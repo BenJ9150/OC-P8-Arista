@@ -9,33 +9,21 @@ import Foundation
 import CoreData
 
 class SleepHistoryViewModel: ObservableObject {
-    @Published var sleepSessions = [FakeSleepSession]()
+
+    @Published var sleepSessions = [Sleep]()
     
-    private var viewContext: NSManagedObjectContext
+    private let viewContext: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
         self.viewContext = context
         fetchSleepSessions()
     }
     
-    private func fetchSleepSessions() {
-        
-        sleepSessions = [FakeSleepSession(), 
-                         FakeSleepSession(),
-                         FakeSleepSession(),
-                         FakeSleepSession(),
-                         FakeSleepSession(),
-                         FakeSleepSession(),
-                         FakeSleepSession(),
-                         FakeSleepSession(),
-                         FakeSleepSession(),
-                         FakeSleepSession()]
-    }
-}
+    private func fetchSleepSessions() { // TODO: Gérer les erreurs
+        do {
+            let sleepRepository = SleepRepository(viewContext: viewContext)
+            sleepSessions = try sleepRepository.getSleepSessions()
 
-struct FakeSleepSession: Identifiable {
-    var id = UUID()
-    var startDate: Date = Date()
-    var duration: Int = 695
-    var quality: Int = (0...10).randomElement()!
+        } catch {}
+    }
 }

@@ -53,5 +53,8 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+
+        // Add default data
+        try! DefaultData(viewContext: container.viewContext).apply()
     }
 }

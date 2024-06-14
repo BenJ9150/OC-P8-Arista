@@ -9,19 +9,26 @@ import Foundation
 import CoreData
 
 class UserDataViewModel: ObservableObject {
+
     @Published var firstName: String = ""
     @Published var lastName: String = ""
 
-    private var viewContext: NSManagedObjectContext
+    private let viewContext: NSManagedObjectContext
 
     init(context: NSManagedObjectContext) {
         self.viewContext = context
         fetchUserData()
     }
 
-    private func fetchUserData() {
-        // TODO: fetch data in CoreData and replace dumb value below with appropriate information
-        firstName = "Charlotte"
-        lastName = "Corino"
+    private func fetchUserData() { // TODO: Gérer les erreurs
+        do {
+            guard let user = try UserRepository().getUser() else {
+                fatalError()
+            }
+            // update properties
+            firstName = user.firstName ?? ""
+            lastName = user.lastName ?? ""
+
+        } catch {}
     }
 }

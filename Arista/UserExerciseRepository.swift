@@ -34,12 +34,13 @@ extension UserExerciseRepository {
 
 extension UserExerciseRepository {
 
-    func addUserExercise(type: Exercise, duration: Int, intensity: Int, startDate: Date) throws {
+    func addUserExercise(forUser user: User, type: Exercise, duration: Int, intensity: Int, startDate: Date) throws {
         let newExercise = UserExercise(context: viewContext)
         newExercise.exercise = type
         newExercise.duration = Int32(duration)
         newExercise.intensity = Int16(intensity)
         newExercise.startDate = startDate
+        newExercise.user = user
         try viewContext.save()
     }
 }

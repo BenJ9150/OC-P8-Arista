@@ -5,7 +5,7 @@
         <attribute name="type" attributeType="String"/>
         <relationship name="exercise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserExercise" inverseName="exercise" inverseEntity="UserExercise"/>
     </entity>
-    <entity name="Sleep" representedClassName="Sleep" syncable="YES" codeGenerationType="class">
+    <entity name="Sleep" representedClassName=".Sleep" syncable="YES" codeGenerationType="category">
         <attribute name="duration" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="quality" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
