@@ -89,6 +89,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43136EDD2C1C77E900CF7F2D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				43136EDE2C1C781300CF7F2D /* CoreData */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		43136EDE2C1C781300CF7F2D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				53E5873B2B235E9000E4EF99 /* Arista.xcdatamodeld */,
+				53E587392B235E9000E4EF99 /* Persistence.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		53E587242B235E8F00E4EF99 = {
 			isa = PBXGroup;
 			children = (
@@ -112,13 +129,11 @@
 		53E5872F2B235E8F00E4EF99 /* Arista */ = {
 			isa = PBXGroup;
 			children = (
+				43136EDD2C1C77E900CF7F2D /* Models */,
 				53E587612B235FDC00E4EF99 /* ViewModels */,
 				53E587602B235FD700E4EF99 /* Views */,
-				53E5875F2B235FD200E4EF99 /* Models */,
 				53E587302B235E8F00E4EF99 /* AristaApp.swift */,
 				53E587342B235E9000E4EF99 /* Assets.xcassets */,
-				53E587392B235E9000E4EF99 /* Persistence.swift */,
-				53E5873B2B235E9000E4EF99 /* Arista.xcdatamodeld */,
 				53E587362B235E9000E4EF99 /* Preview Content */,
 			);
 			path = Arista;
@@ -147,13 +162,6 @@
 				53E587522B235E9000E4EF99 /* AristaUITestsLaunchTests.swift */,
 			);
 			path = AristaUITests;
-			sourceTree = "<group>";
-		};
-		53E5875F2B235FD200E4EF99 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		53E587602B235FD700E4EF99 /* Views */ = {
