@@ -28,8 +28,27 @@ class AddExerciseViewModel: ObservableObject {
 
 extension AddExerciseViewModel {
 
-    func addUserExercise() -> Bool {
-        // TODO: Ajouter ici la logique pour créer et sauvegarder un nouvel exercice dans CoreData
+    func addUserExercise() -> Bool { // TODO: Gérer les erreurs
+        guard let exerciseType = exercise,
+              let durationToInt = Int32(duration), let intensityToInt = Int16(intensity) else {
+            return false
+        }
+        do {
+            // Get user
+            guard let user = try UserRepository(viewContext: viewContext).getUser() else {
+                return false
+            }
+            // Add new user exercise
+            let userExerciseRepository = UserExerciseRepository(viewContext: viewContext)
+            try userExerciseRepository.addUserExercise(
+                forUser: user,
+                type: exerciseType,
+                duration: durationToInt,
+                intensity: intensityToInt,
+                startDate: Date.now // TODO: Mettre vrai valeur
+            )
+
+        } catch {}
         return true
     }
 }

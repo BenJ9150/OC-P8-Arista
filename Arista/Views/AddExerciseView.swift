@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct AddExerciseView: View {
+struct AddExerciseView: View { // TODO: Trouver quelque chose de mieux pour renseigner la date / heure, la durée et l'intensité
+
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: AddExerciseViewModel
 
@@ -18,7 +19,7 @@ struct AddExerciseView: View {
                     exercisePicker
                     TextField("Heure de démarrage", text: $viewModel.startTime)
                     TextField("Durée (en minutes)", text: $viewModel.duration)
-                    TextField("Intensité (0 à 10)", text: $viewModel.intensity)
+                    TextField("Intensité (0 à 10)", text: $viewModel.intensity) // TODO: Vérifier si entre 0 et 10
                 }.formStyle(.grouped)
                 Spacer()
                 Button("Ajouter l'exercice") {

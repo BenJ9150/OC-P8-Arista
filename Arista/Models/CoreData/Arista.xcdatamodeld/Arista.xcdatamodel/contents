@@ -17,7 +17,7 @@
         <relationship name="sleeps" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Sleep" inverseName="user" inverseEntity="Sleep"/>
         <relationship name="userExercises" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserExercise" inverseName="user" inverseEntity="UserExercise"/>
     </entity>
-    <entity name="UserExercise" representedClassName="UserExercise" syncable="YES" codeGenerationType="class">
+    <entity name="UserExercise" representedClassName=".UserExercise" syncable="YES" codeGenerationType="category">
         <attribute name="duration" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="intensity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>

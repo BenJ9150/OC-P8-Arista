@@ -13,20 +13,20 @@ struct ExerciseListView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.exercises) { exercise in
+            List(viewModel.userExercises) { userExercise in
                 HStack {
-                    Image(systemName: iconForCategory(exercise.category))
+                    Image(systemName: iconForCategory(userExercise.category))
                     VStack(alignment: .leading) {
-                        Text(exercise.category)
+                        Text(userExercise.category)
                             .font(.headline)
-                        Text("Durée: \(exercise.duration) min")
+                        Text("Durée: \(userExercise.duration) min")
                             .font(.subheadline)
-                        Text(exercise.date.formatted())
+                        Text(userExercise.date)
                             .font(.subheadline)
                         
                     }
                     Spacer()
-                    IntensityIndicator(intensity: exercise.intensity)
+                    IntensityIndicator(intensity: userExercise.intensity)
                 }
             }
             .navigationTitle("Exercices")
@@ -61,7 +61,7 @@ struct ExerciseListView: View {
 }
 
 struct IntensityIndicator: View {
-    var intensity: Int
+    var intensity: Int16
     
     var body: some View {
         Circle()
@@ -69,7 +69,7 @@ struct IntensityIndicator: View {
             .frame(width: 10, height: 10)
     }
     
-    func colorForIntensity(_ intensity: Int) -> Color {
+    func colorForIntensity(_ intensity: Int16) -> Color {
         switch intensity {
         case 0...3:
             return .green

@@ -38,7 +38,7 @@ extension UserExerciseRepository {
 
     /// Save new user exercise in Database.
 
-    func addUserExercise(forUser user: User, type: Exercise, duration: Int, intensity: Int, startDate: Date) throws {
+    func addUserExercise(forUser user: User, type: Exercise, duration: Int32, intensity: Int16, startDate: Date) throws {
         let newExercise = UserExercise(context: viewContext)
         newExercise.exercise = type
         newExercise.duration = Int32(duration)

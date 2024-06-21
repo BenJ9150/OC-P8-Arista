@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 class ExerciseListViewModel: ObservableObject {
-    @Published var exercises = [FakeExercise]()
+    @Published var userExercises = [UserExercise]()
 
     var viewContext: NSManagedObjectContext
 
@@ -24,9 +24,17 @@ class ExerciseListViewModel: ObservableObject {
 
 extension ExerciseListViewModel {
 
-    private func fetchUserExercises() {
-        // TODO: fetch data in CoreData and replace dumb value below with appropriate information
-        exercises = [FakeExercise(), FakeExercise(), FakeExercise()]
+//    private func fetchUserExercises() {
+//        // TODO: fetch data in CoreData and replace dumb value below with appropriate information
+//        exercises = [FakeExercise(), FakeExercise(), FakeExercise()]
+//    }
+    
+    private func fetchUserExercises() { // TODO: Gérer les erreurs
+        do {
+            let userExerciseRepository = UserExerciseRepository(viewContext: viewContext)
+            userExercises = try userExerciseRepository.getUserExercise()
+
+        } catch {}
     }
 }
 
