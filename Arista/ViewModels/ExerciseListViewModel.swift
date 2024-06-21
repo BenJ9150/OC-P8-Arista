@@ -20,14 +20,18 @@ class ExerciseListViewModel: ObservableObject {
     }
 }
 
+// MARK: Public reload
+
+extension ExerciseListViewModel {
+    
+    func reload() {
+        fetchUserExercises()
+    }
+}
+
 // MARK: Fetch user exercise
 
 extension ExerciseListViewModel {
-
-//    private func fetchUserExercises() {
-//        // TODO: fetch data in CoreData and replace dumb value below with appropriate information
-//        exercises = [FakeExercise(), FakeExercise(), FakeExercise()]
-//    }
     
     private func fetchUserExercises() { // TODO: Gérer les erreurs
         do {
@@ -36,13 +40,4 @@ extension ExerciseListViewModel {
 
         } catch {}
     }
-}
-
-struct FakeExercise: Identifiable {
-    var id = UUID()
-    
-    var category: String = "Football"
-    var duration: Int = 120
-    var intensity: Int = 8
-    var date: Date = Date()
 }

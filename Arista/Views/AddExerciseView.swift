@@ -12,6 +12,8 @@ struct AddExerciseView: View { // TODO: Trouver quelque chose de mieux pour rens
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: AddExerciseViewModel
 
+    var exerciseAdded: () -> () = {}
+
     var body: some View {
         NavigationView {
             VStack {
@@ -24,6 +26,7 @@ struct AddExerciseView: View { // TODO: Trouver quelque chose de mieux pour rens
                 Spacer()
                 Button("Ajouter l'exercice") {
                     if viewModel.addUserExercise() {
+                        exerciseAdded()
                         presentationMode.wrappedValue.dismiss()
                     }
                 }.buttonStyle(.borderedProminent)
