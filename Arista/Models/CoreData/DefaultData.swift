@@ -17,34 +17,39 @@ struct DefaultData {
     }
 
     func apply() throws {
-        if (try? UserRepository(viewContext: viewContext).getUser()) == nil {
-            let initialUser = try addInitialUser()
-            try addSleepSessions(forUser: initialUser)
-            try? viewContext.save()
-        }
+        let initialUser = addInitialUser()
+        try addSleepSessions(forUser: initialUser)
+        try addExerciseTypes()
+        try viewContext.save()
     }
 }
 
-private extension DefaultData {
+// MARK: Add initial user
 
-    // MARK: Add initial user
+private extension DefaultData {
 
     /// ## Attention: you need to save NSManagedObjectContext after call of this method
 
-    func addInitialUser() throws -> User {
+    func addInitialUser() -> User {
+        if let savedUser = try? UserRepository(viewContext: viewContext).getUser() {
+            return savedUser
+        }
         let initialUser = User(context: viewContext)
         initialUser.firstName = "Benjamin"
         initialUser.lastName = "LEFRANCOIS"
         return initialUser
     }
+}
 
-    // MARK: Add sleep sessions
+// MARK: Add sleep sessions
+
+private extension DefaultData {
 
     /// ## Attention: you need to save NSManagedObjectContext after call of this method
+    /// Delete rule: sleep sessions were deleted when associated user is deleted
 
     func addSleepSessions(forUser user: User) throws {
-        let sleepRepository = SleepRepository(viewContext: viewContext)
-        guard try sleepRepository.getSleepSessions().isEmpty else {
+        guard try SleepRepository(viewContext: viewContext).getSleepSessions().isEmpty else {
             return
         }
 
@@ -82,3 +87,76 @@ private extension DefaultData {
         sleep5.user = user
     }
 }
+
+// MARK: Add exercise types
+
+private extension DefaultData {
+
+    /// ## Attention: you need to save NSManagedObjectContext after call of this method
+
+    func addExerciseTypes() throws {
+        guard try ExerciseRepository(viewContext: viewContext).getExercise().isEmpty else {
+            return
+        }
+
+        let exercise1 = Exercise(context: viewContext)
+        let exercise2 = Exercise(context: viewContext)
+        let exercise3 = Exercise(context: viewContext)
+        let exercise4 = Exercise(context: viewContext)
+        let exercise5 = Exercise(context: viewContext)
+        let exercise6 = Exercise(context: viewContext)
+        let exercise7 = Exercise(context: viewContext)
+        let exercise8 = Exercise(context: viewContext)
+
+        exercise1.type = "Course à pied"
+        exercise1.caloriesPerMin = 9.8
+        
+        exercise2.type = "Cyclisme"
+        exercise2.caloriesPerMin = 9.4
+        
+        exercise3.type = "Natation"
+        exercise3.caloriesPerMin = 9.8
+        
+        exercise4.type = "Football"
+        exercise4.caloriesPerMin = 9.0
+        
+        exercise5.type = "Tennis"
+        exercise5.caloriesPerMin = 8.3
+
+        exercise6.type = "Basketball"
+        exercise6.caloriesPerMin = 8.1
+
+        exercise7.type = "Marche rapide"
+        exercise7.caloriesPerMin = 4.7
+
+        exercise8.type = "Aérobic"
+        exercise8.caloriesPerMin = 7.4
+    }
+}
+
+// MARK: - TEST
+
+extension DefaultData {
+
+    // Method just for test delete rules in CoreData
+
+    func deleteUser() throws {
+        guard let userToDelete = try UserRepository(viewContext: viewContext).getUser() else {
+            return
+        }
+        viewContext.delete(userToDelete)
+        try viewContext.save()
+    }
+
+    func deleteExerciseTypes() throws {
+        let exercisesToDelete = try ExerciseRepository(viewContext: viewContext).getExercise()
+        if exercisesToDelete.isEmpty {
+            return
+        }
+
+        for exercise in exercisesToDelete {
+            viewContext.delete(exercise)
+        }
+        try viewContext.save()
+    }
+}

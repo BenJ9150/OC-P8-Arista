@@ -15,14 +15,14 @@ struct AddExerciseView: View {
         NavigationView {
             VStack {
                 Form {
-                    TextField("Catégorie", text: $viewModel.category)
+                    exercisePicker
                     TextField("Heure de démarrage", text: $viewModel.startTime)
                     TextField("Durée (en minutes)", text: $viewModel.duration)
                     TextField("Intensité (0 à 10)", text: $viewModel.intensity)
                 }.formStyle(.grouped)
                 Spacer()
                 Button("Ajouter l'exercice") {
-                    if viewModel.addExercise() {
+                    if viewModel.addUserExercise() {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }.buttonStyle(.borderedProminent)
@@ -31,6 +31,20 @@ struct AddExerciseView: View {
             .navigationTitle("Nouvel Exercice ...")
             
         }
+    }
+}
+
+// MARK: Exercise picker
+
+extension AddExerciseView {
+
+    private var exercisePicker: some View {
+        Picker("Catégorie", selection: $viewModel.exercise) {
+            ForEach(viewModel.exercises) { exercise in
+                Text(exercise.type ?? "").tag(exercise as Exercise?)
+            }
+        }
+        .pickerStyle(.menu)
     }
 }
 

@@ -21,6 +21,9 @@ struct UserRepository {
 
 extension UserRepository {
 
+    /// Get current user from Database.
+    /// MVP: Only one user is possible, so fetch limit of request set to one.
+
     func getUser() throws -> User? {
         let request = User.fetchRequest()
         request.fetchLimit = 1

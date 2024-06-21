@@ -19,6 +19,11 @@ class UserDataViewModel: ObservableObject {
         self.viewContext = context
         fetchUserData()
     }
+}
+
+// MARK: Fetch user data
+
+extension UserDataViewModel {
 
     private func fetchUserData() { // TODO: Gérer les erreurs
         do {

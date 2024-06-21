@@ -18,7 +18,12 @@ class SleepHistoryViewModel: ObservableObject {
         self.viewContext = context
         fetchSleepSessions()
     }
-    
+}
+
+// MARK: Fetch sleep sessions
+
+extension SleepHistoryViewModel {
+
     private func fetchSleepSessions() { // TODO: Gérer les erreurs
         do {
             let sleepRepository = SleepRepository(viewContext: viewContext)

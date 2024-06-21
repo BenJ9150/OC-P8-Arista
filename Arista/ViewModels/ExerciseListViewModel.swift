@@ -16,10 +16,15 @@ class ExerciseListViewModel: ObservableObject {
 
     init(context: NSManagedObjectContext) {
         self.viewContext = context
-        fetchExercises()
+        fetchUserExercises()
     }
+}
 
-    private func fetchExercises() {
+// MARK: Fetch user exercise
+
+extension ExerciseListViewModel {
+
+    private func fetchUserExercises() {
         // TODO: fetch data in CoreData and replace dumb value below with appropriate information
         exercises = [FakeExercise(), FakeExercise(), FakeExercise()]
     }

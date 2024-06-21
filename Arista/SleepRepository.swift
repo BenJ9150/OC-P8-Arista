@@ -21,6 +21,8 @@ struct SleepRepository {
 
 extension SleepRepository {
 
+    /// Get all sleep sessions from Database sorted by date (most recent first).
+
     func getSleepSessions() throws -> [Sleep] {
         let request = Sleep.fetchRequest()
         request.sortDescriptors = [

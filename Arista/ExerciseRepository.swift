@@ -21,6 +21,9 @@ struct ExerciseRepository {
 
 extension ExerciseRepository {
 
+    /// Get all exercise types from Database that can be use for UserExercise entity.
+    /// Exercise types are sorted alphabetically.
+
     func getExercise() throws -> [Exercise] {
         let request = Exercise.fetchRequest()
         request.sortDescriptors = [
@@ -33,6 +36,8 @@ extension ExerciseRepository {
 // MARK: Add Exercise
 
 extension ExerciseRepository {
+
+    /// Save new exercise type in Database.
 
     func addExercise(type: String, caloriesPerMin: Decimal) throws {
         let newExercise = Exercise(context: viewContext)

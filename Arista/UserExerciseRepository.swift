@@ -21,6 +21,8 @@ struct UserExerciseRepository {
 
 extension UserExerciseRepository {
 
+    /// Get all user exercises from Database sorted by date (most recent first).
+
     func getUserExercise() throws -> [UserExercise] {
         let request = UserExercise.fetchRequest()
         request.sortDescriptors = [
@@ -33,6 +35,8 @@ extension UserExerciseRepository {
 // MARK: Add User Exercise
 
 extension UserExerciseRepository {
+
+    /// Save new user exercise in Database.
 
     func addUserExercise(forUser user: User, type: Exercise, duration: Int, intensity: Int, startDate: Date) throws {
         let newExercise = UserExercise(context: viewContext)
