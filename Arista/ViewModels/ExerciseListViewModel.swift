@@ -13,6 +13,10 @@ class ExerciseListViewModel: ObservableObject {
 
     @Published var userExercises = [UserExercise]()
 
+    @Published var fetchError: String = ""
+    @Published var deleteError: String = ""
+    @Published var showAlertError = false
+
     var viewContext: NSManagedObjectContext
     var selection = Set<String>()
 
@@ -30,12 +34,16 @@ extension ExerciseListViewModel {
         fetchUserExercises()
     }
 
-    func delete(_ userExercise: UserExercise) { // TODO: Gérer les erreurs
+    func delete(_ userExercise: UserExercise) {
         do {
-            let userExerciseRepository = UserExerciseRepository(viewContext: viewContext)
-            try userExerciseRepository.delete(userExercise)
+            try UserExerciseRepository(viewContext: viewContext).delete(userExercise)
+            deleteError = ""
+            reload()
 
-        } catch {}
+        } catch {
+            deleteError = AppError.deleteUserExercise.message
+            showAlertError.toggle()
+        }
     }
 }
 
@@ -43,11 +51,13 @@ extension ExerciseListViewModel {
 
 extension ExerciseListViewModel {
 
-    private func fetchUserExercises() { // TODO: Gérer les erreurs
+    private func fetchUserExercises() {
         do {
-            let userExerciseRepository = UserExerciseRepository(viewContext: viewContext)
-            userExercises = try userExerciseRepository.getUserExercise()
+            userExercises = try UserExerciseRepository(viewContext: viewContext).getUserExercise()
+            fetchError = ""
 
-        } catch {}
+        } catch {
+            fetchError = AppError.fetchUserExercises.message
+        }
     }
 }

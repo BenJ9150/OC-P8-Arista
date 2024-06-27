@@ -11,6 +11,7 @@ import CoreData
 class SleepHistoryViewModel: ObservableObject {
 
     @Published var sleepSessions = [Sleep]()
+    @Published var fetchError: String = ""
 
     private let viewContext: NSManagedObjectContext
 
@@ -24,11 +25,13 @@ class SleepHistoryViewModel: ObservableObject {
 
 extension SleepHistoryViewModel {
 
-    private func fetchSleepSessions() { // TODO: Gérer les erreurs
+    private func fetchSleepSessions() {
         do {
-            let sleepRepository = SleepRepository(viewContext: viewContext)
-            sleepSessions = try sleepRepository.getSleepSessions()
+            sleepSessions = try SleepRepository(viewContext: viewContext).getSleepSessions()
+            fetchError = ""
 
-        } catch {}
+        } catch {
+            fetchError = AppError.fetchSleeps.message
+        }
     }
 }

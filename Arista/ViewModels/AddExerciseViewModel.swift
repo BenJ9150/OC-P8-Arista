@@ -14,8 +14,12 @@ class AddExerciseViewModel: ObservableObject {
     @Published var exercise: Exercise?
     @Published var startTime = Date()
     @Published var durationHour = 0
-    @Published var durationMinute = 1
+    @Published var durationMinute = 0
     @Published var intensity: Double = 5
+
+    @Published var fetchError: String = ""
+    @Published var addError: String = ""
+    @Published var showAlertError = false
 
     private var viewContext: NSManagedObjectContext
 
@@ -29,27 +33,52 @@ class AddExerciseViewModel: ObservableObject {
 
 extension AddExerciseViewModel {
 
-    func addUserExercise() -> Bool { // TODO: Gérer les erreurs
-        guard let exerciseType = exercise else {
+    func addUserExercise() -> Bool {
+        // Check duration
+        guard durationHour + durationMinute > 0 else {
+            addError = AppError.addUserExerciseCauseDuration.message
+            showAlertError.toggle()
             return false
         }
+        // Get exercise
+        guard let exerciseType = exercise else {
+            addError = AppError.addUserExerciseCauseExerciseIsNil.message
+            showAlertError.toggle()
+            return false
+        }
+        // Get user
         do {
-            // Get user
             guard let user = try UserRepository(viewContext: viewContext).getUser() else {
+                addError = AppError.userIsNil.message
+                showAlertError.toggle()
                 return false
             }
             // Add new user exercise
-            let userExerciseRepository = UserExerciseRepository(viewContext: viewContext)
-            try userExerciseRepository.addUserExercise(
+            return addUserExercise(forUser: user, exerciseType: exerciseType)
+
+        } catch {
+            addError = AppError.fetchUser.message
+            showAlertError.toggle()
+            return false
+        }
+    }
+
+    private func addUserExercise(forUser user: User, exerciseType: Exercise) -> Bool {
+        do {
+            try UserExerciseRepository(viewContext: viewContext).addUserExercise(
                 forUser: user,
                 type: exerciseType,
                 duration: Int32(durationMinute + durationHour * 60),
                 intensity: Int16(intensity),
                 startDate: startTime
             )
+            return true
 
-        } catch {}
-        return true
+        } catch {
+            addError = AppError.addUserExercise.message
+            showAlertError.toggle()
+            return false
+        }
     }
 }
 
@@ -57,12 +86,14 @@ extension AddExerciseViewModel {
 
 extension AddExerciseViewModel {
 
-    private func fetchExerciseTypes() { // TODO: Gérer les erreurs
+    private func fetchExerciseTypes() {
         do {
-            let exerciseRepository = ExerciseRepository(viewContext: viewContext)
-            exercises = try exerciseRepository.getExercise()
+            exercises = try ExerciseRepository(viewContext: viewContext).getExercise()
             exercise = exercises.first
+            fetchError = ""
 
-        } catch {}
+        } catch {
+            fetchError = AppError.fetchExerciseTypes.message
+        }
     }
 }

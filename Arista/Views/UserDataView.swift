@@ -8,9 +8,23 @@
 import SwiftUI
 
 struct UserDataView: View {
+
     @ObservedObject var viewModel: UserDataViewModel
 
     var body: some View {
+        if viewModel.fetchError.isEmpty {
+            userDataToDisplay
+        } else {
+            ErrorMessage(message: viewModel.fetchError)
+        }
+    }
+}
+
+// MARK: User data to display
+
+extension UserDataView {
+
+    private var userDataToDisplay: some View {
         VStack(alignment: .leading) {
             Spacer()
             Text("Hello")

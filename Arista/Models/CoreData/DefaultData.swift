@@ -53,38 +53,28 @@ private extension DefaultData {
             return
         }
 
-        let sleep1 = Sleep(context: viewContext)
-        let sleep2 = Sleep(context: viewContext)
-        let sleep3 = Sleep(context: viewContext)
-        let sleep4 = Sleep(context: viewContext)
-        let sleep5 = Sleep(context: viewContext)
+        sleepBuilder(forUser: user, dateFactor: 1)
+        sleepBuilder(forUser: user, dateFactor: 2)
+        sleepBuilder(forUser: user, dateFactor: 3)
+        sleepBuilder(forUser: user, dateFactor: 4)
+        sleepBuilder(forUser: user, dateFactor: 5)
+        sleepBuilder(forUser: user, dateFactor: 6)
+        sleepBuilder(forUser: user, dateFactor: 7)
+        sleepBuilder(forUser: user, dateFactor: 8)
+        sleepBuilder(forUser: user, dateFactor: 9)
+        sleepBuilder(forUser: user, dateFactor: 10)
+        sleepBuilder(forUser: user, dateFactor: 11)
+        sleepBuilder(forUser: user, dateFactor: 12)
+    }
 
+    func sleepBuilder(forUser user: User, dateFactor: Double) {
+        let sleep = Sleep(context: viewContext)
         let timeIntervalForADay: TimeInterval = 60 * 60 * 24
 
-        sleep1.duration = (0...900).randomElement()!
-        sleep1.quality = (0...10).randomElement()!
-        sleep1.startDate = Date(timeIntervalSinceNow: timeIntervalForADay*5)
-        sleep1.user = user
-
-        sleep2.duration = (0...900).randomElement()!
-        sleep2.quality = (0...10).randomElement()!
-        sleep2.startDate = Date(timeIntervalSinceNow: timeIntervalForADay*4)
-        sleep2.user = user
-
-        sleep3.duration = (0...900).randomElement()!
-        sleep3.quality = (0...10).randomElement()!
-        sleep3.startDate = Date(timeIntervalSinceNow: timeIntervalForADay*3)
-        sleep3.user = user
-
-        sleep4.duration = (0...900).randomElement()!
-        sleep4.quality = (0...10).randomElement()!
-        sleep4.startDate = Date(timeIntervalSinceNow: timeIntervalForADay*2)
-        sleep4.user = user
-
-        sleep5.duration = (0...900).randomElement()!
-        sleep5.quality = (0...10).randomElement()!
-        sleep5.startDate = Date(timeIntervalSinceNow: timeIntervalForADay)
-        sleep5.user = user
+        sleep.duration = (0...900).randomElement()!
+        sleep.quality = (0...10).randomElement()!
+        sleep.startDate = Date(timeIntervalSinceNow: timeIntervalForADay * dateFactor)
+        sleep.user = user
     }
 }
 
@@ -99,38 +89,20 @@ private extension DefaultData {
             return
         }
 
-        let exercise1 = Exercise(context: viewContext)
-        let exercise2 = Exercise(context: viewContext)
-        let exercise3 = Exercise(context: viewContext)
-        let exercise4 = Exercise(context: viewContext)
-        let exercise5 = Exercise(context: viewContext)
-        let exercise6 = Exercise(context: viewContext)
-        let exercise7 = Exercise(context: viewContext)
-        let exercise8 = Exercise(context: viewContext)
+        exerciseBuilder(type: "Course à pied", calories: 9.8)
+        exerciseBuilder(type: "Cyclisme", calories: 9.4)
+        exerciseBuilder(type: "Natation", calories: 9.8)
+        exerciseBuilder(type: "Football", calories: 9.0)
+        exerciseBuilder(type: "Tennis", calories: 8.3)
+        exerciseBuilder(type: "Basketball", calories: 8.1)
+        exerciseBuilder(type: "Marche rapide", calories: 4.7)
+        exerciseBuilder(type: "Aérobic", calories: 7.4)
+    }
 
-        exercise1.type = "Course à pied"
-        exercise1.caloriesPerMin = 9.8
-
-        exercise2.type = "Cyclisme"
-        exercise2.caloriesPerMin = 9.4
-
-        exercise3.type = "Natation"
-        exercise3.caloriesPerMin = 9.8
-
-        exercise4.type = "Football"
-        exercise4.caloriesPerMin = 9.0
-
-        exercise5.type = "Tennis"
-        exercise5.caloriesPerMin = 8.3
-
-        exercise6.type = "Basketball"
-        exercise6.caloriesPerMin = 8.1
-
-        exercise7.type = "Marche rapide"
-        exercise7.caloriesPerMin = 4.7
-
-        exercise8.type = "Aérobic"
-        exercise8.caloriesPerMin = 7.4
+    func exerciseBuilder(type: String, calories: NSDecimalNumber) {
+        let exercise = Exercise(context: viewContext)
+        exercise.type = type
+        exercise.caloriesPerMin = calories
     }
 }
 

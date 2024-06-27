@@ -15,23 +15,41 @@ struct AddExerciseView: View {
     var exerciseAdded: () -> Void = {}
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Form {
-                    exercisePicker
-                    durationPicker
-                    intensityPicker
-                    hourAndMinutePicker
-                }.formStyle(.grouped)
-                Spacer()
-                Button("Ajouter l'exercice") {
-                    if viewModel.addUserExercise() {
-                        exerciseAdded()
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }.buttonStyle(.borderedProminent)
+        NavigationStack {
+            Group {
+                if viewModel.fetchError.isEmpty {
+                    exerciseForm
+                } else {
+                    ErrorMessage(message: viewModel.fetchError)
+                }
             }
             .navigationTitle("Nouvel Exercice ...")
+            .alert(viewModel.addError, isPresented: $viewModel.showAlertError) {
+                Button("OK", action: {})
+            }
+        }
+    }
+}
+
+// MARK: Exercise Form
+
+extension AddExerciseView {
+
+    private var exerciseForm: some View {
+        VStack {
+            Form {
+                exercisePicker
+                durationPicker
+                intensityPicker
+                hourAndMinutePicker
+            }.formStyle(.grouped)
+            Spacer()
+            Button("Ajouter l'exercice") {
+                if viewModel.addUserExercise() {
+                    exerciseAdded()
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }.buttonStyle(.borderedProminent)
         }
     }
 }

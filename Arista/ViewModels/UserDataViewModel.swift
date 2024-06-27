@@ -12,6 +12,7 @@ class UserDataViewModel: ObservableObject {
 
     @Published var firstName: String = ""
     @Published var lastName: String = ""
+    @Published var fetchError: String = ""
 
     private let viewContext: NSManagedObjectContext
 
@@ -25,15 +26,19 @@ class UserDataViewModel: ObservableObject {
 
 extension UserDataViewModel {
 
-    private func fetchUserData() { // TODO: Gérer les erreurs
+    private func fetchUserData() {
         do {
             guard let user = try UserRepository().getUser() else {
-                fatalError()
+                fetchError = AppError.userIsNil.message
+                return
             }
             // update properties
             firstName = user.firstName ?? ""
             lastName = user.lastName ?? ""
+            fetchError = ""
 
-        } catch {}
+        } catch {
+            fetchError = AppError.fetchUser.message
+        }
     }
 }

@@ -13,22 +13,31 @@ struct ExerciseListView: View {
     @State private var showingAddExerciseView = false
 
     var body: some View {
-        NavigationView {
-            exercisesList
-                .navigationTitle("Exercices")
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            showingAddExerciseView = true
-                        } label: {
-                            Image(systemName: "plus")
-                        }
+        NavigationStack {
+            Group {
+                if viewModel.fetchError.isEmpty {
+                    exercisesList
+                } else {
+                    ErrorMessage(message: viewModel.fetchError)
+                }
+            }
+            .navigationTitle("Exercices")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showingAddExerciseView = true
+                    } label: {
+                        Image(systemName: "plus")
                     }
                 }
-        }
-        .sheet(isPresented: $showingAddExerciseView) {
-            AddExerciseView(viewModel: AddExerciseViewModel(context: viewModel.viewContext)) {
-                viewModel.reload()
+            }
+            .sheet(isPresented: $showingAddExerciseView) {
+                AddExerciseView(viewModel: AddExerciseViewModel(context: viewModel.viewContext)) {
+                    viewModel.reload()
+                }
+            }
+            .alert(viewModel.deleteError, isPresented: $viewModel.showAlertError) {
+                Button("OK", action: {})
             }
         }
     }
