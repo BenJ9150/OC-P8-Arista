@@ -9,13 +9,13 @@ import SwiftUI
 
 struct IntensityIndicator: View {
     var intensity: Double
-    
+
     var body: some View {
         Circle()
             .fill(colorForIntensity(intensity))
             .frame(width: 10, height: 10)
     }
-    
+
     private func colorForIntensity(_ intensity: Double) -> Color {
         switch intensity {
         case 0...3:

@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct AddExerciseView: View { // TODO: Trouver quelque chose de mieux pour renseigner la date / heure, la durée et l'intensité
+struct AddExerciseView: View {
 
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: AddExerciseViewModel
 
-    var exerciseAdded: () -> () = {}
+    var exerciseAdded: () -> Void = {}
 
     var body: some View {
         NavigationView {

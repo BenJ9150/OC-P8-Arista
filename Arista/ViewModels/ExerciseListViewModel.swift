@@ -23,7 +23,7 @@ class ExerciseListViewModel: ObservableObject {
 // MARK: Public reload
 
 extension ExerciseListViewModel {
-    
+
     func reload() {
         fetchUserExercises()
     }
@@ -32,7 +32,7 @@ extension ExerciseListViewModel {
 // MARK: Fetch user exercise
 
 extension ExerciseListViewModel {
-    
+
     private func fetchUserExercises() { // TODO: Gérer les erreurs
         do {
             let userExerciseRepository = UserExerciseRepository(viewContext: viewContext)

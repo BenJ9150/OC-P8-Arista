@@ -11,9 +11,9 @@ import CoreData
 class SleepHistoryViewModel: ObservableObject {
 
     @Published var sleepSessions = [Sleep]()
-    
+
     private let viewContext: NSManagedObjectContext
-    
+
     init(context: NSManagedObjectContext) {
         self.viewContext = context
         fetchSleepSessions()
