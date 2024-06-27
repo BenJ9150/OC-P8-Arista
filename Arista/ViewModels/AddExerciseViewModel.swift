@@ -12,9 +12,10 @@ class AddExerciseViewModel: ObservableObject {
 
     @Published var exercises = [Exercise]()
     @Published var exercise: Exercise?
-    @Published var startTime: String = ""
-    @Published var duration: String = ""
-    @Published var intensity: String = ""
+    @Published var startTime = Date()
+    @Published var durationHour = 0
+    @Published var durationMinute = 1
+    @Published var intensity: Double = 5
 
     private var viewContext: NSManagedObjectContext
 
@@ -29,8 +30,7 @@ class AddExerciseViewModel: ObservableObject {
 extension AddExerciseViewModel {
 
     func addUserExercise() -> Bool { // TODO: Gérer les erreurs
-        guard let exerciseType = exercise,
-              let durationToInt = Int32(duration), let intensityToInt = Int16(intensity) else {
+        guard let exerciseType = exercise else {
             return false
         }
         do {
@@ -43,9 +43,9 @@ extension AddExerciseViewModel {
             try userExerciseRepository.addUserExercise(
                 forUser: user,
                 type: exerciseType,
-                duration: durationToInt,
-                intensity: intensityToInt,
-                startDate: Date.now // TODO: Mettre vrai valeur
+                duration: Int32(durationMinute + durationHour * 60),
+                intensity: Int16(intensity),
+                startDate: startTime
             )
 
         } catch {}

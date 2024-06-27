@@ -53,7 +53,7 @@ extension ExerciseListView {
                     
                 }
                 Spacer()
-                IntensityIndicator(intensity: userExercise.intensity)
+                IntensityIndicator(intensity: Double(userExercise.intensity))
             }
         }
 
@@ -71,34 +71,6 @@ extension ExerciseListView {
                 return "bicycle"
             default:
                 return "questionmark"
-            }
-        }
-    }
-}
-
-// MARK: Intensity indicator
-
-extension ExerciseListView {
-
-    private struct IntensityIndicator: View {
-        var intensity: Int16
-        
-        var body: some View {
-            Circle()
-                .fill(colorForIntensity(intensity))
-                .frame(width: 10, height: 10)
-        }
-        
-        private func colorForIntensity(_ intensity: Int16) -> Color {
-            switch intensity {
-            case 0...3:
-                return .green
-            case 4...6:
-                return .yellow
-            case 7...10:
-                return .red
-            default:
-                return .gray
             }
         }
     }
