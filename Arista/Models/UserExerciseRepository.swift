@@ -55,3 +55,15 @@ extension UserExerciseRepository {
         try viewContext.save()
     }
 }
+
+// MARK: Delete User Exercise
+
+extension UserExerciseRepository {
+
+    /// Delete  new user exercise from Database.
+
+    func delete(_ userExercice: UserExercise) throws {
+        viewContext.delete(userExercice)
+        try viewContext.save()
+    }
+}

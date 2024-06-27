@@ -10,9 +10,11 @@ import Foundation
 import CoreData
 
 class ExerciseListViewModel: ObservableObject {
+
     @Published var userExercises = [UserExercise]()
 
     var viewContext: NSManagedObjectContext
+    var selection = Set<String>()
 
     init(context: NSManagedObjectContext) {
         self.viewContext = context
@@ -20,12 +22,20 @@ class ExerciseListViewModel: ObservableObject {
     }
 }
 
-// MARK: Public reload
+// MARK: Public method
 
 extension ExerciseListViewModel {
 
     func reload() {
         fetchUserExercises()
+    }
+
+    func delete(_ userExercise: UserExercise) { // TODO: Gérer les erreurs
+        do {
+            let userExerciseRepository = UserExerciseRepository(viewContext: viewContext)
+            try userExerciseRepository.delete(userExercise)
+
+        } catch {}
     }
 }
 

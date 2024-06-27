@@ -7,32 +7,51 @@
 
 import SwiftUI
 
-struct ExerciseListView: View { // TODO: Ajouter la possibilité de supprimer un exercice
+struct ExerciseListView: View {
 
     @ObservedObject var viewModel: ExerciseListViewModel
     @State private var showingAddExerciseView = false
 
     var body: some View {
         NavigationView {
-            List(viewModel.userExercises) { userExercise in
-                UserExerciseRow(userExercise: userExercise)
-            }
-            .navigationTitle("Exercices")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingAddExerciseView = true
-                    } label: {
-                        Image(systemName: "plus")
+            exercisesList
+                .navigationTitle("Exercices")
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showingAddExerciseView = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
-
                 }
-            }
         }
         .sheet(isPresented: $showingAddExerciseView) {
             AddExerciseView(viewModel: AddExerciseViewModel(context: viewModel.viewContext)) {
                 viewModel.reload()
             }
+        }
+    }
+}
+
+// MARK: User exercises list
+
+extension ExerciseListView {
+
+    private var exercisesList: some View {
+        List {
+            ForEach(viewModel.userExercises) { userExercise in
+                UserExerciseRow(userExercise: userExercise)
+            }
+            .onDelete(perform: deleteExercise)
+        }
+    }
+
+    private func deleteExercise(at offsets: IndexSet) {
+        // Perform delete operation in your ViewModel
+        for index in offsets {
+            let exerciseToDelete = viewModel.userExercises[index]
+            viewModel.delete(exerciseToDelete)
         }
     }
 }
@@ -47,7 +66,8 @@ extension ExerciseListView {
 
         var body: some View {
             HStack {
-                Image(systemName: iconForCategory(userExercise.category))
+                IconForCategory(exercise: userExercise.category)
+                    .padding(.trailing, 8)
                 VStack(alignment: .leading) {
                     Text(userExercise.category)
                         .font(.headline)
@@ -58,24 +78,6 @@ extension ExerciseListView {
                 }
                 Spacer()
                 IntensityIndicator(intensity: Double(userExercise.intensity))
-            }
-        }
-
-        private func iconForCategory(_ category: String) -> String {
-            // TODO: Mettre dans CoreData le nom de l'image lié à l'exercice
-            switch category {
-            case "Football":
-                return "sportscourt"
-            case "Natation":
-                return "waveform.path.ecg"
-            case "Running":
-                return "figure.run"
-            case "Marche":
-                return "figure.walk"
-            case "Cyclisme":
-                return "bicycle"
-            default:
-                return "questionmark"
             }
         }
     }

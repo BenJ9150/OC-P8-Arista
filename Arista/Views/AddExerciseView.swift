@@ -43,7 +43,11 @@ extension AddExerciseView {
     private var exercisePicker: some View {
         Picker("Catégorie", selection: $viewModel.exercise) {
             ForEach(viewModel.exercises) { exercise in
-                Text(exercise.type ?? "").tag(exercise as Exercise?)
+                HStack {
+                    IconForCategory(exercise: exercise.type ?? "")
+                    Text(exercise.type ?? "")
+                }
+                .tag(exercise as Exercise?)
             }
         }
         .pickerStyle(.menu)
