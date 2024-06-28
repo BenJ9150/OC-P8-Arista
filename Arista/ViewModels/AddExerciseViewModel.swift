@@ -10,18 +10,33 @@ import CoreData
 
 class AddExerciseViewModel: ObservableObject {
 
+    // MARK: Public properties
+
     @Published var exercises = [Exercise]()
     @Published var exercise: Exercise?
     @Published var startTime = Date()
-    @Published var durationHour = 0
-    @Published var durationMinute = 0
     @Published var intensity: Double = 5
-
     @Published var fetchError: String = ""
     @Published var addError: String = ""
     @Published var showAlertError = false
 
+    @Published var durationHour = 0 {
+        didSet {
+            startTime -= Double(durationHour) * 60 * 60
+        }
+    }
+
+    @Published var durationMinute = 0 {
+        didSet {
+            startTime -= Double(durationMinute) * 60
+        }
+    }
+
+    // MARK: Private properties
+
     private var viewContext: NSManagedObjectContext
+
+    // MARK: Init
 
     init(context: NSManagedObjectContext) {
         self.viewContext = context

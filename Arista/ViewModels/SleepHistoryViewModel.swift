@@ -10,10 +10,16 @@ import CoreData
 
 class SleepHistoryViewModel: ObservableObject {
 
+    // MARK: Public properties
+
     @Published var sleepSessions = [Sleep]()
     @Published var fetchError: String = ""
 
+    // MARK: Private properties
+
     private let viewContext: NSManagedObjectContext
+
+    // MARK: Init
 
     init(context: NSManagedObjectContext) {
         self.viewContext = context

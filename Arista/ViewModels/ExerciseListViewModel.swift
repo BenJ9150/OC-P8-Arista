@@ -11,14 +11,16 @@ import CoreData
 
 class ExerciseListViewModel: ObservableObject {
 
-    @Published var userExercises = [UserExercise]()
+    // MARK: Public properties
 
+    @Published var userExercises = [UserExercise]()
     @Published var fetchError: String = ""
     @Published var deleteError: String = ""
     @Published var showAlertError = false
 
     var viewContext: NSManagedObjectContext
-    var selection = Set<String>()
+
+    // MARK: Init
 
     init(context: NSManagedObjectContext) {
         self.viewContext = context

@@ -10,11 +10,17 @@ import CoreData
 
 class UserDataViewModel: ObservableObject {
 
+    // MARK: Public properties
+
     @Published var firstName: String = ""
     @Published var lastName: String = ""
     @Published var fetchError: String = ""
 
+    // MARK: Private properties
+
     private let viewContext: NSManagedObjectContext
+
+    // MARK: Init
 
     init(context: NSManagedObjectContext) {
         self.viewContext = context
