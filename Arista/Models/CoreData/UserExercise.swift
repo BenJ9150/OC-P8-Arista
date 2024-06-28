@@ -11,10 +11,7 @@ import CoreData
 public class UserExercise: NSManagedObject {
 
     var date: String {
-        guard let date = startDate else {
-            return ""
-        }
-        return "\(date.formatted())"
+        return startDate?.formatted() ?? ""
     }
 
     var category: String {

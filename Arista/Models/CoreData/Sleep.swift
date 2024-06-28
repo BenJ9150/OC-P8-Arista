@@ -11,9 +11,6 @@ import CoreData
 public class Sleep: NSManagedObject {
 
     var date: String {
-        guard let date = startDate else {
-            return ""
-        }
-        return "\(date.formatted())"
+        return startDate?.formatted() ?? ""
     }
 }
