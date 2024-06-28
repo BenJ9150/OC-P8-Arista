@@ -34,13 +34,15 @@ extension UserDataViewModel {
 
     private func fetchUserData() {
         do {
-            guard let user = try UserRepository(viewContext: viewContext).getUser() else {
+            guard let user = try UserRepository(viewContext: viewContext).getUser(),
+                  let userFirstName = user.firstName,
+                  let userLastName = user.lastName else {
                 fetchError = AppError.userIsNil.message
                 return
             }
             // update properties
-            firstName = user.firstName ?? ""
-            lastName = user.lastName ?? ""
+            firstName = userFirstName
+            lastName = userLastName
             fetchError = ""
 
         } catch {

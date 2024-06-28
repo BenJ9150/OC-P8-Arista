@@ -9,26 +9,7 @@ import XCTest
 import CoreData
 @testable import Arista
 
-final class UserExerciseRepositoryTests: XCTestCase {
-
-    // MARK: Private methods
-
-    private func exerciseTypes(context: NSManagedObjectContext) -> [ExerciseType] {
-        let exerciseType1 = ExerciseType(context: context)
-        exerciseType1.caloriesPerMin = 9.0
-        exerciseType1.type = "Football"
-
-        let exerciseType2 = ExerciseType(context: context)
-        exerciseType2.caloriesPerMin = 9.0
-        exerciseType2.type = "Running"
-
-        let exerciseType3 = ExerciseType(context: context)
-        exerciseType3.caloriesPerMin = 9.0
-        exerciseType3.type = "Fitness"
-
-        return [exerciseType1, exerciseType2, exerciseType3]
-    }
-}
+final class UserExerciseRepositoryTests: XCTestCase {}
 
 // MARK: Empty entities
 
@@ -67,7 +48,7 @@ extension UserExerciseRepositoryTests {
 
             let user = createUser(context: viewContext)
             let dates = dates(context: viewContext)
-            let types = exerciseTypes(context: viewContext)
+            let types = createExerciseTypes(context: viewContext)
 
             let data = UserExerciseRepository(viewContext: viewContext)
             try data.addUserExercise(forUser: user, type: types[0], duration: 10, intensity: 5, startDate: dates[0])
@@ -115,7 +96,7 @@ extension UserExerciseRepositoryTests {
             // Given user exercise has been added (and 3 exercise types)
 
             let user = createUser(context: viewContext)
-            let types = exerciseTypes(context: viewContext)
+            let types = createExerciseTypes(context: viewContext)
             let data = UserExerciseRepository(viewContext: viewContext)
             try data.addUserExercise(forUser: user, type: types[0], duration: 10, intensity: 5, startDate: Date())
 

@@ -35,8 +35,8 @@ func emptyEntities(context: NSManagedObjectContext) {
         }
         try context.save()
 
-    } catch {
-        XCTFail("error in emptyEntities of DefaultDataTests")
+    } catch let error {
+        XCTFail("error in emptyEntities method, error: \(error.localizedDescription)")
     }
 }
 
@@ -60,4 +60,22 @@ func dates(context: NSManagedObjectContext) -> [Date] {
         Date(timeIntervalSinceNow: -(60*60*24)),
         Date(timeIntervalSinceNow: -(60*60*24*2))
     ]
+}
+
+// MARK: Create exercise types
+
+func createExerciseTypes(context: NSManagedObjectContext) -> [ExerciseType] {
+    let exerciseType1 = ExerciseType(context: context)
+    exerciseType1.caloriesPerMin = 9.0
+    exerciseType1.type = "Football"
+
+    let exerciseType2 = ExerciseType(context: context)
+    exerciseType2.caloriesPerMin = 9.0
+    exerciseType2.type = "Running"
+
+    let exerciseType3 = ExerciseType(context: context)
+    exerciseType3.caloriesPerMin = 9.0
+    exerciseType3.type = "Fitness"
+
+    return [exerciseType1, exerciseType2, exerciseType3]
 }
