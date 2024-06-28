@@ -1,5 +1,5 @@
 //
-//  ExerciseRepository.swift
+//  ExerciseTypeRepository.swift
 //  Arista
 //
 //  Created by Benjamin LEFRANCOIS on 14/06/2024.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct ExerciseRepository {
+struct ExerciseTypeRepository {
 
     private let viewContext: NSManagedObjectContext
 
@@ -19,15 +19,15 @@ struct ExerciseRepository {
 
 // MARK: Get Exercises
 
-extension ExerciseRepository {
+extension ExerciseTypeRepository {
 
     /// Get all exercise types from Database that can be use for UserExercise entity.
     /// Exercise types are sorted alphabetically.
 
-    func getExercise() throws -> [Exercise] {
-        let request = Exercise.fetchRequest()
+    func getExercise() throws -> [ExerciseType] {
+        let request = ExerciseType.fetchRequest()
         request.sortDescriptors = [
-            NSSortDescriptor(SortDescriptor<Exercise>(\.type, order: .forward))
+            NSSortDescriptor(SortDescriptor<ExerciseType>(\.type, order: .forward))
         ]
         return try viewContext.fetch(request)
     }
@@ -35,12 +35,12 @@ extension ExerciseRepository {
 
 // MARK: Add Exercise
 
-extension ExerciseRepository {
+extension ExerciseTypeRepository {
 
     /// Save new exercise type in Database.
 
     func addExercise(type: String, caloriesPerMin: Decimal) throws {
-        let newExercise = Exercise(context: viewContext)
+        let newExercise = ExerciseType(context: viewContext)
         newExercise.type = type
         newExercise.caloriesPerMin = NSDecimalNumber(decimal: caloriesPerMin)
         try viewContext.save()

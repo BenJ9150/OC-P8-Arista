@@ -12,8 +12,8 @@ class AddExerciseViewModel: ObservableObject {
 
     // MARK: Public properties
 
-    @Published var exercises = [Exercise]()
-    @Published var exercise: Exercise?
+    @Published var exercises = [ExerciseType]()
+    @Published var exercise: ExerciseType?
     @Published var startTime = Date()
     @Published var intensity: Double = 5
     @Published var fetchError: String = ""
@@ -78,7 +78,7 @@ extension AddExerciseViewModel {
         }
     }
 
-    private func addUserExercise(forUser user: User, exerciseType: Exercise) -> Bool {
+    private func addUserExercise(forUser user: User, exerciseType: ExerciseType) -> Bool {
         do {
             try UserExerciseRepository(viewContext: viewContext).addUserExercise(
                 forUser: user,
@@ -103,7 +103,7 @@ extension AddExerciseViewModel {
 
     private func fetchExerciseTypes() {
         do {
-            exercises = try ExerciseRepository(viewContext: viewContext).getExercise()
+            exercises = try ExerciseTypeRepository(viewContext: viewContext).getExercise()
             exercise = exercises.first
             fetchError = ""
 

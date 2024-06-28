@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		43136EE82C1C82BF00CF7F2D /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EE72C1C82BF00CF7F2D /* UserRepository.swift */; };
 		43136EEA2C1C82C800CF7F2D /* SleepRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EE92C1C82C800CF7F2D /* SleepRepository.swift */; };
-		43136EEC2C1C82D100CF7F2D /* ExerciseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EEB2C1C82D100CF7F2D /* ExerciseRepository.swift */; };
+		43136EEC2C1C82D100CF7F2D /* ExerciseTypeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EEB2C1C82D100CF7F2D /* ExerciseTypeRepository.swift */; };
 		43136EEE2C1C82D900CF7F2D /* UserExerciseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EED2C1C82D900CF7F2D /* UserExerciseRepository.swift */; };
 		43136EF02C1C882400CF7F2D /* DefaultData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EEF2C1C882400CF7F2D /* DefaultData.swift */; };
 		43136EF22C1C8E0D00CF7F2D /* Sleep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EF12C1C8E0D00CF7F2D /* Sleep.swift */; };
@@ -56,7 +56,7 @@
 /* Begin PBXFileReference section */
 		43136EE72C1C82BF00CF7F2D /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		43136EE92C1C82C800CF7F2D /* SleepRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepRepository.swift; sourceTree = "<group>"; };
-		43136EEB2C1C82D100CF7F2D /* ExerciseRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseRepository.swift; sourceTree = "<group>"; };
+		43136EEB2C1C82D100CF7F2D /* ExerciseTypeRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseTypeRepository.swift; sourceTree = "<group>"; };
 		43136EED2C1C82D900CF7F2D /* UserExerciseRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserExerciseRepository.swift; sourceTree = "<group>"; };
 		43136EEF2C1C882400CF7F2D /* DefaultData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultData.swift; sourceTree = "<group>"; };
 		43136EF12C1C8E0D00CF7F2D /* Sleep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sleep.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 				43136EDE2C1C781300CF7F2D /* CoreData */,
 				43136EE72C1C82BF00CF7F2D /* UserRepository.swift */,
 				43136EE92C1C82C800CF7F2D /* SleepRepository.swift */,
-				43136EEB2C1C82D100CF7F2D /* ExerciseRepository.swift */,
+				43136EEB2C1C82D100CF7F2D /* ExerciseTypeRepository.swift */,
 				43136EED2C1C82D900CF7F2D /* UserExerciseRepository.swift */,
 			);
 			path = Models;
@@ -407,7 +407,7 @@
 				53E587692B23616A00E4EF99 /* UserDataViewModel.swift in Sources */,
 				43136EEA2C1C82C800CF7F2D /* SleepRepository.swift in Sources */,
 				435892C62C2DA5510031233C /* IconForCategory.swift in Sources */,
-				43136EEC2C1C82D100CF7F2D /* ExerciseRepository.swift in Sources */,
+				43136EEC2C1C82D100CF7F2D /* ExerciseTypeRepository.swift in Sources */,
 				435892C42C2DA5370031233C /* IntensityIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -18,6 +18,6 @@ public class UserExercise: NSManagedObject {
     }
 
     var category: String {
-        return exercise?.type ?? ""
+        return exerciseType?.type ?? ""
     }
 }

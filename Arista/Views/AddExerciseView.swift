@@ -65,7 +65,7 @@ extension AddExerciseView {
                     IconForCategory(exercise: exercise.type ?? "")
                     Text(exercise.type ?? "")
                 }
-                .tag(exercise as Exercise?)
+                .tag(exercise as ExerciseType?)
             }
         }
         .pickerStyle(.menu)

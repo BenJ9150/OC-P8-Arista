@@ -85,7 +85,7 @@ private extension DefaultData {
     /// ## Attention: you need to save NSManagedObjectContext after call of this method
 
     func addExerciseTypes() throws {
-        guard try ExerciseRepository(viewContext: viewContext).getExercise().isEmpty else {
+        guard try ExerciseTypeRepository(viewContext: viewContext).getExercise().isEmpty else {
             return
         }
 
@@ -100,7 +100,7 @@ private extension DefaultData {
     }
 
     func exerciseBuilder(type: String, calories: NSDecimalNumber) {
-        let exercise = Exercise(context: viewContext)
+        let exercise = ExerciseType(context: viewContext)
         exercise.type = type
         exercise.caloriesPerMin = calories
     }
@@ -121,7 +121,7 @@ extension DefaultData {
     }
 
     func deleteExerciseTypes() throws {
-        let exercisesToDelete = try ExerciseRepository(viewContext: viewContext).getExercise()
+        let exercisesToDelete = try ExerciseTypeRepository(viewContext: viewContext).getExercise()
         if exercisesToDelete.isEmpty {
             return
         }
