@@ -13,40 +13,6 @@ final class SleepRepositoryTests: XCTestCase {
 
     // MARK: Private methods
 
-    private func emptyEntities(context: NSManagedObjectContext) {
-        do {
-            // Clean user
-            let users = try context.fetch(User.fetchRequest())
-            for user in users {
-                context.delete(user)
-            }
-            // Clean sleeps
-            let sleeps = try context.fetch(Sleep.fetchRequest())
-            for sleep in sleeps {
-                context.delete(sleep)
-            }
-            try context.save()
-
-        } catch {
-            XCTFail("error in emptyEntities of UserRepositoryTests")
-        }
-    }
-
-    private func user(context: NSManagedObjectContext) -> User {
-        let user = User(context: context)
-        user.firstName = "Ben"
-        user.lastName = "TEST"
-        return user
-    }
-
-    private func dates(context: NSManagedObjectContext) -> [Date] {
-        return [
-            Date(),
-            Date(timeIntervalSinceNow: -(60*60*24)),
-            Date(timeIntervalSinceNow: -(60*60*24*2))
-        ]
-    }
-
     private func createSleep(context: NSManagedObjectContext, duration: Int32, quality: Int16, date: Date, user: User) {
         let sleep = Sleep(context: context)
         sleep.duration = duration
@@ -91,7 +57,7 @@ extension SleepRepositoryTests {
         do {
             // Given 3 sleep sessions have been added
 
-            let user = user(context: viewContext)
+            let user = createUser(context: viewContext)
             let dates = dates(context: viewContext)
             createSleep(context: viewContext, duration: 1000, quality: 6, date: dates[0], user: user)
             createSleep(context: viewContext, duration: 1100, quality: 7, date: dates[1], user: user)
@@ -138,7 +104,7 @@ extension SleepRepositoryTests {
         do {
             // Given sleep session has been added
 
-            let user = user(context: viewContext)
+            let user = createUser(context: viewContext)
             createSleep(context: viewContext, duration: 1000, quality: 6, date: Date(), user: user)
 
             // When deleting user

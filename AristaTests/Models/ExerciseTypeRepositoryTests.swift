@@ -9,23 +9,7 @@ import XCTest
 import CoreData
 @testable import Arista
 
-final class ExerciseTypeRepositoryTests: XCTestCase {
-
-    // MARK: Private methods
-
-    private func emptyEntities(context: NSManagedObjectContext) {
-        do {
-            let exerciseTypes = try context.fetch(ExerciseType.fetchRequest())
-            for exerciseType in exerciseTypes {
-                context.delete(exerciseType)
-            }
-            try context.save()
-
-        } catch {
-            XCTFail("error in emptyEntities of ExerciseTypeRepositoryTests")
-        }
-    }
-}
+final class ExerciseTypeRepositoryTests: XCTestCase {}
 
 // MARK: Empty entities
 

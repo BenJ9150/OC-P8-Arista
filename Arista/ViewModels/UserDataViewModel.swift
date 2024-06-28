@@ -34,7 +34,7 @@ extension UserDataViewModel {
 
     private func fetchUserData() {
         do {
-            guard let user = try UserRepository().getUser() else {
+            guard let user = try UserRepository(viewContext: viewContext).getUser() else {
                 fetchError = AppError.userIsNil.message
                 return
             }

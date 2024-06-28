@@ -10,11 +10,20 @@ import CoreData
 
 struct DefaultData {
 
+    // MARK: Public property
+
     let viewContext: NSManagedObjectContext
+
+    // MARK: Init
 
     init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         self.viewContext = viewContext
     }
+}
+
+// MARK: Public method
+
+extension DefaultData {
 
     func apply() throws {
         let initialUser = addInitialUser()
@@ -36,7 +45,7 @@ private extension DefaultData {
         }
         let initialUser = User(context: viewContext)
         initialUser.firstName = "Benjamin"
-        initialUser.lastName = "LEFRANCOIS"
+        initialUser.lastName = "LEFAUX"
         return initialUser
     }
 }

@@ -13,40 +13,6 @@ final class UserExerciseRepositoryTests: XCTestCase {
 
     // MARK: Private methods
 
-    private func emptyEntities(context: NSManagedObjectContext) {
-        do {
-            // Clean user
-            let users = try context.fetch(User.fetchRequest())
-            for user in users {
-                context.delete(user)
-            }
-            // Clean user exercises
-            let userExercises = try context.fetch(UserExercise.fetchRequest())
-            for userExercise in userExercises {
-                context.delete(userExercise)
-            }
-            try context.save()
-
-        } catch {
-            XCTFail("error in emptyEntities of UserExerciseRepositoryTests")
-        }
-    }
-
-    private func user(context: NSManagedObjectContext) -> User {
-        let user = User(context: context)
-        user.firstName = "Ben"
-        user.lastName = "TEST"
-        return user
-    }
-
-    private func dates(context: NSManagedObjectContext) -> [Date] {
-        return [
-            Date(),
-            Date(timeIntervalSinceNow: -(60*60*24)),
-            Date(timeIntervalSinceNow: -(60*60*24*2))
-        ]
-    }
-
     private func exerciseTypes(context: NSManagedObjectContext) -> [ExerciseType] {
         let exerciseType1 = ExerciseType(context: context)
         exerciseType1.caloriesPerMin = 9.0
@@ -99,7 +65,7 @@ extension UserExerciseRepositoryTests {
         do {
             // Given 3 exercises have been added
 
-            let user = user(context: viewContext)
+            let user = createUser(context: viewContext)
             let dates = dates(context: viewContext)
             let types = exerciseTypes(context: viewContext)
 
@@ -148,7 +114,7 @@ extension UserExerciseRepositoryTests {
         do {
             // Given user exercise has been added (and 3 exercise types)
 
-            let user = user(context: viewContext)
+            let user = createUser(context: viewContext)
             let types = exerciseTypes(context: viewContext)
             let data = UserExerciseRepository(viewContext: viewContext)
             try data.addUserExercise(forUser: user, type: types[0], duration: 10, intensity: 5, startDate: Date())

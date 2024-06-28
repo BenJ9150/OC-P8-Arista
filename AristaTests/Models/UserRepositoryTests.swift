@@ -11,20 +11,10 @@ import CoreData
 
 final class UserRepositoryTests: XCTestCase {
 
-    // MARK: Private methods
+    // MARK: Private properties
 
-    private func emptyEntities(context: NSManagedObjectContext) {
-        do {
-            let users = try context.fetch(User.fetchRequest())
-            for user in users {
-                context.delete(user)
-            }
-            try context.save()
-
-        } catch {
-            XCTFail("error in emptyEntities of UserRepositoryTests")
-        }
-    }
+    private let defaultSleepSessionsCount = 12
+    private let defaultExerciseTypesCount = 8
 }
 
 // MARK: Empty entities
@@ -64,9 +54,7 @@ extension UserRepositoryTests {
 
         // Given user is created
 
-        let newUser = User(context: viewContext)
-        newUser.firstName = "Ben"
-        newUser.lastName = "TEST"
+        _ = createUser(context: viewContext)
 
         // When getting user
 
@@ -76,7 +64,7 @@ extension UserRepositoryTests {
         // Then user Ben TEST is not nil
 
         XCTAssertNotNil(user)
-        XCTAssert(user?.firstName == "Ben")
-        XCTAssert(user?.lastName == "TEST")
+        XCTAssert(user?.firstName == userTestFirstName)
+        XCTAssert(user?.lastName == userTestLastName)
     }
 }

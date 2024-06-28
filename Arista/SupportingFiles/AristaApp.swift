@@ -6,27 +6,33 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct AristaApp: App {
+
     let persistenceController = PersistenceController.shared
+
+    var context: NSManagedObjectContext {
+        return persistenceController.container.viewContext
+    }
 
     var body: some Scene {
         WindowGroup {
             TabView {
-                UserDataView(viewModel: UserDataViewModel(context: persistenceController.container.viewContext))
+                UserDataView(viewModel: UserDataViewModel(context: context))
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .tabItem {
                         Label("Utilisateur", systemImage: "person")
                     }
 
-                ExerciseListView(viewModel: ExerciseListViewModel(context: persistenceController.container.viewContext))
+                ExerciseListView(viewModel: ExerciseListViewModel(context: context))
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .tabItem {
                         Label("Exercices", systemImage: "flame")
                     }
 
-                SleepHistoryView(viewModel: SleepHistoryViewModel(context: persistenceController.container.viewContext))
+                SleepHistoryView(viewModel: SleepHistoryViewModel(context: context))
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .tabItem {
                         Label("Sommeil", systemImage: "moon")

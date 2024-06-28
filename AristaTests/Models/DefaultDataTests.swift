@@ -15,37 +15,6 @@ final class DefaultDataTests: XCTestCase {
 
     private let defaultSleepSessionsCount = 12
     private let defaultExerciseTypesCount = 8
-
-    // MARK: Private methods
-
-    private func emptyEntities(context: NSManagedObjectContext) {
-        do {
-            // Clean user
-            let users = try context.fetch(User.fetchRequest())
-            for user in users {
-                context.delete(user)
-            }
-            // Clean sleeps
-            let sleeps = try context.fetch(Sleep.fetchRequest())
-            for sleep in sleeps {
-                context.delete(sleep)
-            }
-            // Clean exercise types
-            let exerciseTypes = try context.fetch(ExerciseType.fetchRequest())
-            for exerciseType in exerciseTypes {
-                context.delete(exerciseType)
-            }
-            // Clean user exercises
-            let userExercises = try context.fetch(UserExercise.fetchRequest())
-            for userExercise in userExercises {
-                context.delete(userExercise)
-            }
-            try context.save()
-
-        } catch {
-            XCTFail("error in emptyEntities of DefaultDataTests")
-        }
-    }
 }
 
 // MARK: Load default data
@@ -97,7 +66,6 @@ extension DefaultDataTests {
             // When loading a second time
 
             try DefaultData(viewContext: viewContext).apply()
-            
 
             // Then sleepSessions count and exerciseTypes count are valid, and not duplicate
 
