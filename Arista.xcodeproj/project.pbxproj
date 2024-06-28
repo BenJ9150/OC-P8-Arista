@@ -60,6 +60,7 @@
 		43136EED2C1C82D900CF7F2D /* UserExerciseRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserExerciseRepository.swift; sourceTree = "<group>"; };
 		43136EEF2C1C882400CF7F2D /* DefaultData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultData.swift; sourceTree = "<group>"; };
 		43136EF12C1C8E0D00CF7F2D /* Sleep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sleep.swift; sourceTree = "<group>"; };
+		431654222C2ECE5800324AF5 /* Arista.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Arista.xctestplan; sourceTree = "<group>"; };
 		435892C32C2DA5370031233C /* IntensityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntensityIndicator.swift; sourceTree = "<group>"; };
 		435892C52C2DA5510031233C /* IconForCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconForCategory.swift; sourceTree = "<group>"; };
 		435892C82C2DA5DA0031233C /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
@@ -158,6 +159,7 @@
 		53E587242B235E8F00E4EF99 = {
 			isa = PBXGroup;
 			children = (
+				431654222C2ECE5800324AF5 /* Arista.xctestplan */,
 				53E5872F2B235E8F00E4EF99 /* Arista */,
 				53E587452B235E9000E4EF99 /* AristaTests */,
 				53E5874F2B235E9000E4EF99 /* AristaUITests */,
@@ -378,7 +380,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "New run script phase :\nif [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
