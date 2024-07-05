@@ -21,17 +21,17 @@ final class DefaultDataTests: XCTestCase {
 
 extension DefaultDataTests {
 
-    func test_LoadDefaultData() {
+    func test_GivenThatDefaultDataAreLoaded_WhenFetching_ThenUserIsNotNilAndSleepsAndExerciseTypeExist() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
         do {
-            // Given default data are loaded
+            // Given that default data are loaded
 
             try DefaultData(viewContext: viewContext).apply()
 
-            // When get all data
+            // When fetching all data
 
             let user = try viewContext.fetch(User.fetchRequest()).first
             let sleepSessions = try viewContext.fetch(Sleep.fetchRequest())
@@ -44,7 +44,7 @@ extension DefaultDataTests {
             XCTAssertEqual(exerciseTypes.count, defaultExerciseTypesCount)
 
         } catch {
-            XCTFail("error in test_LoadDefaultData of DefaultDataTests")
+            XCTFail("error in Load default data of DefaultDataTests")
         }
     }
 }
@@ -53,13 +53,13 @@ extension DefaultDataTests {
 
 extension DefaultDataTests {
 
-    func test_ReloadDefaultData() {
+    func test_GivenThatDefaultDataAreLoaded_WhenReloading_ThenDataAreNotDuplicate() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
         do {
-            // Given default data are loaded
+            // Given that default data are loaded
 
             try DefaultData(viewContext: viewContext).apply()
 
@@ -75,7 +75,7 @@ extension DefaultDataTests {
             XCTAssertEqual(exerciseTypes.count, defaultExerciseTypesCount)
 
         } catch {
-            XCTFail("error in test_LoadDefaultData of DefaultDataTests")
+            XCTFail("error in Reload default data of DefaultDataTests")
         }
     }
 }

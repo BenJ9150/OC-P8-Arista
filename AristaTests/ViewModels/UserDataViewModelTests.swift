@@ -14,23 +14,19 @@ final class UserDataViewModelTests: XCTestCase {
 
     // MARK: Private property
 
-    private let viewContext = PersistenceController(inMemory: true).container.viewContext
     private var cancellables = Set<AnyCancellable>()
-
-    // MARK: Setup
-
-    override func setUp() {
-        emptyEntities(context: viewContext)
-    }
 }
 
 // MARK: User is Nil
 
 extension UserDataViewModelTests {
 
-    func test_UserIsNil() {
+    func test_GivenThatNoUser_WhenFetching_ThenErrorMessageAndUserDataEmpty() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
 
-        // Given no user loaded, when fetching data (in init of ViewModel)
+        // Given that there is no user, when fetching data (in init of ViewModel)
 
         let viewModel = UserDataViewModel(context: viewContext)
 
@@ -70,9 +66,12 @@ extension UserDataViewModelTests {
 
 extension UserDataViewModelTests {
 
-    func test_UserIsValid() {
+    func test_GivenThatUserExists_WhenFetching_ThenNoErrorMessageAndUserDataExist() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
 
-        // Given user is created
+        // Given that user is created
 
         _ = createUser(context: viewContext)
 

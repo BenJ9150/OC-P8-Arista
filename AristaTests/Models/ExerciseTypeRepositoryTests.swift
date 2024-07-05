@@ -9,25 +9,23 @@ import XCTest
 import CoreData
 @testable import Arista
 
-final class ExerciseTypeRepositoryTests: XCTestCase {}
+final class ExerciseTypeRepositoryTests: XCTestCase {
 
-// MARK: Empty entities
+    // MARK: Empty entities
 
-extension ExerciseTypeRepositoryTests {
+    func test_GivenThatEntitiesAreEmpty_WhenFetchingExerciseTypes_ThenExerciseTypesIsEmpty() {
 
-    func test_EmptyEntities() {
-
-        // Given entities are empty
+        // Given that entities are empty
 
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
-        // When getting data
+        // When fetching data
 
         let data = ExerciseTypeRepository(viewContext: viewContext)
         let exercises = try? data.getExercise()
 
-        // Then entities are empty
+        // Then data are empty
 
         XCTAssertNotNil(exercises)
         XCTAssert(exercises?.isEmpty == true)
@@ -38,35 +36,38 @@ extension ExerciseTypeRepositoryTests {
 
 extension ExerciseTypeRepositoryTests {
 
-    func test_AddExerciseTypesAndGetInAlphabeticalOrder() {
+    func test_GivenThatExerciseTypesAdded_WhenFetching_ThenExerciseTypesExistInAlphabeticalOrder() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
         do {
-            // Given 3 exercises have been added
+            // Given that 3 exercises have been added
 
             let data = ExerciseTypeRepository(viewContext: viewContext)
+            try data.addExercise(type: "Football", caloriesPerMin: 9.0)
             try data.addExercise(type: "Cyclisme", caloriesPerMin: 9.4)
             try data.addExercise(type: "Natation", caloriesPerMin: 9.8)
-            try data.addExercise(type: "Football", caloriesPerMin: 9.0)
 
-            // When get exercise types
+            // When fetching exercise types
 
             let exerciseTypes = try data.getExercise()
 
             // Then there are 3 sleep sessions, and in alphabetical order
 
             XCTAssert(exerciseTypes.count == 3)
+
             XCTAssert(exerciseTypes[0].type == "Cyclisme")
             XCTAssert(exerciseTypes[0].caloriesPerMin == 9.4)
+
             XCTAssert(exerciseTypes[1].type == "Football")
             XCTAssert(exerciseTypes[1].caloriesPerMin == 9.0)
+
             XCTAssert(exerciseTypes[2].type == "Natation")
             XCTAssert(exerciseTypes[2].caloriesPerMin == 9.8)
 
         } catch {
-            XCTFail("error in test_AddExerciseTypesAndGetInAlphabeticalOrder of ExerciseTypeRepositoryTests")
+            XCTFail("error in Add exercise types of ExerciseTypeRepositoryTests")
         }
     }
 }

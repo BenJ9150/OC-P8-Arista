@@ -16,23 +16,19 @@ final class ExerciseListViewModelTests: XCTestCase {
 
     // MARK: Private property
 
-    private let viewContext = PersistenceController(inMemory: true).container.viewContext
     private var cancellables = Set<AnyCancellable>()
-
-    // MARK: Setup
-
-    override func setUp() {
-        emptyEntities(context: viewContext)
-    }
 }
 
 // MARK: Empty entities
 
 extension ExerciseListViewModelTests {
 
-    func test_EmptyEntities() {
+    func test_GivenThatEntitiesAreEmpty_WhenFetching_ThenNoErrorMessageAndEmptyList() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
 
-        // Given entities are empty, when fetching data (in init of ViewModel)
+        // Given that entities are empty, when fetching data (in init of ViewModel)
 
         let viewModel = ExerciseListViewModel(context: viewContext)
 
@@ -60,47 +56,87 @@ extension ExerciseListViewModelTests {
     }
 }
 
-// MARK: Add and delete
+// MARK: Add user exercises
 
 extension ExerciseListViewModelTests {
 
-    func test_FetchExercisesAndDeleteOne() {
+    func test_GivenThatUserExercisesAdded_WhenFetching_ThenNoErrorMessageAndUserExercisesExist() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
+
         do {
-            // Given 3 exercises have been added
+            // Given that 3 exercises have been added (from oldest to newest)
 
-            let user = createUser(context: viewContext)
-            let dates = dates(context: viewContext)
-            let types = createExerciseTypes(context: viewContext)
+            _ = try addThreeUserExercises(context: viewContext)
 
-            let data = UserExerciseRepository(viewContext: viewContext)
-            try data.addUserExercise(forUser: user, type: types[0], duration: 10, intensity: 5, startDate: dates[0])
-            try data.addUserExercise(forUser: user, type: types[1], duration: 12, intensity: 6, startDate: dates[1])
-            try data.addUserExercise(forUser: user, type: types[2], duration: 14, intensity: 7, startDate: dates[2])
-
-            // When fetching user data (in init of UserDataViewModel)
+            // When fetching user exercises (in init of ExerciseListViewModel)
 
             let viewModel = ExerciseListViewModel(context: viewContext)
 
-            // And when deleting first exercise in the list (i.e. the most recent)
+            // Then no error message and there are 3 user exercises
 
-            viewModel.delete(viewModel.userExercises.first!)
-
-            // Then there are 2 exercises, and no error message
-
-            let listExpectation = XCTestExpectation(description: "fetch list of user exercise")
             let fetchErrorExpectation = XCTestExpectation(description: "fetch list of user exercise error")
-
-            viewModel.$userExercises
-                .sink { userExercises in
-                    XCTAssertEqual(userExercises.count, 2)
-                    listExpectation.fulfill()
-                }
-                .store(in: &self.cancellables)
+            let listExpectation = XCTestExpectation(description: "fetch list of user exercise")
 
             viewModel.$fetchError
                 .sink { fetchError in
                     XCTAssertEqual(fetchError, "")
                     fetchErrorExpectation.fulfill()
+                }
+                .store(in: &self.cancellables)
+
+            viewModel.$userExercises
+                .sink { userExercises in
+                    XCTAssertEqual(userExercises.count, 3)
+                    listExpectation.fulfill()
+                }
+                .store(in: &self.cancellables)
+
+            // Expectation timeout
+            wait(for: [listExpectation, fetchErrorExpectation], timeout: 10)
+
+        } catch {
+            XCTFail("error in Add user exercises of ExerciseListViewModelTests")
+        }
+    }
+}
+
+// MARK: Delete user execise
+
+extension ExerciseListViewModelTests {
+
+    func test_GivenThatThreeUserExercisesAdded_WhenDeleting_ThenNoErrorMessageAndTwoUserExercisesExist() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
+
+        do {
+            // Given 3 exercises have been added
+
+            _ = try addThreeUserExercises(context: viewContext)
+
+            // When deleting user exercise
+
+            let viewModel = ExerciseListViewModel(context: viewContext)
+            viewModel.delete(viewModel.userExercises.first!)
+
+            // Then no error message and there are 2 user exercises
+
+            let fetchErrorExpectation = XCTestExpectation(description: "fetch list of user exercise error")
+            let listExpectation = XCTestExpectation(description: "fetch list of user exercise")
+
+            viewModel.$fetchError
+                .sink { fetchError in
+                    XCTAssertEqual(fetchError, "")
+                    fetchErrorExpectation.fulfill()
+                }
+                .store(in: &self.cancellables)
+
+            viewModel.$userExercises
+                .sink { userExercises in
+                    XCTAssertEqual(userExercises.count, 2)
+                    listExpectation.fulfill()
                 }
                 .store(in: &self.cancellables)
 

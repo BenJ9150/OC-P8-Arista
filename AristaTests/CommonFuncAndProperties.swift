@@ -54,17 +54,16 @@ func createUser(context: NSManagedObjectContext) -> User {
 
 // MARK: Get dates
 
-func dates(context: NSManagedObjectContext) -> [Date] {
-    return [
-        Date(),
-        Date(timeIntervalSinceNow: -(60*60*24)),
-        Date(timeIntervalSinceNow: -(60*60*24*2))
-    ]
-}
+/// 3 sorted dates, from newest (index 0)  to oldest
+let dates = [
+    Date(),
+    Date(timeIntervalSinceNow: -(60*60*24)),
+    Date(timeIntervalSinceNow: -(60*60*24*2))
+]
 
 // MARK: Create exercise types
 
-func createExerciseTypes(context: NSManagedObjectContext) -> [ExerciseType] {
+private func addThreeExerciseTypes(context: NSManagedObjectContext) -> [ExerciseType] {
     let exerciseType1 = ExerciseType(context: context)
     exerciseType1.caloriesPerMin = 9.0
     exerciseType1.type = "Football"
@@ -78,4 +77,21 @@ func createExerciseTypes(context: NSManagedObjectContext) -> [ExerciseType] {
     exerciseType3.type = "Fitness"
 
     return [exerciseType1, exerciseType2, exerciseType3]
+}
+
+// MARK: Create user exercises
+
+func addThreeUserExercises(context: NSManagedObjectContext) throws -> (UserExerciseRepository, [ExerciseType]) {
+
+    // Create user and 3 exercise types
+    let user = createUser(context: context)
+    let types = addThreeExerciseTypes(context: context)
+
+    // Create 3 user exercises (from oldest to newest)
+    let data = UserExerciseRepository(viewContext: context)
+    try data.addUserExercise(forUser: user, type: types[2], duration: 14, intensity: 7, startDate: dates[2])
+    try data.addUserExercise(forUser: user, type: types[1], duration: 12, intensity: 6, startDate: dates[1])
+    try data.addUserExercise(forUser: user, type: types[0], duration: 10, intensity: 5, startDate: dates[0])
+
+    return (data, types)
 }

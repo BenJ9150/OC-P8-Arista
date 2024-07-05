@@ -21,14 +21,14 @@ final class UserRepositoryTests: XCTestCase {
 
 extension UserRepositoryTests {
 
-    func test_EmptyEntities() {
+    func test_GivenThatEntitiesAreEmpty_WhenFetchingUser_ThenUserIsNil() {
         do {
-            // Given entities are empty
+            // Given that entities are empty
 
             let viewContext = PersistenceController(inMemory: true).container.viewContext
             emptyEntities(context: viewContext)
 
-            // When getting user
+            // When fetching user
 
             let data = UserRepository(viewContext: viewContext)
             let user = try data.getUser()
@@ -38,7 +38,7 @@ extension UserRepositoryTests {
             XCTAssertNil(user)
 
         } catch {
-            XCTFail("error in test_EmptyEntities of UserRepositoryTests")
+            XCTFail("error in Empty entities of UserRepositoryTests")
         }
     }
 }
@@ -47,21 +47,21 @@ extension UserRepositoryTests {
 
 extension UserRepositoryTests {
 
-    func test_GetUser() {
+    func test_GivenThatUserExists_WhenFetchingUser_ThenUserIsNotNil() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
-        // Given user is created
+        // Given that user is created
 
         _ = createUser(context: viewContext)
 
-        // When getting user
+        // When fetching user
 
         let data = UserRepository(viewContext: viewContext)
         let user = try? data.getUser()
 
-        // Then user Ben TEST is not nil
+        // Then user is not nil
 
         XCTAssertNotNil(user)
         XCTAssert(user?.firstName == userTestFirstName)

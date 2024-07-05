@@ -9,76 +9,102 @@ import XCTest
 import CoreData
 @testable import Arista
 
-final class UserExerciseRepositoryTests: XCTestCase {}
+final class UserExerciseRepositoryTests: XCTestCase {
 
-// MARK: Empty entities
+    // MARK: Empty entities
 
-extension UserExerciseRepositoryTests {
+    func test_GivenThatEntitiesAreEmpty_WhenFetchingUserExercises_ThenUserExercisesIsEmpty() {
 
-    func test_EmptyEntities() {
-
-        // Given entities are empty
+        // Given that entities are empty
 
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
-        // When getting data
+        // When fetching data
 
         let data = UserExerciseRepository(viewContext: viewContext)
         let exercises = try? data.getUserExercise()
 
-        // Then entities are empty
+        // Then data are empty
 
         XCTAssertNotNil(exercises)
         XCTAssert(exercises?.isEmpty == true)
     }
 }
 
-// MARK: Add and delete
+// MARK: Add user exercises
 
 extension UserExerciseRepositoryTests {
 
-    func test_AddExercisesAndDeleteOne() {
+    func test_GivenThatUserExercisesAdded_WhenFetching_ThenUserExercisesExistInTheRightOrder() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
         do {
-            // Given 3 exercises have been added
+            // Given that 3 exercises have been added (from oldest to newest)
 
-            let user = createUser(context: viewContext)
-            let dates = dates(context: viewContext)
-            let types = createExerciseTypes(context: viewContext)
+            let (userExerciseRepository, types) = try addThreeUserExercises(context: viewContext)
 
-            let data = UserExerciseRepository(viewContext: viewContext)
-            try data.addUserExercise(forUser: user, type: types[0], duration: 10, intensity: 5, startDate: dates[0])
-            try data.addUserExercise(forUser: user, type: types[1], duration: 12, intensity: 6, startDate: dates[1])
-            try data.addUserExercise(forUser: user, type: types[2], duration: 14, intensity: 7, startDate: dates[2])
+            // When fetching user exercises
 
-            // When delete first exercise in the list (i.e. the most recent)
+            let exercises = try userExerciseRepository.getUserExercise()
 
-            try data.delete(try data.getUserExercise().first!)
+            // Then there are 3 exercises, and in the right order (from newest to oldest)
 
-            // Then there are 2 exercises, and in the right order
+            XCTAssert(exercises.count == 3)
 
-            let exercises = try data.getUserExercise()
-            XCTAssert(exercises.count == 2)
-            XCTAssert(exercises[0].category == "Running")
-            XCTAssert(exercises[0].duration == 12)
-            XCTAssert(exercises[0].intensity == 6)
-            XCTAssert(exercises[0].startDate == dates[1])
-            XCTAssert(exercises[0].date == "\(dates[1].formatted())")
-            XCTAssert(exercises[0].category == types[1].type)
+            XCTAssert(exercises[0].duration == 10)
+            XCTAssert(exercises[0].intensity == 5)
+            XCTAssert(exercises[0].startDate == dates[0])
+            XCTAssert(exercises[0].date == "\(dates[0].formatted())")
+            XCTAssert(exercises[0].category == types[0].type)
 
-            XCTAssert(exercises[1].category == "Fitness")
-            XCTAssert(exercises[1].duration == 14)
-            XCTAssert(exercises[1].intensity == 7)
-            XCTAssert(exercises[1].startDate == dates[2])
-            XCTAssert(exercises[1].date == "\(dates[2].formatted())")
-            XCTAssert(exercises[1].category == types[2].type)
+            XCTAssert(exercises[1].duration == 12)
+            XCTAssert(exercises[1].intensity == 6)
+            XCTAssert(exercises[1].startDate == dates[1])
+            XCTAssert(exercises[1].date == "\(dates[1].formatted())")
+            XCTAssert(exercises[1].category == types[1].type)
+
+            XCTAssert(exercises[2].duration == 14)
+            XCTAssert(exercises[2].intensity == 7)
+            XCTAssert(exercises[2].startDate == dates[2])
+            XCTAssert(exercises[2].date == "\(dates[2].formatted())")
+            XCTAssert(exercises[2].category == types[2].type)
 
         } catch {
-            XCTFail("error in testAddExercisesAndDeleteOne of UserExerciseRepositoryTests")
+            XCTFail("error in Add user exercises of UserExerciseRepositoryTests")
+        }
+    }
+}
+
+// MARK: Delete user exercise
+
+extension UserExerciseRepositoryTests {
+
+    func test_GivenThatThreeUserExercisesAdded_WhenDeleting_ThenTwoUserExercisesExistInTheRightOrder() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
+
+        do {
+            // Given that 3 exercises have been added (from oldest to newest)
+
+            let (userExerciseRepository, _) = try addThreeUserExercises(context: viewContext)
+
+            // When deleting first exercise in the list (i.e. the most recent)
+
+            try userExerciseRepository.delete(try userExerciseRepository.getUserExercise().first!)
+
+            // Then there are 2 exercises, and in the right order (from newest to oldest)
+
+            let exercises = try userExerciseRepository.getUserExercise()
+            XCTAssert(exercises.count == 2)
+            XCTAssert(exercises[0].startDate == dates[1])
+            XCTAssert(exercises[1].startDate == dates[2])
+
+        } catch {
+            XCTFail("error in Delete user exercise of UserExerciseRepositoryTests")
         }
     }
 }
@@ -87,23 +113,20 @@ extension UserExerciseRepositoryTests {
 
 extension UserExerciseRepositoryTests {
 
-    func test_DeleteRules() {
+    func test_GivenThatUserExerciseExist_WhenDeletingUser_ThenUserExercisesIsEmptyAndExerciseTypesAlreadyExist() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
         do {
-            // Given user exercise has been added (and 3 exercise types)
+            // Given that 3 exercises have been added (and 3 exercise types)
 
-            let user = createUser(context: viewContext)
-            let types = createExerciseTypes(context: viewContext)
-            let data = UserExerciseRepository(viewContext: viewContext)
-            try data.addUserExercise(forUser: user, type: types[0], duration: 10, intensity: 5, startDate: Date())
+            _ = try addThreeUserExercises(context: viewContext)
 
             // When deleting user
 
             guard let userToDelete = try viewContext.fetch(User.fetchRequest()).first else {
-                XCTFail("error in test_DeleteRules of UserExerciseRepositoryTests, user to delete is nil")
+                XCTFail("error in Delete rule of UserExerciseRepositoryTests, user to delete is nil")
                 return
             }
             viewContext.delete(userToDelete)
@@ -116,7 +139,7 @@ extension UserExerciseRepositoryTests {
             XCTAssertEqual(exerciseTypes.count, 3)
 
         } catch {
-            XCTFail("error in test_DeleteRules of UserExerciseRepositoryTests")
+            XCTFail("error in Delete rule of UserExerciseRepositoryTests")
         }
     }
 }

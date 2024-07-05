@@ -26,19 +26,19 @@ final class SleepRepositoryTests: XCTestCase {
 
 extension SleepRepositoryTests {
 
-    func test_EmptyEntities() {
+    func test_GivenThatEntitiesAreEmpty_WhenFetchingSleeps_ThenSleepsIsEmpty() {
 
-        // Given entities are empty
+        // Given that entities are empty
 
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
-        // When getting data
+        // When fetching data
 
         let data = SleepRepository(viewContext: viewContext)
         let sleepSessions = try? data.getSleepSessions()
 
-        // Then entities are empty
+        // Then data are empty
 
         XCTAssertNotNil(sleepSessions)
         XCTAssert(sleepSessions?.isEmpty == true)
@@ -49,26 +49,25 @@ extension SleepRepositoryTests {
 
 extension SleepRepositoryTests {
 
-    func test_GetSleepSessions() {
+    func test_GivenThatSleepsExist_WhenFetchingSleeps_ThenSleepsExistInTheRightOrder() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
         do {
-            // Given 3 sleep sessions have been added
+            // Given that 3 sleep sessions have been added (from oldest to newest)
 
             let user = createUser(context: viewContext)
-            let dates = dates(context: viewContext)
-            createSleep(context: viewContext, duration: 1000, quality: 6, date: dates[0], user: user)
-            createSleep(context: viewContext, duration: 1100, quality: 7, date: dates[1], user: user)
             createSleep(context: viewContext, duration: 1200, quality: 8, date: dates[2], user: user)
+            createSleep(context: viewContext, duration: 1100, quality: 7, date: dates[1], user: user)
+            createSleep(context: viewContext, duration: 1000, quality: 6, date: dates[0], user: user)
 
-            // When get sleep sessions
+            // When fetching sleep sessions
 
             let data = SleepRepository(viewContext: viewContext)
             let sleepSessions = try data.getSleepSessions()
 
-            // Then there are 3 sleep sessions, and in the right order
+            // Then there are 3 sleep sessions, and in the right order (from newest to oldest)
 
             XCTAssert(sleepSessions.count == 3)
             XCTAssert(sleepSessions[0].duration == 1000)
@@ -87,7 +86,7 @@ extension SleepRepositoryTests {
             XCTAssert(sleepSessions[2].date == "\(dates[2].formatted())")
 
         } catch {
-            XCTFail("error in test_GetSleepSessions of SleepRepositoryTests")
+            XCTFail("error in Get sleep sessions of SleepRepositoryTests")
         }
     }
 }
@@ -96,13 +95,13 @@ extension SleepRepositoryTests {
 
 extension SleepRepositoryTests {
 
-    func test_DeleteRule() {
+    func test_GivenThatSleepsExist_WhenDeletingUser_ThenSleepsIsEmpty() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
         do {
-            // Given sleep session has been added
+            // Given that sleep session has been added
 
             let user = createUser(context: viewContext)
             createSleep(context: viewContext, duration: 1000, quality: 6, date: Date(), user: user)
@@ -110,7 +109,7 @@ extension SleepRepositoryTests {
             // When deleting user
 
             guard let userToDelete = try viewContext.fetch(User.fetchRequest()).first else {
-                XCTFail("error in test_DeleteRule of SleepRepositoryTests, user to delete is nil")
+                XCTFail("error in Delete rule of SleepRepositoryTests, user to delete is nil")
                 return
             }
             viewContext.delete(userToDelete)
@@ -121,7 +120,7 @@ extension SleepRepositoryTests {
             XCTAssertEqual(sleepSessions.count, 0)
 
         } catch {
-            XCTFail("error in test_DeleteRule of SleepRepositoryTests")
+            XCTFail("error in Delete rule of SleepRepositoryTests")
         }
     }
 }
