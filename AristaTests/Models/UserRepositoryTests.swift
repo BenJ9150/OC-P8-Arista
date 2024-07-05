@@ -52,19 +52,24 @@ extension UserRepositoryTests {
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
-        // Given that user is created
+        do {
+            // Given that user is created
 
-        _ = createUser(context: viewContext)
+            _ = try createUser(context: viewContext)
 
-        // When fetching user
+            // When fetching user
 
-        let data = UserRepository(viewContext: viewContext)
-        let user = try? data.getUser()
+            let data = UserRepository(viewContext: viewContext)
+            let user = try? data.getUser()
 
-        // Then user is not nil
+            // Then user is not nil
 
-        XCTAssertNotNil(user)
-        XCTAssert(user?.firstName == userTestFirstName)
-        XCTAssert(user?.lastName == userTestLastName)
+            XCTAssertNotNil(user)
+            XCTAssert(user?.firstName == userTestFirstName)
+            XCTAssert(user?.lastName == userTestLastName)
+
+        } catch {
+            XCTFail("error in Get user of UserRepositoryTests")
+        }
     }
 }

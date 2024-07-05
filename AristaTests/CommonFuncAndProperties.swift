@@ -45,10 +45,15 @@ func emptyEntities(context: NSManagedObjectContext) {
 let userTestFirstName = "Ben"
 let userTestLastName = "TEST"
 
-func createUser(context: NSManagedObjectContext) -> User {
+func createUser(context: NSManagedObjectContext) throws -> User {
     let user = User(context: context)
     user.firstName = userTestFirstName
     user.lastName = userTestLastName
+
+    // Check creation
+    if try context.fetch(User.fetchRequest()).first == nil {
+        XCTFail("error in createUser method, user is nil")
+    }
     return user
 }
 
@@ -63,7 +68,7 @@ let dates = [
 
 // MARK: Create exercise types
 
-private func addThreeExerciseTypes(context: NSManagedObjectContext) -> [ExerciseType] {
+func addThreeExerciseTypes(context: NSManagedObjectContext) throws -> [ExerciseType] {
     let exerciseType1 = ExerciseType(context: context)
     exerciseType1.caloriesPerMin = 9.0
     exerciseType1.type = "Football"
@@ -76,6 +81,10 @@ private func addThreeExerciseTypes(context: NSManagedObjectContext) -> [Exercise
     exerciseType3.caloriesPerMin = 9.0
     exerciseType3.type = "Fitness"
 
+    // Check creation
+    if try context.fetch(ExerciseType.fetchRequest()).count != 3 {
+        XCTFail("error in addThreeExerciseTypes method, count not equal to 3")
+    }
     return [exerciseType1, exerciseType2, exerciseType3]
 }
 
@@ -85,8 +94,8 @@ private func addThreeExerciseTypes(context: NSManagedObjectContext) -> [Exercise
 
 func addThreeUserExercises(context: NSManagedObjectContext) throws -> (UserExerciseRepository, [ExerciseType]) {
     // Create user and 3 exercise types
-    let user = createUser(context: context)
-    let types = addThreeExerciseTypes(context: context)
+    let user = try createUser(context: context)
+    let types = try addThreeExerciseTypes(context: context)
 
     // Create 3 user exercises (from oldest to newest)
     let data = UserExerciseRepository(viewContext: context)
@@ -99,19 +108,11 @@ func addThreeUserExercises(context: NSManagedObjectContext) throws -> (UserExerc
 
 // MARK: Create sleep sessions
 
-private func createSleep(context: NSManagedObjectContext, duration: Int32, quality: Int16, date: Date, user: User) {
-    let sleep = Sleep(context: context)
-    sleep.duration = duration
-    sleep.quality = quality
-    sleep.startDate = date
-    sleep.user = user
-}
-
 /// Create 3 sleep sessions from oldest to newest
 
 func addThreeSleepSessions(context: NSManagedObjectContext) throws {
     // Create user
-    let user = createUser(context: context)
+    let user = try createUser(context: context)
 
     // Create 3 sleep sessions (from oldest to newest)
     createSleep(context: context, duration: 1200, quality: 8, date: dates[2], user: user)
@@ -122,4 +123,12 @@ func addThreeSleepSessions(context: NSManagedObjectContext) throws {
     if try context.fetch(Sleep.fetchRequest()).count != 3 {
         XCTFail("error in addThreeSleepSessions method, count not equal to 3")
     }
+}
+
+private func createSleep(context: NSManagedObjectContext, duration: Int32, quality: Int16, date: Date, user: User) {
+    let sleep = Sleep(context: context)
+    sleep.duration = duration
+    sleep.quality = quality
+    sleep.startDate = date
+    sleep.user = user
 }

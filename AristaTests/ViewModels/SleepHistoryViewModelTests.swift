@@ -37,7 +37,7 @@ extension SleepHistoryViewModelTests {
 
             // Then no error message and there are 3 sleep sessions
 
-            let fetchErrorExpectation = XCTestExpectation(description: "fetch list of user exercise error")
+            let fetchErrorExpectation = XCTestExpectation(description: "fetch list of sleep sessions error")
             let listExpectation = XCTestExpectation(description: "fetch list of sleep sessions")
 
             viewModel.$fetchError
@@ -58,7 +58,7 @@ extension SleepHistoryViewModelTests {
             wait(for: [listExpectation, fetchErrorExpectation], timeout: 10)
 
         } catch {
-            XCTFail("error in test_FetchExercisesAndDeleteOne of SleepHistoryViewModelTests")
+            XCTFail("error in Get sleep history of SleepHistoryViewModelTests")
         }
     }
 }

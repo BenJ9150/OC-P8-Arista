@@ -71,42 +71,47 @@ extension UserDataViewModelTests {
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
-        // Given that user is created
+        do {
+            // Given that user is created
 
-        _ = createUser(context: viewContext)
+            _ = try createUser(context: viewContext)
 
-        // When fetching user data (in init of UserDataViewModel)
+            // When fetching user data (in init of UserDataViewModel)
 
-        let viewModel = UserDataViewModel(context: viewContext)
+            let viewModel = UserDataViewModel(context: viewContext)
 
-        // Then no error message and user is valid
+            // Then no error message and user is valid
 
-        let fetchErrorExpectation = XCTestExpectation(description: "fetch user no error")
-        let firstNameExpectation = XCTestExpectation(description: "fetch user first name")
-        let lastNameExpectation = XCTestExpectation(description: "fetch user last name")
+            let fetchErrorExpectation = XCTestExpectation(description: "fetch user error")
+            let firstNameExpectation = XCTestExpectation(description: "fetch user first name")
+            let lastNameExpectation = XCTestExpectation(description: "fetch user last name")
 
-        viewModel.$fetchError
-            .sink { fetchError in
-                XCTAssertEqual(fetchError, "")
-                fetchErrorExpectation.fulfill()
-            }
-            .store(in: &cancellables)
+            viewModel.$fetchError
+                .sink { fetchError in
+                    XCTAssertEqual(fetchError, "")
+                    fetchErrorExpectation.fulfill()
+                }
+                .store(in: &cancellables)
 
-        viewModel.$firstName
-            .sink { firstName in
-                XCTAssertEqual(firstName, userTestFirstName)
-                firstNameExpectation.fulfill()
-            }
-            .store(in: &cancellables)
+            viewModel.$firstName
+                .sink { firstName in
+                    XCTAssertEqual(firstName, userTestFirstName)
+                    firstNameExpectation.fulfill()
+                }
+                .store(in: &cancellables)
 
-        viewModel.$lastName
-            .sink { lastName in
-                XCTAssertEqual(lastName, userTestLastName)
-                lastNameExpectation.fulfill()
-            }
-            .store(in: &cancellables)
+            viewModel.$lastName
+                .sink { lastName in
+                    XCTAssertEqual(lastName, userTestLastName)
+                    lastNameExpectation.fulfill()
+                }
+                .store(in: &cancellables)
 
-        // Expectation timeout
-        wait(for: [fetchErrorExpectation, firstNameExpectation, lastNameExpectation], timeout: 10)
+            // Expectation timeout
+            wait(for: [fetchErrorExpectation, firstNameExpectation, lastNameExpectation], timeout: 10)
+
+        } catch {
+            XCTFail("error in User is valid of UserDataViewModelTests")
+        }
     }
 }
