@@ -42,7 +42,7 @@ extension UserExerciseRepositoryTests {
         emptyEntities(context: viewContext)
 
         do {
-            // Given that 3 exercises have been added (from oldest to newest)
+            // Given that 3 user exercises have been added (from oldest to newest)
 
             let (userExerciseRepository, types) = try addThreeUserExercises(context: viewContext)
 
@@ -88,7 +88,7 @@ extension UserExerciseRepositoryTests {
         emptyEntities(context: viewContext)
 
         do {
-            // Given that 3 exercises have been added (from oldest to newest)
+            // Given that 3 user exercises have been added (from oldest to newest)
 
             let (userExerciseRepository, _) = try addThreeUserExercises(context: viewContext)
 

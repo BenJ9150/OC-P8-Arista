@@ -11,20 +11,7 @@ import CoreData
 
 final class SleepRepositoryTests: XCTestCase {
 
-    // MARK: Private methods
-
-    private func createSleep(context: NSManagedObjectContext, duration: Int32, quality: Int16, date: Date, user: User) {
-        let sleep = Sleep(context: context)
-        sleep.duration = duration
-        sleep.quality = quality
-        sleep.startDate = date
-        sleep.user = user
-    }
-}
-
-// MARK: Empty entities
-
-extension SleepRepositoryTests {
+    // MARK: Empty entities
 
     func test_GivenThatEntitiesAreEmpty_WhenFetchingSleeps_ThenSleepsIsEmpty() {
 
@@ -57,10 +44,7 @@ extension SleepRepositoryTests {
         do {
             // Given that 3 sleep sessions have been added (from oldest to newest)
 
-            let user = createUser(context: viewContext)
-            createSleep(context: viewContext, duration: 1200, quality: 8, date: dates[2], user: user)
-            createSleep(context: viewContext, duration: 1100, quality: 7, date: dates[1], user: user)
-            createSleep(context: viewContext, duration: 1000, quality: 6, date: dates[0], user: user)
+            try addThreeSleepSessions(context: viewContext)
 
             // When fetching sleep sessions
 
@@ -101,10 +85,9 @@ extension SleepRepositoryTests {
         emptyEntities(context: viewContext)
 
         do {
-            // Given that sleep session has been added
+            // Given that 3 sleep sessions have been added
 
-            let user = createUser(context: viewContext)
-            createSleep(context: viewContext, duration: 1000, quality: 6, date: Date(), user: user)
+            try addThreeSleepSessions(context: viewContext)
 
             // When deleting user
 

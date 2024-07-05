@@ -24,11 +24,13 @@ final class ExerciseListViewModelTests: XCTestCase {
 extension ExerciseListViewModelTests {
 
     func test_GivenThatEntitiesAreEmpty_WhenFetching_ThenNoErrorMessageAndEmptyList() {
-        // Clean manually all data
+
+        // Given that entities are empty
+
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
 
-        // Given that entities are empty, when fetching data (in init of ViewModel)
+        // When fetching data (in init of ViewModel)
 
         let viewModel = ExerciseListViewModel(context: viewContext)
 
@@ -56,7 +58,7 @@ extension ExerciseListViewModelTests {
     }
 }
 
-// MARK: Add user exercises
+// MARK: Get user exercises
 
 extension ExerciseListViewModelTests {
 
@@ -66,7 +68,7 @@ extension ExerciseListViewModelTests {
         emptyEntities(context: viewContext)
 
         do {
-            // Given that 3 exercises have been added (from oldest to newest)
+            // Given that 3 user exercises have been added (from oldest to newest)
 
             _ = try addThreeUserExercises(context: viewContext)
 
@@ -97,7 +99,7 @@ extension ExerciseListViewModelTests {
             wait(for: [listExpectation, fetchErrorExpectation], timeout: 10)
 
         } catch {
-            XCTFail("error in Add user exercises of ExerciseListViewModelTests")
+            XCTFail("error in Get user exercises of ExerciseListViewModelTests")
         }
     }
 }
@@ -112,7 +114,7 @@ extension ExerciseListViewModelTests {
         emptyEntities(context: viewContext)
 
         do {
-            // Given 3 exercises have been added
+            // Given that 3 user exercises have been added
 
             _ = try addThreeUserExercises(context: viewContext)
 
@@ -144,7 +146,7 @@ extension ExerciseListViewModelTests {
             wait(for: [listExpectation, fetchErrorExpectation], timeout: 10)
 
         } catch {
-            XCTFail("error in test_FetchExercisesAndDeleteOne of ExerciseListViewModelTests")
+            XCTFail("error in Delete user execise of ExerciseListViewModelTests")
         }
     }
 }
