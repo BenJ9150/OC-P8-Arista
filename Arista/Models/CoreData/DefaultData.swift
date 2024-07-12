@@ -10,13 +10,9 @@ import CoreData
 
 struct DefaultData {
 
-    // MARK: Public property
+    private let viewContext: NSManagedObjectContext
 
-    let viewContext: NSManagedObjectContext
-
-    // MARK: Init
-
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
     }
 }

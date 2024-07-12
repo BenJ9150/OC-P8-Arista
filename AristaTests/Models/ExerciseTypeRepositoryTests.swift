@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import CoreData
 @testable import Arista
 
 final class ExerciseTypeRepositoryTests: XCTestCase {

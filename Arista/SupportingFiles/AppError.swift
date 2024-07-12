@@ -9,6 +9,7 @@ import Foundation
 
 enum AppError: Error {
 
+    case loadPersistentStores
     case userIsNil
     case fetchUser
     case fetchSleeps
@@ -25,6 +26,10 @@ enum AppError: Error {
 
     var message: String {
         switch self {
+        case .loadPersistentStores:
+            print("AppError: loadPersistentStores")
+            return "\(messagePrefix), veuillez relancer l'application."
+
         case .userIsNil:
             print("AppError: userIsNil")
             return "\(messagePrefix), utilisateur inexistant."

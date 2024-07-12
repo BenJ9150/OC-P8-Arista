@@ -12,7 +12,7 @@ struct UserRepository {
 
     private let viewContext: NSManagedObjectContext
 
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
     }
 }

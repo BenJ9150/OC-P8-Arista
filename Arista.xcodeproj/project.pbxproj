@@ -25,6 +25,8 @@
 		436AD3142C2F240E008E0E6C /* CommonFuncAndProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436AD3132C2F240E008E0E6C /* CommonFuncAndProperties.swift */; };
 		436AD3172C2F2E9B008E0E6C /* ExerciseListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436AD3152C2F2E9B008E0E6C /* ExerciseListViewModelTests.swift */; };
 		436AD3182C2F2E9B008E0E6C /* UserDataViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436AD3162C2F2E9B008E0E6C /* UserDataViewModelTests.swift */; };
+		43BC00E52C411F6200AE6543 /* PersistenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC00E42C411F6200AE6543 /* PersistenceViewModel.swift */; };
+		43BC00E72C4129DB00AE6543 /* PersistenceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC00E62C4129DB00AE6543 /* PersistenceViewModelTests.swift */; };
 		43C89F242C25C23C002C9712 /* UserExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C89F232C25C23C002C9712 /* UserExercise.swift */; };
 		43D0C22C2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0C22B2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift */; };
 		43D0C22E2C380FA000464D8A /* AddExerciseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0C22D2C380FA000464D8A /* AddExerciseViewModelTests.swift */; };
@@ -82,6 +84,8 @@
 		436AD3132C2F240E008E0E6C /* CommonFuncAndProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFuncAndProperties.swift; sourceTree = "<group>"; };
 		436AD3152C2F2E9B008E0E6C /* ExerciseListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseListViewModelTests.swift; sourceTree = "<group>"; };
 		436AD3162C2F2E9B008E0E6C /* UserDataViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataViewModelTests.swift; sourceTree = "<group>"; };
+		43BC00E42C411F6200AE6543 /* PersistenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceViewModel.swift; sourceTree = "<group>"; };
+		43BC00E62C4129DB00AE6543 /* PersistenceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceViewModelTests.swift; sourceTree = "<group>"; };
 		43C89F232C25C23C002C9712 /* UserExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExercise.swift; sourceTree = "<group>"; };
 		43D0C22B2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepHistoryViewModelTests.swift; sourceTree = "<group>"; };
 		43D0C22D2C380FA000464D8A /* AddExerciseViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseViewModelTests.swift; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 		436AD30A2C2F0C54008E0E6C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				43BC00E62C4129DB00AE6543 /* PersistenceViewModelTests.swift */,
 				436AD3162C2F2E9B008E0E6C /* UserDataViewModelTests.swift */,
 				43D0C22B2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift */,
 				436AD3152C2F2E9B008E0E6C /* ExerciseListViewModelTests.swift */,
@@ -272,6 +277,7 @@
 		53E587612B235FDC00E4EF99 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				43BC00E42C411F6200AE6543 /* PersistenceViewModel.swift */,
 				53E587682B23616A00E4EF99 /* UserDataViewModel.swift */,
 				53E587702B23714800E4EF99 /* SleepHistoryViewModel.swift */,
 				53E5876A2B23648500E4EF99 /* ExerciseListViewModel.swift */,
@@ -432,6 +438,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43BC00E52C411F6200AE6543 /* PersistenceViewModel.swift in Sources */,
 				53E5873A2B235E9000E4EF99 /* Persistence.swift in Sources */,
 				435892C92C2DA5DA0031233C /* ErrorMessage.swift in Sources */,
 				53E587712B23714800E4EF99 /* SleepHistoryViewModel.swift in Sources */,
@@ -463,6 +470,7 @@
 			files = (
 				436AD3172C2F2E9B008E0E6C /* ExerciseListViewModelTests.swift in Sources */,
 				431654242C2ED0BD00324AF5 /* UserExerciseRepositoryTests.swift in Sources */,
+				43BC00E72C4129DB00AE6543 /* PersistenceViewModelTests.swift in Sources */,
 				436AD3142C2F240E008E0E6C /* CommonFuncAndProperties.swift in Sources */,
 				43D0C22C2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift in Sources */,
 				43D0C22E2C380FA000464D8A /* AddExerciseViewModelTests.swift in Sources */,

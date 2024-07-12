@@ -11,32 +11,34 @@ import CoreData
 @main
 struct AristaApp: App {
 
-    let persistenceController = PersistenceController.shared
+    @StateObject private var viewModel = PersistenceViewModel()
 
-    var context: NSManagedObjectContext {
-        return persistenceController.container.viewContext
+    var viewContext: NSManagedObjectContext {
+        return viewModel.persistence.container.viewContext
     }
 
     var body: some Scene {
         WindowGroup {
-            TabView {
-                UserDataView(viewModel: UserDataViewModel(context: context))
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .tabItem {
-                        Label("Utilisateur", systemImage: "person")
-                    }
+            if viewModel.loadPersistentStoresError.isEmpty {
+                TabView {
+                    UserDataView(viewModel: UserDataViewModel(context: viewContext))
+                        .tabItem {
+                            Label("Utilisateur", systemImage: "person")
+                        }
 
-                ExerciseListView(viewModel: ExerciseListViewModel(context: context))
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .tabItem {
-                        Label("Exercices", systemImage: "flame")
-                    }
+                    ExerciseListView(viewModel: ExerciseListViewModel(context: viewContext))
+                        .tabItem {
+                            Label("Exercices", systemImage: "flame")
+                        }
 
-                SleepHistoryView(viewModel: SleepHistoryViewModel(context: context))
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .tabItem {
-                        Label("Sommeil", systemImage: "moon")
-                    }
+                    SleepHistoryView(viewModel: SleepHistoryViewModel(context: viewContext))
+                        .tabItem {
+                            Label("Sommeil", systemImage: "moon")
+                        }
+                }
+            } else {
+                // Error when loaded persistent store
+                ErrorMessage(message: viewModel.loadPersistentStoresError)
             }
         }
     }
