@@ -60,6 +60,7 @@ private extension DefaultData {
 
         sleepBuilder(forUser: user, dateFactor: 1)
         sleepBuilder(forUser: user, dateFactor: 2)
+        sleepBuilder(forUser: user, dateFactor: 2.5)
         sleepBuilder(forUser: user, dateFactor: 3)
         sleepBuilder(forUser: user, dateFactor: 4)
         sleepBuilder(forUser: user, dateFactor: 5)
@@ -69,16 +70,15 @@ private extension DefaultData {
         sleepBuilder(forUser: user, dateFactor: 9)
         sleepBuilder(forUser: user, dateFactor: 10)
         sleepBuilder(forUser: user, dateFactor: 11)
-        sleepBuilder(forUser: user, dateFactor: 12)
     }
 
     func sleepBuilder(forUser user: User, dateFactor: Double) {
         let sleep = Sleep(context: viewContext)
         let timeIntervalForADay: TimeInterval = 60 * 60 * 24
 
-        sleep.duration = (0...900).randomElement()!
+        sleep.duration = (60...600).randomElement()!
         sleep.quality = (0...10).randomElement()!
-        sleep.startDate = Date(timeIntervalSinceNow: timeIntervalForADay * dateFactor)
+        sleep.startDate = Date(timeIntervalSinceNow: -timeIntervalForADay * dateFactor)
         sleep.user = user
     }
 }

@@ -12,7 +12,7 @@ enum AppError: Error {
     case loadPersistentStores
     case userIsNil
     case fetchUser
-    case fetchSleeps
+    case fetchSleepSessions
     case fetchUserExercises
     case deleteUserExercise
     case fetchExerciseTypes
@@ -38,8 +38,8 @@ enum AppError: Error {
             print("AppError: fetchUser")
             return "\(messagePrefix) lors de la récupération de votre compte."
 
-        case .fetchSleeps:
-            print("AppError: fetchSleeps")
+        case .fetchSleepSessions:
+            print("AppError: fetchSleepSessions")
             return "\(messagePrefix) lors de la récupération de vos sessions de sommeil."
 
         case .fetchUserExercises:

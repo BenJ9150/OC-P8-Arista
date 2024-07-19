@@ -23,8 +23,11 @@ extension SleepRepository {
 
     /// Get all sleep sessions from Database sorted by date (most recent first).
 
-    func getSleepSessions() throws -> [Sleep] {
+    func getSleepSessions(limit: Int = .max) throws -> [Sleep] {
         let request = Sleep.fetchRequest()
+        if limit != .max {
+            request.fetchLimit = limit
+        }
         request.sortDescriptors = [
             NSSortDescriptor(SortDescriptor<Sleep>(\.startDate, order: .reverse))
         ]

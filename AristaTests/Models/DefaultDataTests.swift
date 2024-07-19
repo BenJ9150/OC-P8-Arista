@@ -20,7 +20,7 @@ final class DefaultDataTests: XCTestCase {
 
 extension DefaultDataTests {
 
-    func test_GivenThatDefaultDataAreLoaded_WhenFetching_ThenUserIsNotNilAndSleepsAndExerciseTypeExist() {
+    func test_GivenThatDefaultDataAreLoaded_WhenFetching_ThenUserIsNotNilAndSleepAndExerciseTypeExist() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)

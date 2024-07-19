@@ -32,7 +32,7 @@ extension SleepHistoryView {
     private var sleepSessionsList: some View {
         List(viewModel.sleepSessions) { session in
             HStack {
-                QualityIndicator(quality: Int(session.quality))
+                QualityIndicator(quality: session.quality)
                     .padding()
                 VStack(alignment: .leading) {
                     Text("Début : \(session.date)")
@@ -48,29 +48,16 @@ extension SleepHistoryView {
 extension SleepHistoryView {
 
     private struct QualityIndicator: View {
-        let quality: Int
+        let quality: Int16
 
         var body: some View {
             ZStack {
                 Circle()
-                    .stroke(qualityColor(quality), lineWidth: 5)
-                    .foregroundColor(qualityColor(quality))
+                    .stroke(quality.color(), lineWidth: 5)
+                    .foregroundColor(quality.color())
                     .frame(width: 30, height: 30)
                 Text("\(quality)")
-                    .foregroundColor(qualityColor(quality))
-            }
-        }
-
-        func qualityColor(_ quality: Int) -> Color {
-            switch 10 - quality {
-            case 0...3:
-                return .green
-            case 4...6:
-                return .yellow
-            case 7...10:
-                return .red
-            default:
-                return .gray
+                    .foregroundColor(quality.color())
             }
         }
     }

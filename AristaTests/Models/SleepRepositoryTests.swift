@@ -12,7 +12,7 @@ final class SleepRepositoryTests: XCTestCase {
 
     // MARK: Empty entities
 
-    func test_GivenThatEntitiesAreEmpty_WhenFetchingSleeps_ThenSleepsIsEmpty() {
+    func test_GivenThatEntitiesAreEmpty_WhenFetchingSleepSessions_ThenListOfSleepSessionsIsEmpty() {
 
         // Given that entities are empty
 
@@ -35,7 +35,7 @@ final class SleepRepositoryTests: XCTestCase {
 
 extension SleepRepositoryTests {
 
-    func test_GivenThatSleepsExist_WhenFetchingSleeps_ThenSleepsExistInTheRightOrder() {
+    func test_GivenThatSleepSessionsExist_WhenFetchingSleepSessions_ThenSleepSessionsExistInTheRightOrder() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
@@ -72,13 +72,37 @@ extension SleepRepositoryTests {
             XCTFail("error in Get sleep sessions of SleepRepositoryTests")
         }
     }
+
+    func test_GivenThatThreeSleepSessionsExist_WhenFetchingTwoSleepSessions_ThenListCountIsTwo() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
+
+        do {
+            // Given that 3 sleep sessions have been added (from oldest to newest)
+
+            try addThreeSleepSessions(context: viewContext)
+
+            // When fetching 2 sleep sessions
+
+            let data = SleepRepository(viewContext: viewContext)
+            let sleepSessions = try data.getSleepSessions(limit: 2)
+
+            // Then there are 2 sleep sessions
+
+            XCTAssert(sleepSessions.count == 2)
+
+        } catch {
+            XCTFail("error in Get sleep sessions of SleepRepositoryTests")
+        }
+    }
 }
 
 // MARK: Delete rule
 
 extension SleepRepositoryTests {
 
-    func test_GivenThatSleepsExist_WhenDeletingUser_ThenSleepsIsEmpty() {
+    func test_GivenThatSleepSessionsExist_WhenDeletingUser_ThenListOfSleepSessionsIsEmpty() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)

@@ -37,7 +37,7 @@ extension SleepHistoryViewModel {
             fetchError = ""
 
         } catch {
-            fetchError = AppError.fetchSleeps.message
+            fetchError = AppError.fetchSleepSessions.message
         }
     }
 }

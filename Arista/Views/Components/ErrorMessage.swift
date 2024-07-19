@@ -18,7 +18,7 @@ struct ErrorMessage: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 48)
-                .foregroundStyle(.red)
+                .foregroundStyle(Color("ErrorMessage"))
                 .symbolEffect(.pulse, options: .repeating, value: animation)
                 .padding(.bottom)
                 .onAppear {
@@ -27,7 +27,7 @@ struct ErrorMessage: View {
             Text(message)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 48)
-                .foregroundStyle(.red)
+                .foregroundStyle(Color("ErrorMessage"))
                 .bold()
         }
     }

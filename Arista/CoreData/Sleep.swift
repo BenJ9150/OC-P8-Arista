@@ -13,4 +13,8 @@ public class Sleep: NSManagedObject {
     var date: String {
         return startDate?.formatted() ?? ""
     }
+
+    var dateWithoutTime: Date {
+        return startDate?.withoutTime() ?? Date()
+    }
 }

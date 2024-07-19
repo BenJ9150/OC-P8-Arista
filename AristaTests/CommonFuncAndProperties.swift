@@ -18,9 +18,9 @@ func emptyEntities(context: NSManagedObjectContext) {
         for user in users {
             context.delete(user)
         }
-        // Clean sleeps
-        let sleeps = try context.fetch(Sleep.fetchRequest())
-        for sleep in sleeps {
+        // Clean sleep sessions
+        let sleepSessions = try context.fetch(Sleep.fetchRequest())
+        for sleep in sleepSessions {
             context.delete(sleep)
         }
         // Clean exercise types
@@ -59,11 +59,11 @@ func createUser(context: NSManagedObjectContext) throws -> User {
 
 // MARK: Get dates
 
-/// 3 sorted dates, from newest (index 0)  to oldest
+/// 3 sorted dates, from newest (index 0)  to oldest (with 2 last dates the same day)
 let dates = [
     Date(),
     Date(timeIntervalSinceNow: -(60*60*24)),
-    Date(timeIntervalSinceNow: -(60*60*24*2))
+    Date(timeIntervalSinceNow: -(60*60*24*1.5))
 ]
 
 // MARK: Create exercise types
@@ -90,7 +90,7 @@ func addThreeExerciseTypes(context: NSManagedObjectContext) throws -> [ExerciseT
 
 // MARK: Create user exercises
 
-/// Create 3 user exercises from oldest to newest
+/// Create 3 user exercises from oldest to newest, with 2 dates the same day
 
 func addThreeUserExercises(context: NSManagedObjectContext) throws -> (UserExerciseRepository, [ExerciseType]) {
     // Create user and 3 exercise types
@@ -108,7 +108,7 @@ func addThreeUserExercises(context: NSManagedObjectContext) throws -> (UserExerc
 
 // MARK: Create sleep sessions
 
-/// Create 3 sleep sessions from oldest to newest
+/// Create 3 sleep sessions from oldest to newest, with 2 last dates the same day
 
 func addThreeSleepSessions(context: NSManagedObjectContext) throws {
     // Create user

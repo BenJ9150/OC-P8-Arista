@@ -16,6 +16,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         do {
             try viewContext.save()
+            try DefaultData(viewContext: viewContext).apply()
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")

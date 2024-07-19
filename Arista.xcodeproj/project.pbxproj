@@ -14,6 +14,8 @@
 		43136EF02C1C882400CF7F2D /* DefaultData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EEF2C1C882400CF7F2D /* DefaultData.swift */; };
 		43136EF22C1C8E0D00CF7F2D /* Sleep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43136EF12C1C8E0D00CF7F2D /* Sleep.swift */; };
 		431654242C2ED0BD00324AF5 /* UserExerciseRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431654232C2ED0BD00324AF5 /* UserExerciseRepositoryTests.swift */; };
+		4326FE4B2C4A6009003CE8AD /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326FE4A2C4A6009003CE8AD /* DateExtension.swift */; };
+		4326FE4D2C4A6308003CE8AD /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326FE4C2C4A6308003CE8AD /* IntExtension.swift */; };
 		435892C42C2DA5370031233C /* IntensityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435892C32C2DA5370031233C /* IntensityIndicator.swift */; };
 		435892C62C2DA5510031233C /* IconForCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435892C52C2DA5510031233C /* IconForCategory.swift */; };
 		435892C92C2DA5DA0031233C /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435892C82C2DA5DA0031233C /* ErrorMessage.swift */; };
@@ -73,6 +75,8 @@
 		43136EF12C1C8E0D00CF7F2D /* Sleep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sleep.swift; sourceTree = "<group>"; };
 		431654222C2ECE5800324AF5 /* Arista.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Arista.xctestplan; sourceTree = "<group>"; };
 		431654232C2ED0BD00324AF5 /* UserExerciseRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserExerciseRepositoryTests.swift; sourceTree = "<group>"; };
+		4326FE4A2C4A6009003CE8AD /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		4326FE4C2C4A6308003CE8AD /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		435892C32C2DA5370031233C /* IntensityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntensityIndicator.swift; sourceTree = "<group>"; };
 		435892C52C2DA5510031233C /* IconForCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconForCategory.swift; sourceTree = "<group>"; };
 		435892C82C2DA5DA0031233C /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
@@ -137,7 +141,6 @@
 		43136EDD2C1C77E900CF7F2D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				43136EDE2C1C781300CF7F2D /* CoreData */,
 				43136EE72C1C82BF00CF7F2D /* UserRepository.swift */,
 				43136EE92C1C82C800CF7F2D /* SleepRepository.swift */,
 				43136EEB2C1C82D100CF7F2D /* ExerciseTypeRepository.swift */,
@@ -156,6 +159,15 @@
 				43C89F232C25C23C002C9712 /* UserExercise.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		4326FE492C4A5FCD003CE8AD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4326FE4A2C4A6009003CE8AD /* DateExtension.swift */,
+				4326FE4C2C4A6308003CE8AD /* IntExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		435892C72C2DA57B0031233C /* Components */ = {
@@ -226,6 +238,8 @@
 		53E5872F2B235E8F00E4EF99 /* Arista */ = {
 			isa = PBXGroup;
 			children = (
+				4326FE492C4A5FCD003CE8AD /* Extensions */,
+				43136EDE2C1C781300CF7F2D /* CoreData */,
 				43136EDD2C1C77E900CF7F2D /* Models */,
 				53E587612B235FDC00E4EF99 /* ViewModels */,
 				53E587602B235FD700E4EF99 /* Views */,
@@ -441,6 +455,7 @@
 				43BC00E52C411F6200AE6543 /* PersistenceViewModel.swift in Sources */,
 				53E5873A2B235E9000E4EF99 /* Persistence.swift in Sources */,
 				435892C92C2DA5DA0031233C /* ErrorMessage.swift in Sources */,
+				4326FE4D2C4A6308003CE8AD /* IntExtension.swift in Sources */,
 				53E587712B23714800E4EF99 /* SleepHistoryViewModel.swift in Sources */,
 				43136EE82C1C82BF00CF7F2D /* UserRepository.swift in Sources */,
 				43136EF22C1C8E0D00CF7F2D /* Sleep.swift in Sources */,
@@ -458,6 +473,7 @@
 				53E5876F2B236DBC00E4EF99 /* AddExerciseViewModel.swift in Sources */,
 				53E587692B23616A00E4EF99 /* UserDataViewModel.swift in Sources */,
 				43136EEA2C1C82C800CF7F2D /* SleepRepository.swift in Sources */,
+				4326FE4B2C4A6009003CE8AD /* DateExtension.swift in Sources */,
 				435892C62C2DA5510031233C /* IconForCategory.swift in Sources */,
 				43136EEC2C1C82D100CF7F2D /* ExerciseTypeRepository.swift in Sources */,
 				435892C42C2DA5370031233C /* IntensityIndicator.swift in Sources */,
