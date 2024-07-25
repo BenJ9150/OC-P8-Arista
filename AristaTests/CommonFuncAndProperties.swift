@@ -63,7 +63,7 @@ func createUser(context: NSManagedObjectContext) throws -> User {
 let dates = [
     Date(),
     Date(timeIntervalSinceNow: -(60*60*24)),
-    Date(timeIntervalSinceNow: -(60*60*24*1.5))
+    Date(timeIntervalSinceNow: -(60*60*24)-1)
 ]
 
 // MARK: Create exercise types

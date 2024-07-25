@@ -129,14 +129,14 @@ extension UserDataViewModelTests {
 
             try addThreeSleepSessions(context: viewContext)
 
-            // When fetching sleep sessions (in init of UserDataViewModel)
+            // When fetching sleep summary (in init of UserDataViewModel)
 
             let viewModel = UserDataViewModel(context: viewContext)
 
             // Then no error message, there are 1 sleep session the first date, and 2 sleep sessions the last date
 
             let fetchErrorExpectation = XCTestExpectation(description: "fetch sleep summary error")
-            let sleepSummaryExpectation = XCTestExpectation(description: "fetch sleep summary")
+            let summaryExpectation = XCTestExpectation(description: "fetch sleep summary")
 
             viewModel.$fetchSleepError
                 .sink { fetchSleepError in
@@ -150,15 +150,63 @@ extension UserDataViewModelTests {
                     XCTAssertEqual(sleepSummary.count, 2)
                     XCTAssertEqual(sleepSummary[dates[0].withoutTime()]!.count, 1)
                     XCTAssertEqual(sleepSummary[dates[2].withoutTime()]!.count, 2)
-                    sleepSummaryExpectation.fulfill()
+                    summaryExpectation.fulfill()
                 }
                 .store(in: &self.cancellables)
 
             // Expectation timeout
-            wait(for: [fetchErrorExpectation, sleepSummaryExpectation], timeout: 10)
+            wait(for: [fetchErrorExpectation, summaryExpectation], timeout: 10)
 
         } catch {
             XCTFail("error in Get sleep summary of UserDataViewModelTests")
+        }
+    }
+}
+
+// MARK: Get Exercise summary
+
+extension UserDataViewModelTests {
+
+    func test_GivenThatThreeUserExercisesIn2DaysAdded_WhenFetchingExerciseSummary_ThenThreeUserExercisesIn2DaysExist() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
+
+        do {
+            // Given that 3 user exercises have been added (from oldest to newest, with 2 last dates the same day)
+
+            _ = try addThreeUserExercises(context: viewContext)
+
+            // When fetching exercise summary (in init of UserDataViewModel)
+
+            let viewModel = UserDataViewModel(context: viewContext)
+
+            // Then no error message, there are 1 exercise the first date, and 2 exercises the last date
+
+            let fetchErrorExpectation = XCTestExpectation(description: "fetch exercise summary error")
+            let summaryExpectation = XCTestExpectation(description: "fetch exercise summary")
+
+            viewModel.$fetchExercisesError
+                .sink { fetchExercisesError in
+                    XCTAssertEqual(fetchExercisesError, "")
+                    fetchErrorExpectation.fulfill()
+                }
+                .store(in: &cancellables)
+
+            viewModel.$exercisesSummary
+                .sink { exercisesSummary in
+                    XCTAssertEqual(exercisesSummary.count, 2)
+                    XCTAssertEqual(exercisesSummary[dates[0].withoutTime()]!.count, 1)
+                    XCTAssertEqual(exercisesSummary[dates[2].withoutTime()]!.count, 2)
+                    summaryExpectation.fulfill()
+                }
+                .store(in: &self.cancellables)
+
+            // Expectation timeout
+            wait(for: [fetchErrorExpectation, summaryExpectation], timeout: 10)
+
+        } catch {
+            XCTFail("error in Get Exercise summary of UserDataViewModelTests")
         }
     }
 }

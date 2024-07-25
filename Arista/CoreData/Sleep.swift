@@ -7,8 +7,9 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
-public class Sleep: NSManagedObject {
+public class Sleep: NSManagedObject, Summary {
 
     var date: String {
         return startDate?.formatted() ?? ""
@@ -16,5 +17,9 @@ public class Sleep: NSManagedObject {
 
     var dateWithoutTime: Date {
         return startDate?.withoutTime() ?? Date()
+    }
+
+    var chartColor: Color {
+        return quality.qualityColor()
     }
 }

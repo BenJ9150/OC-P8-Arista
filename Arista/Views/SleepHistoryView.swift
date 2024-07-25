@@ -53,11 +53,11 @@ extension SleepHistoryView {
         var body: some View {
             ZStack {
                 Circle()
-                    .stroke(quality.color(), lineWidth: 5)
-                    .foregroundColor(quality.color())
+                    .stroke(quality.qualityColor(), lineWidth: 5)
+                    .foregroundColor(quality.qualityColor())
                     .frame(width: 30, height: 30)
                 Text("\(quality)")
-                    .foregroundColor(quality.color())
+                    .foregroundColor(quality.qualityColor())
             }
         }
     }

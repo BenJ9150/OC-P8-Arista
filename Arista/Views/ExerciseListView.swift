@@ -86,7 +86,7 @@ extension ExerciseListView {
                         .font(.subheadline)
                 }
                 Spacer()
-                IntensityIndicator(intensity: Double(userExercise.intensity))
+                IntensityIndicator(intensity: userExercise.intensity)
             }
         }
     }

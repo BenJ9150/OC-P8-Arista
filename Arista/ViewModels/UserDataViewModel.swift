@@ -16,11 +16,17 @@ class UserDataViewModel: ObservableObject {
     @Published var lastName: String = ""
     @Published var fetchError: String = ""
 
-    // MARK: Summary properties
+    // MARK: Sleep summary properties
 
     @Published var sleepSummary: [Date: [Sleep]] = [:]
     private let sleepSummaryCount = 5
     @Published var fetchSleepError: String = ""
+
+    // MARK: Exercise summary properties
+
+    @Published var exercisesSummary: [Date: [UserExercise]] = [:]
+    private let exercisesSummaryCount = 5
+    @Published var fetchExercisesError: String = ""
 
     // MARK: Private properties
 
@@ -31,7 +37,7 @@ class UserDataViewModel: ObservableObject {
     init(context: NSManagedObjectContext) {
         self.viewContext = context
         fetchUserData()
-        fetchSleepSummary()
+        fetchSummaries()
     }
 }
 
@@ -58,6 +64,16 @@ extension UserDataViewModel {
     }
 }
 
+// MARK: Summaries
+
+extension UserDataViewModel {
+
+    func fetchSummaries() {
+        fetchSleepSummary()
+        fetchExercisesSummary()
+    }
+}
+
 // MARK: Sleep summary
 
 extension UserDataViewModel {
@@ -65,8 +81,10 @@ extension UserDataViewModel {
     private func fetchSleepSummary() {
         do {
             // Fetch last sleep sessions
-            let sleepSessions = try SleepRepository(viewContext: viewContext).getSleepSessions(limit: sleepSummaryCount)
+            let sleepRepo = SleepRepository(viewContext: viewContext)
+            let sleepSessions = try sleepRepo.getSleepSessions(limit: sleepSummaryCount)
             fetchSleepError = ""
+            sleepSummary.removeAll()
 
             for sleep in sleepSessions {
                 if sleepSummary.keys.contains(sleep.dateWithoutTime) {
@@ -77,6 +95,31 @@ extension UserDataViewModel {
             }
         } catch {
             fetchSleepError = AppError.fetchSleepSessions.message
+        }
+    }
+}
+
+// MARK: Exercises summary
+
+extension UserDataViewModel {
+
+    private func fetchExercisesSummary() { // TODO: Test unitaire
+        do {
+            // Fetch last user exercises
+            let userExerciseRepo = UserExerciseRepository(viewContext: viewContext)
+            let userExercises = try userExerciseRepo.getUserExercise(limit: exercisesSummaryCount)
+            fetchExercisesError = ""
+            exercisesSummary.removeAll()
+
+            for userExercise in userExercises {
+                if exercisesSummary.keys.contains(userExercise.dateWithoutTime) {
+                    exercisesSummary[userExercise.dateWithoutTime]?.append(userExercise)
+                } else {
+                    exercisesSummary[userExercise.dateWithoutTime] = [userExercise]
+                }
+            }
+        } catch {
+            fetchExercisesError = AppError.fetchUserExercises.message
         }
     }
 }

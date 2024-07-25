@@ -8,24 +8,11 @@
 import SwiftUI
 
 struct IntensityIndicator: View {
-    var intensity: Double
+    var intensity: Int16
 
     var body: some View {
         Circle()
-            .fill(colorForIntensity(intensity))
+            .fill(intensity.intensityColor())
             .frame(width: 10, height: 10)
-    }
-
-    private func colorForIntensity(_ intensity: Double) -> Color {
-        switch intensity {
-        case 0...3:
-            return .green
-        case 4...6:
-            return .yellow
-        case 7...10:
-            return .red
-        default:
-            return .gray
-        }
     }
 }

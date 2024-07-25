@@ -23,8 +23,11 @@ extension UserExerciseRepository {
 
     /// Get all user exercises from Database sorted by date (most recent first).
 
-    func getUserExercise() throws -> [UserExercise] {
+    func getUserExercise(limit: Int = .max) throws -> [UserExercise] {
         let request = UserExercise.fetchRequest()
+        if limit != .max {
+            request.fetchLimit = limit
+        }
         request.sortDescriptors = [
             NSSortDescriptor(SortDescriptor<UserExercise>(\.startDate, order: .reverse))
         ]

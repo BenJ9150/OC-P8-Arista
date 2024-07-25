@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Charts
 
 struct UserDataView: View {
 
@@ -22,13 +21,14 @@ struct UserDataView: View {
         VStack {
             if viewModel.fetchError.isEmpty {
                 userDataToDisplay
-                sleepSummary
+                summaries
                 Spacer()
             } else {
                 ErrorMessage(message: viewModel.fetchError)
             }
         }
         .onAppear {
+            viewModel.fetchSummaries()
             withAnimation(.bouncy) { startAnimation = true }
         }
         .onDisappear { startAnimation = false }
@@ -52,83 +52,30 @@ extension UserDataView {
             .fontWeight(.bold)
             .padding()
             .padding(.horizontal)
-            .padding(.vertical)
+            .padding(.top)
             Spacer()
         }
     }
 }
 
-// MARK: Sleep summary
+// MARK: Summaries
 
 extension UserDataView {
 
-    private var sleepSummary: some View {
-        VStack(alignment: .leading) {
-            // Chart title
-            HStack {
-                Image(systemName: "moon.fill")
-                Text("Votre sommeil")
-                    .font(.subheadline)
-                    .bold()
-            }
-            .foregroundStyle(Color("ChartBoldText"))
-            // Chart content
-            if viewModel.fetchSleepError.isEmpty {
-                sleepChart
-            } else {
-                ErrorMessage(message: viewModel.fetchSleepError)
-                    .padding(.top)
-            }
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color("ChartBackground"))
-                .shadow(color: shadowColor, radius: 4, x: 0, y: 4)
-        )
-        .padding()
-        .padding(.horizontal)
-    }
-
-    private var sleepChart: some View {
-        Chart {
-            ForEach(viewModel.sleepSummary.keys.sorted(), id: \.self) { date in
-                if let sleepSessions = viewModel.sleepSummary[date] {
-                    ForEach(sleepSessions, id: \.self) { sleep in
-                        BarMark(
-                            x: .value("Date", date.toString()),
-                            y: .value("Value", startAnimation ? sleep.duration : 600)
-                        )
-                        .foregroundStyle(sleep.quality.color())
-                    }
-                }
-            }
-            .clipShape(.capsule)
-        }
-        .frame(height: 300)
-        .chartXAxis {
-            AxisMarks(preset: .aligned) { value in
-                AxisValueLabel {
-                    if let text = value.as(String.self) {
-                        Text(text)
-                            .foregroundStyle(Color("ChartBoldText"))
-                            .font(.caption)
-                            .bold()
-                    }
-                }
-            }
-        }
-        .chartYAxis {
-            AxisMarks(preset: .aligned) { value in
-                AxisValueLabel {
-                    if let number = value.as(Int32.self) {
-                        Text("\(number/60)h")
-                            .foregroundStyle(Color("ChartBoldText"))
-                            .font(.caption)
-                            .bold()
-                    }
-                }
-            }
+    private var summaries: some View {
+        VStack {
+            SummaryChart(
+                title: "Votre sommeil",
+                image: "moon.fill",
+                data: viewModel.sleepSummary.mapValues { $0.map(AnySummary.init) },
+                error: viewModel.fetchSleepError
+            )
+            SummaryChart(
+                title: "Vos exercices",
+                image: "flame.fill",
+                data: viewModel.exercisesSummary.mapValues { $0.map(AnySummary.init) },
+                error: viewModel.fetchExercisesError
+            )
         }
     }
 }

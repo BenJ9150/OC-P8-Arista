@@ -41,7 +41,7 @@ extension AddExerciseView {
                 exercisePicker
                 durationPicker
                 intensityPicker
-                hourAndMinutePicker
+                datePicker
             }.formStyle(.grouped)
             Spacer()
             Button("Ajouter l'exercice") {
@@ -117,12 +117,12 @@ extension AddExerciseView {
     }
 }
 
-// MARK: Hour picker
+// MARK: Date picker
 
 extension AddExerciseView {
 
-    private var hourAndMinutePicker: some View {
-        DatePicker("Heure de démarrage", selection: $viewModel.startTime, displayedComponents: .hourAndMinute)
+    private var datePicker: some View {
+        DatePicker("Date", selection: $viewModel.startTime, displayedComponents: [.date, .hourAndMinute])
             .padding(.all, 8)
     }
 }
@@ -136,7 +136,7 @@ extension AddExerciseView {
             // Display selection
             HStack {
                 Text("Intensité : \(Int(viewModel.intensity))")
-                IntensityIndicator(intensity: viewModel.intensity)
+                IntensityIndicator(intensity: Int16(viewModel.intensity))
             }
             .padding(.top)
 

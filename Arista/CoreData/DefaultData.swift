@@ -60,7 +60,7 @@ private extension DefaultData {
 
         sleepBuilder(forUser: user, dateFactor: 1)
         sleepBuilder(forUser: user, dateFactor: 2)
-        sleepBuilder(forUser: user, dateFactor: 2.5)
+        sleepBuilder(forUser: user, dateFactor: 2.1)
         sleepBuilder(forUser: user, dateFactor: 3)
         sleepBuilder(forUser: user, dateFactor: 4)
         sleepBuilder(forUser: user, dateFactor: 5)

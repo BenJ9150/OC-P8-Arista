@@ -77,7 +77,36 @@ extension UserExerciseRepositoryTests {
     }
 }
 
-// MARK: Delete user exercise
+// MARK: Get user exercises
+
+extension UserExerciseRepositoryTests {
+
+    func test_GivenThatThreeUserExercisesExist_WhenFetchingTwoUserExercises_ThenListCountIsTwo() {
+        // Clean manually all data
+        let viewContext = PersistenceController(inMemory: true).container.viewContext
+        emptyEntities(context: viewContext)
+
+        do {
+            // Given that 3 user exercises have been added (from oldest to newest)
+
+            _ = try addThreeUserExercises(context: viewContext)
+
+            // When fetching 2 user exercises
+
+            let data = UserExerciseRepository(viewContext: viewContext)
+            let userExercises = try data.getUserExercise(limit: 2)
+
+            // Then there are 2 sleep sessions
+
+            XCTAssert(userExercises.count == 2)
+
+        } catch {
+            XCTFail("error in Get user exercises of SleepRepositoryTests")
+        }
+    }
+}
+
+// MARK: Delete user exercises
 
 extension UserExerciseRepositoryTests {
 

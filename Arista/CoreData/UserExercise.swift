@@ -7,8 +7,9 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
-public class UserExercise: NSManagedObject {
+public class UserExercise: NSManagedObject, Summary {
 
     var date: String {
         return startDate?.formatted() ?? ""
@@ -16,5 +17,13 @@ public class UserExercise: NSManagedObject {
 
     var category: String {
         return exerciseType?.type ?? ""
+    }
+
+    var dateWithoutTime: Date {
+        return startDate?.withoutTime() ?? Date()
+    }
+
+    var chartColor: Color {
+        return intensity.intensityColor()
     }
 }
