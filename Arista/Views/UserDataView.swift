@@ -13,6 +13,8 @@ struct UserDataView: View {
     @ObservedObject var viewModel: UserDataViewModel
     @State private var startAnimation = false
 
+    private let chartSpacing: CGFloat = 16
+
     private var shadowColor: Color {
         return colorScheme == .dark ? .clear : .gray.opacity(0.4)
     }
@@ -20,9 +22,10 @@ struct UserDataView: View {
     var body: some View {
         VStack {
             if viewModel.fetchError.isEmpty {
-                userDataToDisplay
-                summaries
                 Spacer()
+                userDataToDisplay
+                Spacer()
+                summaries
             } else {
                 ErrorMessage(message: viewModel.fetchError)
             }
@@ -50,9 +53,8 @@ extension UserDataView {
                     .scaleEffect(startAnimation ? 1 : 0.7)
             }
             .fontWeight(.bold)
-            .padding()
-            .padding(.horizontal)
-            .padding(.top)
+            .padding(.horizontal, chartSpacing)
+            .padding(.vertical)
             Spacer()
         }
     }
@@ -63,20 +65,34 @@ extension UserDataView {
 extension UserDataView {
 
     private var summaries: some View {
-        VStack {
+        VStack(spacing: chartSpacing) {
             SummaryChart(
                 title: "Votre sommeil",
                 image: "moon.fill",
                 data: viewModel.sleepSummary.mapValues { $0.map(AnySummary.init) },
+                maxColumnsNb: 7,
                 error: viewModel.fetchSleepError
             )
-            SummaryChart(
-                title: "Vos exercices",
-                image: "flame.fill",
-                data: viewModel.exercisesSummary.mapValues { $0.map(AnySummary.init) },
-                error: viewModel.fetchExercisesError
-            )
+            HStack(alignment: .bottom, spacing: chartSpacing) {
+                SummaryChart(
+                    title: "Vos exercices",
+                    image: "flame.fill",
+                    data: viewModel.exercisesSummary.mapValues { $0.map(AnySummary.init) },
+                    maxColumnsNb: 3,
+                    error: viewModel.fetchExercisesError
+                )
+                .frame(height: 250)
+                CaloriesChart(
+                    title: "Calories brûlées",
+                    image: "flame.fill",
+                    data: viewModel.caloriesPerDay,
+                    maxColumnsNb: 3,
+                    error: viewModel.fetchExercisesError
+                )
+                .frame(height: 175)
+            }
         }
+        .padding(.all, chartSpacing)
     }
 }
 

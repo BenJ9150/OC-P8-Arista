@@ -19,14 +19,15 @@ class UserDataViewModel: ObservableObject {
     // MARK: Sleep summary properties
 
     @Published var sleepSummary: [Date: [Sleep]] = [:]
-    private let sleepSummaryCount = 5
     @Published var fetchSleepError: String = ""
+    private let sleepSummaryCount = 10
 
     // MARK: Exercise summary properties
 
     @Published var exercisesSummary: [Date: [UserExercise]] = [:]
-    private let exercisesSummaryCount = 5
+    @Published var caloriesPerDay: [Date: Decimal] = [:]
     @Published var fetchExercisesError: String = ""
+    private let exercisesSummaryCount = 6
 
     // MARK: Private properties
 
@@ -103,7 +104,7 @@ extension UserDataViewModel {
 
 extension UserDataViewModel {
 
-    private func fetchExercisesSummary() { // TODO: Test unitaire
+    private func fetchExercisesSummary() {
         do {
             // Fetch last user exercises
             let userExerciseRepo = UserExerciseRepository(viewContext: viewContext)
@@ -118,8 +119,23 @@ extension UserDataViewModel {
                     exercisesSummary[userExercise.dateWithoutTime] = [userExercise]
                 }
             }
+            groupCaloriesPerDay()
+
         } catch {
             fetchExercisesError = AppError.fetchUserExercises.message
+        }
+    }
+
+    private func groupCaloriesPerDay() {
+        caloriesPerDay.removeAll()
+        for (date, exercises) in exercisesSummary {
+            var totalCalories: Decimal = 0
+            for exercise in exercises {
+                if let caloriesPerMin = exercise.exerciseType?.caloriesPerMin {
+                    totalCalories += (caloriesPerMin as Decimal) * Decimal(exercise.duration)
+                }
+            }
+            caloriesPerDay[date] = totalCalories
         }
     }
 }

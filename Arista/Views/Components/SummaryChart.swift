@@ -19,6 +19,7 @@ struct SummaryChart: View {
     let title: String
     let image: String
     let data: [Date: [AnySummary]]
+    let maxColumnsNb: Int
     let error: String
 
     @State private var startAnimation = false
@@ -26,13 +27,15 @@ struct SummaryChart: View {
     var body: some View {
         VStack(alignment: .leading) {
             // Chart title
-            HStack {
+            HStack(spacing: 5) {
                 Image(systemName: image)
+                    .font(.subheadline)
                 Text(title)
                     .font(.subheadline)
                     .bold()
             }
             .foregroundStyle(Color("ChartBoldText"))
+            .padding(.bottom, 10)
             // Chart content
             if error.isEmpty {
                 createChart(withData: data)
@@ -41,14 +44,12 @@ struct SummaryChart: View {
                     .padding(.top)
             }
         }
-        .padding()
+        .padding(.all, 12)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color("ChartBackground"))
                 .shadow(color: shadowColor, radius: 4, x: 0, y: 4)
         )
-        .padding()
-        .padding(.horizontal)
         .onAppear {
             withAnimation(.bouncy) { startAnimation = true }
         }
@@ -62,7 +63,7 @@ extension SummaryChart {
 
     private func createChart(withData data: [Date: [AnySummary]]) -> some View {
         Chart {
-            ForEach(data.keys.sorted(), id: \.self) { date in
+            ForEach(data.keys.sorted().prefix(maxColumnsNb), id: \.self) { date in
                 if let items = data[date] {
                     ForEach(items, id: \.self) { item in
                         BarMark(
@@ -78,10 +79,10 @@ extension SummaryChart {
         .chartXAxis {
             AxisMarks(preset: .aligned) { value in
                 AxisValueLabel {
-                    if let text = value.as(String.self) {
-                        Text(text)
+                    if let date = value.as(String.self) {
+                        Text(date)
                             .foregroundStyle(Color("ChartBoldText"))
-                            .font(.caption)
+                            .font(.caption2)
                             .bold()
                     }
                 }
@@ -90,18 +91,19 @@ extension SummaryChart {
         .chartYAxis {
             AxisMarks(preset: .aligned) { value in
                 AxisValueLabel {
-                    if let number = value.as(Int32.self) {
-                        Text("\(number / 60)h")
+                    if let duration = value.as(Int32.self) {
+                        Text("\(duration / 60)h")
                             .foregroundStyle(Color("ChartBoldText"))
-                            .font(.caption)
+                            .font(.caption2)
                             .bold()
                     }
                 }
             }
         }
+        .padding(.horizontal, -5)
     }
 }
 
 #Preview {
-    SummaryChart(title: "Mon graphique", image: "moon.fill", data: [:], error: "")
+    SummaryChart(title: "Mon graphique", image: "moon.fill", data: [:], maxColumnsNb: 3, error: "")
 }

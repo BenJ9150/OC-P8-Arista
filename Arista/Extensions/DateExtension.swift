@@ -15,9 +15,10 @@ extension Date {
         return calendar.date(from: components) ?? self
     }
 
-    func toString(format: String = "dd/MM") -> String {
+    func toString(format: String = "d MMM") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "fr_FR")
         return dateFormatter.string(from: self)
     }
 }
