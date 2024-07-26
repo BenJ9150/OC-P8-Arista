@@ -15,7 +15,7 @@ struct IconForCategory: View {
         Image(systemName: iconForCategory(exercise))
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: 24)
+            .frame(width: 40)
     }
 
     private func iconForCategory(_ category: String) -> String {

@@ -42,7 +42,7 @@ extension SleepHistoryView {
                     SleepRow(sleep: sleep)
                 }
             } header: {
-                Text("") // for top spacing
+                Divider()
             }
         }
         .listRowSeparator(.hidden)
@@ -63,11 +63,15 @@ extension SleepHistoryView {
         var body: some View {
             HStack {
                 QualityIndicator(quality: sleep.quality)
-                    .padding()
+                    .padding(.trailing, 10)
+                    .padding(.vertical)
                 VStack(alignment: .leading) {
                     Text("Début : \(sleep.date)")
+                        .font(.headline)
                     Text("Durée : \(sleep.duration/60) heures")
+                        .font(.subheadline)
                 }
+                .foregroundStyle(Color("GrayText"))
             }
         }
     }

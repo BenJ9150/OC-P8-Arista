@@ -13,6 +13,6 @@ struct IntensityIndicator: View {
     var body: some View {
         Circle()
             .fill(intensity.intensityColor())
-            .frame(width: 10, height: 10)
+            .frame(width: 16, height: 16)
     }
 }

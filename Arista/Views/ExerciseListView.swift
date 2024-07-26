@@ -56,7 +56,7 @@ extension ExerciseListView {
                 }
                 .onDelete(perform: deleteExercise)
             } header: {
-                Text("") // for top spacing
+                Divider()
             }
         }
         .safeAreaPadding(.bottom, 80) // for add button
@@ -86,18 +86,19 @@ extension ExerciseListView {
         var body: some View {
             HStack {
                 IconForCategory(exercise: userExercise.category)
-                    .padding(.trailing, 8)
+                    .padding(.trailing)
                 VStack(alignment: .leading) {
                     Text(userExercise.category)
                         .font(.headline)
                     Text("Durée: \(userExercise.duration) min")
-                        .font(.subheadline)
+                        .font(.footnote)
                     Text(userExercise.date)
-                        .font(.subheadline)
+                        .font(.footnote)
                 }
                 Spacer()
                 IntensityIndicator(intensity: userExercise.intensity)
             }
+            .foregroundStyle(Color("GrayText"))
         }
     }
 }

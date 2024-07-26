@@ -54,10 +54,11 @@ extension UserDataView {
                     .font(.title)
                     .opacity(startAnimation ? 1 : 0)
                     .scaleEffect(startAnimation ? 1 : 0.7)
+                Divider()
             }
             .fontWeight(.bold)
             .padding(.horizontal, chartSpacing)
-            .padding(.vertical)
+            .padding(.top)
             Spacer()
         }
     }

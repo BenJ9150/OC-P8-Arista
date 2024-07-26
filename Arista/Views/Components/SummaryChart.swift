@@ -37,7 +37,7 @@ struct SummaryChart<T>: View where T: Summary {
                     .font(.subheadline)
                     .bold()
             }
-            .foregroundStyle(Color("ChartBoldText"))
+            .foregroundStyle(Color("GrayText"))
             .padding(.bottom, 10)
             // Chart content
             if error.isEmpty {
@@ -74,7 +74,7 @@ extension SummaryChart {
             Text(emptyMessage)
                 .frame(maxHeight: .infinity)
                 .multilineTextAlignment(.center)
-                .foregroundStyle(Color("ChartBoldText"))
+                .foregroundStyle(Color("GrayText"))
                 .font(.footnote)
                 .padding()
             Spacer()
@@ -121,7 +121,7 @@ extension SummaryChart {
             AxisValueLabel {
                 if let date = value.as(String.self) {
                     Text(date)
-                        .foregroundStyle(Color("ChartBoldText"))
+                        .foregroundStyle(Color("GrayText"))
                         .font(.caption2)
                         .bold()
                 }
@@ -139,7 +139,7 @@ extension SummaryChart {
                         Text("\(decimal)")
                     }
                 }
-                .foregroundStyle(Color("ChartBoldText"))
+                .foregroundStyle(Color("GrayText"))
                 .font(.caption2)
                 .bold()
             }
