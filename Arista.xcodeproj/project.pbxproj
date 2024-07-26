@@ -16,7 +16,6 @@
 		4313978F2C52471300AA70FE /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313978E2C52471300AA70FE /* Summary.swift */; };
 		431397912C52540600AA70FE /* SummaryChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431397902C52540600AA70FE /* SummaryChart.swift */; };
 		431654242C2ED0BD00324AF5 /* UserExerciseRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431654232C2ED0BD00324AF5 /* UserExerciseRepositoryTests.swift */; };
-		431FA25E2C5290150096F140 /* CaloriesChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431FA25D2C5290150096F140 /* CaloriesChart.swift */; };
 		4326FE4B2C4A6009003CE8AD /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326FE4A2C4A6009003CE8AD /* DateExtension.swift */; };
 		4326FE4D2C4A6308003CE8AD /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326FE4C2C4A6308003CE8AD /* IntExtension.swift */; };
 		435892C42C2DA5370031233C /* IntensityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435892C32C2DA5370031233C /* IntensityIndicator.swift */; };
@@ -80,7 +79,6 @@
 		431397902C52540600AA70FE /* SummaryChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryChart.swift; sourceTree = "<group>"; };
 		431654222C2ECE5800324AF5 /* Arista.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Arista.xctestplan; sourceTree = "<group>"; };
 		431654232C2ED0BD00324AF5 /* UserExerciseRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserExerciseRepositoryTests.swift; sourceTree = "<group>"; };
-		431FA25D2C5290150096F140 /* CaloriesChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesChart.swift; sourceTree = "<group>"; };
 		4326FE4A2C4A6009003CE8AD /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		4326FE4C2C4A6308003CE8AD /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		435892C32C2DA5370031233C /* IntensityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntensityIndicator.swift; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 				435892C52C2DA5510031233C /* IconForCategory.swift */,
 				435892C82C2DA5DA0031233C /* ErrorMessage.swift */,
 				431397902C52540600AA70FE /* SummaryChart.swift */,
-				431FA25D2C5290150096F140 /* CaloriesChart.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -475,7 +472,6 @@
 				435892CC2C2DB8010031233C /* AppError.swift in Sources */,
 				53E587312B235E8F00E4EF99 /* AristaApp.swift in Sources */,
 				43C89F242C25C23C002C9712 /* UserExercise.swift in Sources */,
-				431FA25E2C5290150096F140 /* CaloriesChart.swift in Sources */,
 				53E587652B23600400E4EF99 /* ExerciseListView.swift in Sources */,
 				53E5876B2B23648500E4EF99 /* ExerciseListViewModel.swift in Sources */,
 				53E5873D2B235E9000E4EF99 /* Arista.xcdatamodeld in Sources */,

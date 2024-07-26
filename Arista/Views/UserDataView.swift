@@ -20,14 +20,17 @@ struct UserDataView: View {
     }
 
     var body: some View {
-        VStack {
-            if viewModel.fetchError.isEmpty {
-                Spacer()
-                userDataToDisplay
-                Spacer()
-                summaries
-            } else {
-                ErrorMessage(message: viewModel.fetchError)
+        ZStack {
+            background
+            VStack {
+                if viewModel.fetchError.isEmpty {
+                    Spacer()
+                    userDataToDisplay
+                    Spacer()
+                    summaries
+                } else {
+                    ErrorMessage(message: viewModel.fetchError)
+                }
             }
         }
         .onAppear {
@@ -69,30 +72,48 @@ extension UserDataView {
             SummaryChart(
                 title: "Votre sommeil",
                 image: "moon.fill",
-                data: viewModel.sleepSummary.mapValues { $0.map(AnySummary.init) },
+                anySummaryData: viewModel.sleepSummary.mapValues { $0.map(AnySummary.init) },
                 maxColumnsNb: 7,
+                emptyMessage: "Ajoutez vos sessions de sommeil dans l'onglet \"Sommeil\" !",
                 error: viewModel.fetchSleepError
             )
             HStack(alignment: .bottom, spacing: chartSpacing) {
                 SummaryChart(
                     title: "Vos exercices",
                     image: "flame.fill",
-                    data: viewModel.exercisesSummary.mapValues { $0.map(AnySummary.init) },
+                    anySummaryData: viewModel.exercisesSummary.mapValues { $0.map(AnySummary.init) },
                     maxColumnsNb: 3,
+                    emptyMessage: "Ajoutez vos derniers exercices dans l'onglet \"Exercices\" !",
                     error: viewModel.fetchExercisesError
                 )
                 .frame(height: 250)
-                CaloriesChart(
+                SummaryChart(
                     title: "Calories brûlées",
                     image: "flame.fill",
-                    data: viewModel.caloriesPerDay,
+                    decimalData: viewModel.caloriesPerDay,
                     maxColumnsNb: 3,
+                    emptyMessage: "Ajoutez vos derniers exercices dans l'onglet \"Exercices\" !",
                     error: viewModel.fetchExercisesError
                 )
                 .frame(height: 175)
             }
         }
         .padding(.all, chartSpacing)
+    }
+}
+
+// MARK: Background
+
+extension UserDataView {
+
+    private var background: some View {
+        VStack {
+            Rectangle()
+                .fill(Gradient(colors: [.brown, .clear]))
+                .frame(maxHeight: colorScheme == .dark ? 200 : .infinity)
+            Spacer()
+        }
+        .ignoresSafeArea()
     }
 }
 
