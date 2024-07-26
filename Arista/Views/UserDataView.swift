@@ -109,8 +109,8 @@ extension UserDataView {
     private var background: some View {
         VStack {
             Rectangle()
-                .fill(Gradient(colors: [.brown, .clear]))
-                .frame(maxHeight: colorScheme == .dark ? 200 : .infinity)
+                .fill(Gradient(colors: [Color("MainBackground"), .clear]))
+                .frame(maxHeight: colorScheme == .dark ? 300 : .infinity)
             Spacer()
         }
         .ignoresSafeArea()

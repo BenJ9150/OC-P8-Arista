@@ -9,28 +9,38 @@ import SwiftUI
 
 struct ExerciseListView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     @ObservedObject var viewModel: ExerciseListViewModel
     @State private var showingAddExerciseView = false
 
+    private var shadowColor: Color {
+        return colorScheme == .dark ? .clear : .gray.opacity(0.4)
+    }
+
     var body: some View {
         NavigationStack {
-            Group {
-                if viewModel.fetchError.isEmpty {
-                    exercisesList
-                } else {
-                    ErrorMessage(message: viewModel.fetchError)
-                }
-            }
-            .navigationTitle("Exercices")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingAddExerciseView = true
-                    } label: {
-                        Image(systemName: "plus")
+            ZStack(alignment: .bottomTrailing) {
+                background
+                VStack {
+                    if viewModel.fetchError.isEmpty {
+                        exercisesList
+                    } else {
+                        ErrorMessage(message: viewModel.fetchError)
                     }
                 }
+                addExerciseButton
             }
+            .navigationTitle("Mes exercices")
+//            .toolbar {
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    Button {
+//                        showingAddExerciseView = true
+//                    } label: {
+//                        Image(systemName: "plus")
+//                    }
+//                }
+//            }
             .sheet(isPresented: $showingAddExerciseView) {
                 AddExerciseView(viewModel: AddExerciseViewModel(context: viewModel.viewContext)) {
                     viewModel.reload()
@@ -49,11 +59,20 @@ extension ExerciseListView {
 
     private var exercisesList: some View {
         List {
-            ForEach(viewModel.userExercises) { userExercise in
-                UserExerciseRow(userExercise: userExercise)
+            Section {
+                ForEach(viewModel.userExercises) { userExercise in
+                    UserExerciseRow(userExercise: userExercise)
+                }
+                .onDelete(perform: deleteExercise)
+            } header: {
+                Text("") // for top spacing
             }
-            .onDelete(perform: deleteExercise)
         }
+        .safeAreaPadding(.bottom, 80) // for add button
+        .listRowSeparator(.hidden)
+        .listRowSpacing(12)
+        .scrollContentBackground(.hidden)
+        .shadow(color: shadowColor, radius: 3, x: 0, y: 3)
     }
 
     private func deleteExercise(at offsets: IndexSet) {
@@ -89,6 +108,38 @@ extension ExerciseListView {
                 IntensityIndicator(intensity: userExercise.intensity)
             }
         }
+    }
+}
+
+// MARK: Add exercise button
+
+extension ExerciseListView {
+
+    private var addExerciseButton: some View {
+        Button {
+            showingAddExerciseView = true
+        } label: {
+            Image(systemName: "plus")
+                .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(Circle())
+        }
+        .padding()
+    }
+}
+
+// MARK: Background
+
+extension ExerciseListView {
+
+    private var background: some View {
+        VStack {
+            Rectangle()
+                .fill(Gradient(colors: [Color("MainBackground"), .clear]))
+                .frame(maxHeight: 300)
+            Spacer()
+        }
+        .ignoresSafeArea()
     }
 }
 
