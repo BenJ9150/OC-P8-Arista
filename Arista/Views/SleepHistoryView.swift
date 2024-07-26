@@ -9,18 +9,24 @@ import SwiftUI
 
 struct SleepHistoryView: View {
 
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: SleepHistoryViewModel
+
+    private var shadowColor: Color {
+        return colorScheme == .dark ? .clear : .gray.opacity(0.4)
+    }
 
     var body: some View {
         NavigationStack {
-            Group {
+            ZStack {
+                BackgroundView()
                 if viewModel.fetchError.isEmpty {
                     sleepSessionsList
                 } else {
                     ErrorMessage(message: viewModel.fetchError)
                 }
             }
-            .navigationTitle("Historique de Sommeil")
+            .navigationTitle("Mon Sommeil")
         }
     }
 }
@@ -30,13 +36,37 @@ struct SleepHistoryView: View {
 extension SleepHistoryView {
 
     private var sleepSessionsList: some View {
-        List(viewModel.sleepSessions) { session in
+        List {
+            Section {
+                ForEach(viewModel.sleepSessions) { sleep in
+                    SleepRow(sleep: sleep)
+                }
+            } header: {
+                Text("") // for top spacing
+            }
+        }
+        .listRowSeparator(.hidden)
+        .listRowSpacing(12)
+        .scrollContentBackground(.hidden)
+        .shadow(color: shadowColor, radius: 3, x: 0, y: 3)
+    }
+}
+
+// MARK: Sleep row
+
+extension SleepHistoryView {
+
+    private struct SleepRow: View {
+
+        let sleep: Sleep
+
+        var body: some View {
             HStack {
-                QualityIndicator(quality: session.quality)
+                QualityIndicator(quality: sleep.quality)
                     .padding()
                 VStack(alignment: .leading) {
-                    Text("Début : \(session.date)")
-                    Text("Durée : \(session.duration/60) heures")
+                    Text("Début : \(sleep.date)")
+                    Text("Durée : \(sleep.duration/60) heures")
                 }
             }
         }
@@ -62,6 +92,8 @@ extension SleepHistoryView {
         }
     }
 }
+
+// MARK: Preview
 
 #Preview {
     SleepHistoryView(viewModel: SleepHistoryViewModel(context: PersistenceController.preview.container.viewContext))

@@ -21,7 +21,7 @@ struct UserDataView: View {
 
     var body: some View {
         ZStack {
-            background
+            BackgroundView(fullscreen: true)
             VStack {
                 if viewModel.fetchError.isEmpty {
                     Spacer()
@@ -107,20 +107,7 @@ extension UserDataView {
     }
 }
 
-// MARK: Background
-
-extension UserDataView {
-
-    private var background: some View {
-        VStack {
-            Rectangle()
-                .fill(Gradient(colors: [Color("MainBackground"), .clear]))
-                .frame(maxHeight: colorScheme == .dark ? 300 : .infinity)
-            Spacer()
-        }
-        .ignoresSafeArea()
-    }
-}
+// MARK: Preview
 
 #Preview {
     UserDataView(viewModel: UserDataViewModel(context: PersistenceController.preview.container.viewContext))

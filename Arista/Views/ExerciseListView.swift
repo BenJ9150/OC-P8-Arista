@@ -21,7 +21,7 @@ struct ExerciseListView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
-                background
+                BackgroundView()
                 VStack {
                     if viewModel.fetchError.isEmpty {
                         exercisesList
@@ -32,15 +32,6 @@ struct ExerciseListView: View {
                 addExerciseButton
             }
             .navigationTitle("Mes exercices")
-//            .toolbar {
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    Button {
-//                        showingAddExerciseView = true
-//                    } label: {
-//                        Image(systemName: "plus")
-//                    }
-//                }
-//            }
             .sheet(isPresented: $showingAddExerciseView) {
                 AddExerciseView(viewModel: AddExerciseViewModel(context: viewModel.viewContext)) {
                     viewModel.reload()
@@ -128,20 +119,7 @@ extension ExerciseListView {
     }
 }
 
-// MARK: Background
-
-extension ExerciseListView {
-
-    private var background: some View {
-        VStack {
-            Rectangle()
-                .fill(Gradient(colors: [Color("MainBackground"), .clear]))
-                .frame(maxHeight: 300)
-            Spacer()
-        }
-        .ignoresSafeArea()
-    }
-}
+// MARK: Preview
 
 #Preview {
     ExerciseListView(viewModel: ExerciseListViewModel(context: PersistenceController.preview.container.viewContext))
