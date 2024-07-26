@@ -72,30 +72,35 @@ extension UserDataView {
             SummaryChart(
                 title: "Votre sommeil",
                 image: "moon.fill",
-                anySummaryData: viewModel.sleepSummary.mapValues { $0.map(AnySummary.init) },
-                maxColumnsNb: 7,
+                data: viewModel.sleepSummary,
+                yAxisIsHour: true,
+                maxColumnsNb: viewModel.sleepSummaryColumns,
                 emptyMessage: "Ajoutez vos sessions de sommeil dans l'onglet \"Sommeil\" !",
                 error: viewModel.fetchSleepError
             )
-            HStack(alignment: .bottom, spacing: chartSpacing) {
+            .padding(.horizontal)
+            .padding(.bottom)
+            HStack(spacing: chartSpacing) {
                 SummaryChart(
                     title: "Vos exercices",
                     image: "flame.fill",
-                    anySummaryData: viewModel.exercisesSummary.mapValues { $0.map(AnySummary.init) },
-                    maxColumnsNb: 3,
+                    data: viewModel.exercisesSummary,
+                    yAxisIsHour: true,
+                    maxColumnsNb: viewModel.exercisesSummaryColumns,
                     emptyMessage: "Ajoutez vos derniers exercices dans l'onglet \"Exercices\" !",
                     error: viewModel.fetchExercisesError
                 )
-                .frame(height: 250)
+                .frame(height: 240)
                 SummaryChart(
                     title: "Calories brûlées",
                     image: "flame.fill",
-                    decimalData: viewModel.caloriesPerDay,
-                    maxColumnsNb: 3,
+                    data: viewModel.caloriesPerDay,
+                    yAxisIsHour: false,
+                    maxColumnsNb: viewModel.exercisesSummaryColumns,
                     emptyMessage: "Ajoutez vos derniers exercices dans l'onglet \"Exercices\" !",
                     error: viewModel.fetchExercisesError
                 )
-                .frame(height: 175)
+                .frame(height: 180)
             }
         }
         .padding(.all, chartSpacing)

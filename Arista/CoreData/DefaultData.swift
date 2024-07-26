@@ -104,38 +104,9 @@ private extension DefaultData {
         exerciseBuilder(type: "Aérobic", calories: 7.4)
     }
 
-    func exerciseBuilder(type: String, calories: NSDecimalNumber) {
+    func exerciseBuilder(type: String, calories: Float) {
         let exercise = ExerciseType(context: viewContext)
         exercise.type = type
         exercise.caloriesPerMin = calories
     }
 }
-
-/*
-// MARK: - TEST
-
-extension DefaultData {
-
-    // Method just for test delete rules in CoreData
-
-    func deleteUser() throws {
-        guard let userToDelete = try UserRepository(viewContext: viewContext).getUser() else {
-            return
-        }
-        viewContext.delete(userToDelete)
-        try viewContext.save()
-    }
-
-    func deleteExerciseTypes() throws {
-        let exercisesToDelete = try ExerciseTypeRepository(viewContext: viewContext).getExercise()
-        if exercisesToDelete.isEmpty {
-            return
-        }
-
-        for exercise in exercisesToDelete {
-            viewContext.delete(exercise)
-        }
-        try viewContext.save()
-    }
-}
-*/

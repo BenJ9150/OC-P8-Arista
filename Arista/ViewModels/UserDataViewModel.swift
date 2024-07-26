@@ -20,14 +20,16 @@ class UserDataViewModel: ObservableObject {
 
     @Published var sleepSummary: [Date: [Sleep]] = [:]
     @Published var fetchSleepError: String = ""
-    private let sleepSummaryCount = 10
+    private let sleepSummaryCount = 12
+    let sleepSummaryColumns = 6
 
     // MARK: Exercise summary properties
 
     @Published var exercisesSummary: [Date: [UserExercise]] = [:]
-    @Published var caloriesPerDay: [Date: Decimal] = [:]
+    @Published var caloriesPerDay: [Date: [Calories]] = [:]
     @Published var fetchExercisesError: String = ""
-    private let exercisesSummaryCount = 6
+    private let exercisesSummaryCount = 9
+    let exercisesSummaryColumns = 3
 
     // MARK: Private properties
 
@@ -119,6 +121,9 @@ extension UserDataViewModel {
                     exercisesSummary[userExercise.dateWithoutTime] = [userExercise]
                 }
             }
+            // Complete with empty value to have exact columns count
+            completExercisesToExactColumnsCount()
+            // Group calories
             groupCaloriesPerDay()
 
         } catch {
@@ -126,16 +131,26 @@ extension UserDataViewModel {
         }
     }
 
+    private func completExercisesToExactColumnsCount() {
+        if let oldestDay = exercisesSummary.keys.sorted().first {
+            var dateIndex = 1.0
+            while exercisesSummary.keys.count < exercisesSummaryColumns {
+                exercisesSummary[oldestDay - 60 * 60 * 24 * dateIndex] = []
+                dateIndex += 1.0
+            }
+        }
+    }
+
     private func groupCaloriesPerDay() {
         caloriesPerDay.removeAll()
         for (date, exercises) in exercisesSummary {
-            var totalCalories: Decimal = 0
+            let calories = Calories(duration: 0)
             for exercise in exercises {
                 if let caloriesPerMin = exercise.exerciseType?.caloriesPerMin {
-                    totalCalories += (caloriesPerMin as Decimal) * Decimal(exercise.duration)
+                    calories.duration += Int32(caloriesPerMin * Float(exercise.duration))
                 }
             }
-            caloriesPerDay[date] = totalCalories
+            caloriesPerDay[date] = [calories]
         }
     }
 }

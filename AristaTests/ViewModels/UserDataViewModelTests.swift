@@ -167,7 +167,7 @@ extension UserDataViewModelTests {
 
 extension UserDataViewModelTests {
 
-    func test_GivenThatThreeUserExercisesIn2DaysAdded_WhenFetchingExerciseSummary_ThenThreeUserExercisesIn2DaysExist() {
+    func test_GivenThatThreeUserExercisesIn2DaysAdded_WhenFetchingExerciseSummary_ThenThreeUserExercisesIn3DaysExist() {
         // Clean manually all data
         let viewContext = PersistenceController(inMemory: true).container.viewContext
         emptyEntities(context: viewContext)
@@ -181,7 +181,7 @@ extension UserDataViewModelTests {
 
             let viewModel = UserDataViewModel(context: viewContext)
 
-            // Then no error message, there are 1 exercise the first date, and 2 exercises the last date
+            // Then no error, there is 1 exercise at the newest date, then 2 exercises, and then empty value
 
             let fetchErrorExpectation = XCTestExpectation(description: "fetch exercise summary error")
             let summaryExpectation = XCTestExpectation(description: "fetch exercise summary")
@@ -195,9 +195,12 @@ extension UserDataViewModelTests {
 
             viewModel.$exercisesSummary
                 .sink { exercisesSummary in
-                    XCTAssertEqual(exercisesSummary.count, 2)
-                    XCTAssertEqual(exercisesSummary[dates[0].withoutTime()]!.count, 1)
-                    XCTAssertEqual(exercisesSummary[dates[2].withoutTime()]!.count, 2)
+                    let sortedDate = exercisesSummary.keys.sorted()
+
+                    XCTAssertEqual(exercisesSummary.count, viewModel.exercisesSummaryColumns)
+                    XCTAssertEqual(exercisesSummary[sortedDate[0]]!.count, 0)
+                    XCTAssertEqual(exercisesSummary[sortedDate[1]]!.count, 2)
+                    XCTAssertEqual(exercisesSummary[sortedDate[2]]!.count, 1)
                     summaryExpectation.fulfill()
                 }
                 .store(in: &self.cancellables)

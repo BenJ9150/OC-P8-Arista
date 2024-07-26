@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct SummaryChart: View {
+struct SummaryChart<T>: View where T: Summary {
 
     @Environment(\.colorScheme) private var colorScheme
 
@@ -19,31 +19,11 @@ struct SummaryChart: View {
 
     let title: String
     let image: String
-    let anySummaryData: [Date: [AnySummary]]?
-    let decimalData: [Date: Decimal]?
+    let data: [Date: [T]]
+    let yAxisIsHour: Bool
     let maxColumnsNb: Int
     let emptyMessage: String
     let error: String
-
-    // MARK: Init
-
-    init(
-        title: String,
-        image: String,
-        anySummaryData: [Date: [AnySummary]]? = nil,
-        decimalData: [Date: Decimal]? = nil,
-        maxColumnsNb: Int,
-        emptyMessage: String,
-        error: String
-    ) {
-        self.title = title
-        self.image = image
-        self.anySummaryData = anySummaryData
-        self.decimalData = decimalData
-        self.maxColumnsNb = maxColumnsNb
-        self.emptyMessage = emptyMessage
-        self.error = error
-    }
 
     // MARK: Cell view
 
@@ -61,7 +41,11 @@ struct SummaryChart: View {
             .padding(.bottom, 10)
             // Chart content
             if error.isEmpty {
-                chartOrEmptyMessage
+                if data.isEmpty {
+                    empty
+                } else {
+                    createChart(withData: data)
+                }
             } else {
                 ErrorMessage(message: error)
                     .padding(.top)
@@ -80,27 +64,9 @@ struct SummaryChart: View {
     }
 }
 
-// MARK: Chart
+// MARK: Empty chart
 
 extension SummaryChart {
-
-    private var chartOrEmptyMessage: some View {
-        Group {
-            if let data = anySummaryData {
-                if data.isEmpty {
-                    empty
-                } else {
-                    createChart(withSummaryData: data)
-                }
-            } else if let data = decimalData {
-                if data.isEmpty {
-                    empty
-                } else {
-                    createChart(withDecimalData: data)
-                }
-            }
-        }
-    }
 
     private var empty: some View {
         VStack {
@@ -120,10 +86,10 @@ extension SummaryChart {
 
 extension SummaryChart {
 
-    private func createChart(withSummaryData data: [Date: [AnySummary]]) -> some View {
+    private func createChart(withData data: [Date: [T]]) -> some View {
         Chart {
             ForEach(data.keys.sorted().suffix(maxColumnsNb), id: \.self) { date in
-                if let items = data[date] {
+                if let items = data[date], !items.isEmpty {
                     ForEach(items, id: \.self) { item in
                         BarMark(
                             x: .value("Date", date.toString()),
@@ -131,30 +97,17 @@ extension SummaryChart {
                         )
                         .foregroundStyle(item.chartColor)
                     }
-                }
-            }
-            .clipShape(Capsule())
-        }
-        .chartXAxis { chartXAxis() }
-        .chartYAxis { chartYAxis(isHour: true) }
-        .padding(.horizontal, -5)
-    }
-
-    private func createChart(withDecimalData data: [Date: Decimal]) -> some View {
-        Chart {
-            ForEach(data.keys.sorted().suffix(maxColumnsNb), id: \.self) { date in
-                if let totalCalories = data[date] {
+                } else {
                     BarMark(
                         x: .value("Date", date.toString()),
-                        y: .value("Value", startAnimation ? totalCalories : 600)
+                        y: .value("Value", 0)
                     )
-                    .foregroundStyle(.orange)
                 }
             }
             .clipShape(Capsule())
         }
         .chartXAxis { chartXAxis() }
-        .chartYAxis { chartYAxis() }
+        .chartYAxis { chartYAxis(isHour: yAxisIsHour) }
         .padding(.horizontal, -5)
     }
 }
@@ -198,7 +151,8 @@ extension SummaryChart {
     SummaryChart(
         title: "Mon graphique",
         image: "moon.fill",
-        anySummaryData: [:],
+        data: [Date: [UserExercise]](),
+        yAxisIsHour: true,
         maxColumnsNb: 3,
         emptyMessage: "Oups, aucune donnée n'est renseignée !",
         error: ""

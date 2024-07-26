@@ -34,6 +34,7 @@
 		43C89F242C25C23C002C9712 /* UserExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C89F232C25C23C002C9712 /* UserExercise.swift */; };
 		43D0C22C2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0C22B2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift */; };
 		43D0C22E2C380FA000464D8A /* AddExerciseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0C22D2C380FA000464D8A /* AddExerciseViewModelTests.swift */; };
+		43E4D87D2C53BEBC00C3DF38 /* Calories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E4D87C2C53BEBC00C3DF38 /* Calories.swift */; };
 		53E587312B235E8F00E4EF99 /* AristaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E587302B235E8F00E4EF99 /* AristaApp.swift */; };
 		53E587352B235E9000E4EF99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53E587342B235E9000E4EF99 /* Assets.xcassets */; };
 		53E587382B235E9000E4EF99 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53E587372B235E9000E4EF99 /* Preview Assets.xcassets */; };
@@ -97,6 +98,7 @@
 		43C89F232C25C23C002C9712 /* UserExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExercise.swift; sourceTree = "<group>"; };
 		43D0C22B2C37FEEF00464D8A /* SleepHistoryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepHistoryViewModelTests.swift; sourceTree = "<group>"; };
 		43D0C22D2C380FA000464D8A /* AddExerciseViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseViewModelTests.swift; sourceTree = "<group>"; };
+		43E4D87C2C53BEBC00C3DF38 /* Calories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calories.swift; sourceTree = "<group>"; };
 		53E5872D2B235E8F00E4EF99 /* Arista.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arista.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53E587302B235E8F00E4EF99 /* AristaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AristaApp.swift; sourceTree = "<group>"; };
 		53E587342B235E9000E4EF99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				43136EF12C1C8E0D00CF7F2D /* Sleep.swift */,
 				43C89F232C25C23C002C9712 /* UserExercise.swift */,
 				4313978E2C52471300AA70FE /* Summary.swift */,
+				43E4D87C2C53BEBC00C3DF38 /* Calories.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				43BC00E52C411F6200AE6543 /* PersistenceViewModel.swift in Sources */,
 				53E5873A2B235E9000E4EF99 /* Persistence.swift in Sources */,
 				435892C92C2DA5DA0031233C /* ErrorMessage.swift in Sources */,
+				43E4D87D2C53BEBC00C3DF38 /* Calories.swift in Sources */,
 				4326FE4D2C4A6308003CE8AD /* IntExtension.swift in Sources */,
 				431397912C52540600AA70FE /* SummaryChart.swift in Sources */,
 				53E587712B23714800E4EF99 /* SleepHistoryViewModel.swift in Sources */,

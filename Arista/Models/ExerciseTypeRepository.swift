@@ -39,10 +39,10 @@ extension ExerciseTypeRepository {
 
     /// Save new exercise type in Database.
 
-    func addExercise(type: String, caloriesPerMin: Decimal) throws {
+    func addExercise(type: String, caloriesPerMin: Float) throws {
         let newExercise = ExerciseType(context: viewContext)
         newExercise.type = type
-        newExercise.caloriesPerMin = NSDecimalNumber(decimal: caloriesPerMin)
+        newExercise.caloriesPerMin = caloriesPerMin
         try viewContext.save()
     }
 }
