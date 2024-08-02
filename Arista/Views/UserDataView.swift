@@ -56,7 +56,7 @@ extension UserDataView {
                     .scaleEffect(startAnimation ? 1 : 0.7)
                 Divider()
             }
-            .fontWeight(.bold)
+            .bold()
             .padding(.horizontal, chartSpacing)
             .padding(.top)
             Spacer()

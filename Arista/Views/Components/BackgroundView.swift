@@ -19,7 +19,7 @@ struct BackgroundView: View {
         VStack {
             Rectangle()
                 .fill(Gradient(colors: [Color("MainBackground"), .clear]))
-                .frame(maxHeight: colorScheme == .dark ? 300 : fullscreen ? .infinity : 300)
+                .frame(maxHeight: colorScheme == .dark ? 220 : fullscreen ? .infinity : 220)
             Spacer()
         }
         .ignoresSafeArea()

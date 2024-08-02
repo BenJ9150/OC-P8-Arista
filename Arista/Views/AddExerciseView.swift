@@ -10,24 +10,41 @@ import SwiftUI
 struct AddExerciseView: View {
 
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: AddExerciseViewModel
 
     var exerciseAdded: () -> Void = {}
 
     var body: some View {
-        NavigationStack {
-            Group {
+        ZStack {
+            BackgroundView()
+            VStack {
+                title
                 if viewModel.fetchError.isEmpty {
                     exerciseForm
+                    Spacer()
+                    addButton
                 } else {
                     ErrorMessage(message: viewModel.fetchError)
                 }
             }
-            .navigationTitle("Nouvel Exercice ...")
-            .alert(viewModel.addError, isPresented: $viewModel.showAlertError) {
-                Button("OK", action: {})
-            }
         }
+        .alert(viewModel.addError, isPresented: $viewModel.showAlertError) {
+            Button("OK", action: {})
+        }
+    }
+}
+
+// MARK: Title
+
+extension AddExerciseView {
+
+    private var title: some View {
+        Text("Nouvel exercice")
+            .font(.title)
+            .bold()
+            .frame(maxWidth: .infinity)
+            .frame(height: 100)
     }
 }
 
@@ -37,20 +54,18 @@ extension AddExerciseView {
 
     private var exerciseForm: some View {
         VStack {
-            Form {
+            HStack {
                 exercisePicker
-                durationPicker
-                intensityPicker
-                datePicker
-            }.formStyle(.grouped)
-            Spacer()
-            Button("Ajouter l'exercice") {
-                if viewModel.addUserExercise() {
-                    exerciseAdded()
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }.buttonStyle(.borderedProminent)
+                intensityTitle
+            }
+            .padding(.top, 30)
+            intensityPicker
+            Divider()
+            durationPicker
+            Divider()
+            datePicker
         }
+        .padding(.horizontal)
     }
 }
 
@@ -69,7 +84,35 @@ extension AddExerciseView {
             }
         }
         .pickerStyle(.menu)
-        .padding(.all, 8)
+    }
+}
+
+// MARK: Intensity picker
+
+extension AddExerciseView {
+
+    private var intensityTitle: some View {
+        HStack {
+            Text("Intensité : \(Int(viewModel.intensity))")
+                .font(.subheadline)
+                .bold()
+                .foregroundStyle(Color("GrayText"))
+            IntensityIndicator(intensity: Int16(viewModel.intensity))
+        }
+    }
+
+    private var intensityPicker: some View {
+        Slider(value: $viewModel.intensity, in: 0...10, step: 1) {
+            Text("")
+        } minimumValueLabel: {
+            Text("0")
+        } maximumValueLabel: {
+            Text("10")
+        }
+        .padding()
+        .padding(.horizontal)
+        .tint(Int16(viewModel.intensity).intensityColor())
+        .foregroundStyle(Color("GrayText"))
     }
 }
 
@@ -81,6 +124,9 @@ extension AddExerciseView {
         VStack(spacing: 6) {
             Text("Durée")
                 .padding(.top)
+                .font(.subheadline)
+                .bold()
+                .foregroundStyle(Color("GrayText"))
             HStack {
                 Spacer()
                 // Hour
@@ -114,6 +160,7 @@ extension AddExerciseView {
             }
             .frame(maxHeight: 100)
         }
+        .padding(.bottom)
     }
 }
 
@@ -122,35 +169,38 @@ extension AddExerciseView {
 extension AddExerciseView {
 
     private var datePicker: some View {
-        DatePicker("Date", selection: $viewModel.startTime, displayedComponents: [.date, .hourAndMinute])
-            .padding(.all, 8)
+        HStack {
+            Text("Date")
+                .padding()
+                .font(.subheadline)
+                .bold()
+                .foregroundStyle(Color("GrayText"))
+            Spacer()
+            DatePicker("", selection: $viewModel.startTime, displayedComponents: [.date, .hourAndMinute])
+                .padding()
+        }
     }
 }
 
-// MARK: Intensity picker
+// MARK: Add button
 
 extension AddExerciseView {
 
-    private var intensityPicker: some View {
-        VStack {
-            // Display selection
-            HStack {
-                Text("Intensité : \(Int(viewModel.intensity))")
-                IntensityIndicator(intensity: Int16(viewModel.intensity))
+    private var addButton: some View {
+        Button {
+            if viewModel.addUserExercise() {
+                exerciseAdded()
+                presentationMode.wrappedValue.dismiss()
             }
-            .padding(.top)
-
-            // Slider to choose intensity
-            Slider(value: $viewModel.intensity, in: 0...10, step: 1) {
-                Text("")
-            } minimumValueLabel: {
-                Text("0")
-            } maximumValueLabel: {
-                Text("10")
-            }
-            .padding()
-            .padding(.horizontal)
+        } label: {
+            Text("AJOUTER")
+                .bold()
+                .foregroundStyle(colorScheme == .dark ? .black : .white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 40)
         }
+        .buttonStyle(.borderedProminent)
+        .padding(.all, 24)
     }
 }
 

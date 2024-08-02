@@ -112,7 +112,7 @@ extension ExerciseListView {
             showingAddExerciseView = true
         } label: {
             Image(systemName: "plus")
-                .foregroundColor(.white)
+                .foregroundColor(colorScheme == .dark ? .black : .white)
                 .frame(width: 56, height: 56)
                 .background(Circle())
         }
