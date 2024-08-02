@@ -9,10 +9,16 @@ import SwiftUI
 
 struct ExerciseListView: View {
 
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.colorScheme) var colorScheme
 
     @ObservedObject var viewModel: ExerciseListViewModel
     @State private var showingAddExerciseView = false
+
+    private var isPortrait: Bool {
+        return horizontalSizeClass == .compact && verticalSizeClass == .regular
+    }
 
     private var shadowColor: Color {
         return colorScheme == .dark ? .clear : .gray.opacity(0.4)
@@ -50,20 +56,18 @@ extension ExerciseListView {
 
     private var exercisesList: some View {
         List {
-            Section {
-                ForEach(viewModel.userExercises) { userExercise in
-                    UserExerciseRow(userExercise: userExercise)
-                }
-                .onDelete(perform: deleteExercise)
-            } header: {
-                Divider()
+            ForEach(viewModel.userExercises) { userExercise in
+                UserExerciseRow(userExercise: userExercise)
             }
+            .onDelete(perform: deleteExercise)
         }
-        .safeAreaPadding(.bottom, 80) // for add button
+        .safeAreaPadding(.bottom, 70) // for add button
         .listRowSeparator(.hidden)
         .listRowSpacing(12)
         .scrollContentBackground(.hidden)
         .shadow(color: shadowColor, radius: 3, x: 0, y: 3)
+        .contentMargins(.vertical, 24, for: .scrollContent)
+        .contentMargins(.horizontal, isPortrait ? 16 : 160, for: .scrollContent)
     }
 
     private func deleteExercise(at offsets: IndexSet) {

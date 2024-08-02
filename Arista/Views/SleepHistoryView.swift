@@ -9,8 +9,15 @@ import SwiftUI
 
 struct SleepHistoryView: View {
 
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.colorScheme) var colorScheme
+
     @ObservedObject var viewModel: SleepHistoryViewModel
+
+    private var isPortrait: Bool {
+        return horizontalSizeClass == .compact && verticalSizeClass == .regular
+    }
 
     private var shadowColor: Color {
         return colorScheme == .dark ? .clear : .gray.opacity(0.4)
@@ -37,18 +44,16 @@ extension SleepHistoryView {
 
     private var sleepSessionsList: some View {
         List {
-            Section {
-                ForEach(viewModel.sleepSessions) { sleep in
-                    SleepRow(sleep: sleep)
-                }
-            } header: {
-                Divider()
+            ForEach(viewModel.sleepSessions) { sleep in
+                SleepRow(sleep: sleep)
             }
         }
         .listRowSeparator(.hidden)
         .listRowSpacing(12)
         .scrollContentBackground(.hidden)
         .shadow(color: shadowColor, radius: 3, x: 0, y: 3)
+        .contentMargins(.vertical, 24, for: .scrollContent)
+        .contentMargins(.horizontal, isPortrait ? 16 : 160, for: .scrollContent)
     }
 }
 

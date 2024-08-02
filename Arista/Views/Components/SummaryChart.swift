@@ -91,9 +91,10 @@ extension SummaryChart {
             ForEach(data.keys.sorted().suffix(maxColumnsNb), id: \.self) { date in
                 if let items = data[date], !items.isEmpty {
                     ForEach(items, id: \.self) { item in
+                        let animValue = Int32(Double(item.duration) * 1.5)
                         BarMark(
                             x: .value("Date", date.toString()),
-                            y: .value("Value", startAnimation ? item.duration : 600)
+                            y: .value("Value", startAnimation ? item.duration : animValue)
                         )
                         .foregroundStyle(item.chartColor)
                     }

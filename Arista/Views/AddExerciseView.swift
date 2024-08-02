@@ -9,28 +9,47 @@ import SwiftUI
 
 struct AddExerciseView: View {
 
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
+
     @ObservedObject var viewModel: AddExerciseViewModel
 
     var exerciseAdded: () -> Void = {}
 
+    private var isPortrait: Bool {
+        return horizontalSizeClass == .compact && verticalSizeClass == .regular
+    }
+
     var body: some View {
-        ZStack {
-            BackgroundView()
-            VStack {
-                title
-                if viewModel.fetchError.isEmpty {
-                    exerciseForm
-                    Spacer()
-                    addButton
-                } else {
-                    ErrorMessage(message: viewModel.fetchError)
+        NavigationStack {
+            ZStack {
+                BackgroundView()
+                VStack {
+                    title
+                    if viewModel.fetchError.isEmpty {
+                        if isPortrait {
+                            exerciseFormInPortrait
+                        } else {
+                            exerciseFormInLandscape
+                        }
+                    } else {
+                        ErrorMessage(message: viewModel.fetchError)
+                    }
                 }
             }
-        }
-        .alert(viewModel.addError, isPresented: $viewModel.showAlertError) {
-            Button("OK", action: {})
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: { dismiss() }, label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.primary)
+                    })
+                }
+            }
+            .alert(viewModel.addError, isPresented: $viewModel.showAlertError) {
+                Button("OK", action: {})
+            }
         }
     }
 }
@@ -44,7 +63,7 @@ extension AddExerciseView {
             .font(.title)
             .bold()
             .frame(maxWidth: .infinity)
-            .frame(height: 100)
+            .frame(height: 60)
     }
 }
 
@@ -52,7 +71,7 @@ extension AddExerciseView {
 
 extension AddExerciseView {
 
-    private var exerciseForm: some View {
+    private var exerciseFormInPortrait: some View {
         VStack {
             HStack {
                 exercisePicker
@@ -64,6 +83,31 @@ extension AddExerciseView {
             durationPicker
             Divider()
             datePicker
+            Spacer()
+            addButton
+        }
+        .padding(.horizontal)
+    }
+
+    private var exerciseFormInLandscape: some View {
+        HStack {
+            VStack {
+                durationPicker
+                datePicker
+            }
+            .padding(.trailing)
+            Divider()
+                .padding(.vertical)
+            VStack {
+                Spacer()
+                HStack {
+                    exercisePicker
+                    intensityTitle
+                }
+                intensityPicker
+                Spacer()
+                addButton
+            }
         }
         .padding(.horizontal)
     }
@@ -190,7 +234,7 @@ extension AddExerciseView {
         Button {
             if viewModel.addUserExercise() {
                 exerciseAdded()
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }
         } label: {
             Text("AJOUTER")
