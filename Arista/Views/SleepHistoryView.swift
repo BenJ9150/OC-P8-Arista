@@ -30,7 +30,7 @@ struct SleepHistoryView: View {
                 if viewModel.fetchError.isEmpty {
                     sleepSessionsList
                 } else {
-                    ErrorMessage(message: viewModel.fetchError)
+                    ErrorMessageView(message: viewModel.fetchError)
                 }
             }
             .navigationTitle("Mon Sommeil")

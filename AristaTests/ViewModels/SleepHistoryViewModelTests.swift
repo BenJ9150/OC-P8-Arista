@@ -28,7 +28,7 @@ extension SleepHistoryViewModelTests {
         do {
             // Given that 3 sleep sessions have been added (from oldest to newest)
 
-            try addThreeSleepSessions(context: viewContext)
+            try SleepSetup().addThreeSleepSessions(context: viewContext)
 
             // When fetching sleep sessions (in init of SleepHistoryViewModel)
 

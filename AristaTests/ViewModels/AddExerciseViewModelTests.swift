@@ -57,7 +57,7 @@ extension AddExerciseViewModelTests {
         do {
             // Given that 3 exercise types are added
 
-            _ = try addThreeExerciseTypes(context: viewContext)
+            _ = try ExerciseSetup().addThreeExerciseTypes(context: viewContext)
 
             // When fetching exercise types (in init of AddExerciseViewModel)
 
@@ -160,7 +160,7 @@ extension AddExerciseViewModelTests {
         do {
             // Given that duration and exercise type are set but user is nil
 
-            _ = try addThreeExerciseTypes(context: viewContext)
+            _ = try ExerciseSetup().addThreeExerciseTypes(context: viewContext)
             let viewModel = AddExerciseViewModel(context: viewContext)
             viewModel.durationHour = 1
 
@@ -202,8 +202,8 @@ extension AddExerciseViewModelTests {
         do {
             // Given that user exist and all exercise is set
 
-            _ = try createUser(context: viewContext)
-            _ = try addThreeExerciseTypes(context: viewContext)
+            _ = try UserSetup().createUser(context: viewContext)
+            _ = try ExerciseSetup().addThreeExerciseTypes(context: viewContext)
             let viewModel = AddExerciseViewModel(context: viewContext)
 
             // Set date and duration

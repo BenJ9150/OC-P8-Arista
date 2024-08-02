@@ -35,7 +35,6 @@
       }
     },
     {
-      "enabled" : false,
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Arista.xcodeproj",

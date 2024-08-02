@@ -32,7 +32,7 @@ struct ExerciseListView: View {
                     if viewModel.fetchError.isEmpty {
                         exercisesList
                     } else {
-                        ErrorMessage(message: viewModel.fetchError)
+                        ErrorMessageView(message: viewModel.fetchError)
                     }
                 }
                 addExerciseButton
@@ -89,7 +89,7 @@ extension ExerciseListView {
 
         var body: some View {
             HStack {
-                IconForCategory(exercise: userExercise.category)
+                IconForCategoryView(exercise: userExercise.category)
                     .padding(.trailing)
                 VStack(alignment: .leading) {
                     Text(userExercise.category)
@@ -100,7 +100,7 @@ extension ExerciseListView {
                         .font(.footnote)
                 }
                 Spacer()
-                IntensityIndicator(intensity: userExercise.intensity)
+                IntensityIndicatorView(intensity: userExercise.intensity)
             }
             .foregroundStyle(Color("GrayText"))
         }

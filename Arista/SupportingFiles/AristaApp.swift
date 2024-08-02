@@ -38,7 +38,7 @@ struct AristaApp: App {
                 }
             } else {
                 // Error when loaded persistent store
-                ErrorMessage(message: viewModel.loadPersistentStoresError)
+                ErrorMessageView(message: viewModel.loadPersistentStoresError)
             }
         }
     }

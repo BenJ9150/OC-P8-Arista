@@ -43,7 +43,7 @@ extension UserExerciseRepositoryTests {
         do {
             // Given that 3 user exercises have been added (from oldest to newest)
 
-            let (userExerciseRepository, types) = try addThreeUserExercises(context: viewContext)
+            let (userExerciseRepository, types) = try ExerciseSetup().addThreeUserExercises(context: viewContext)
 
             // When fetching user exercises
 
@@ -55,20 +55,20 @@ extension UserExerciseRepositoryTests {
 
             XCTAssert(exercises[0].duration == 10)
             XCTAssert(exercises[0].intensity == 5)
-            XCTAssert(exercises[0].startDate == dates[0])
-            XCTAssert(exercises[0].date == "\(dates[0].formatted())")
+            XCTAssert(exercises[0].startDate == XCTestCase.dates[0])
+            XCTAssert(exercises[0].date == "\(XCTestCase.dates[0].formatted())")
             XCTAssert(exercises[0].category == types[0].type)
 
             XCTAssert(exercises[1].duration == 12)
             XCTAssert(exercises[1].intensity == 6)
-            XCTAssert(exercises[1].startDate == dates[1])
-            XCTAssert(exercises[1].date == "\(dates[1].formatted())")
+            XCTAssert(exercises[1].startDate == XCTestCase.dates[1])
+            XCTAssert(exercises[1].date == "\(XCTestCase.dates[1].formatted())")
             XCTAssert(exercises[1].category == types[1].type)
 
             XCTAssert(exercises[2].duration == 14)
             XCTAssert(exercises[2].intensity == 7)
-            XCTAssert(exercises[2].startDate == dates[2])
-            XCTAssert(exercises[2].date == "\(dates[2].formatted())")
+            XCTAssert(exercises[2].startDate == XCTestCase.dates[2])
+            XCTAssert(exercises[2].date == "\(XCTestCase.dates[2].formatted())")
             XCTAssert(exercises[2].category == types[2].type)
 
         } catch {
@@ -89,7 +89,7 @@ extension UserExerciseRepositoryTests {
         do {
             // Given that 3 user exercises have been added (from oldest to newest)
 
-            _ = try addThreeUserExercises(context: viewContext)
+            _ = try ExerciseSetup().addThreeUserExercises(context: viewContext)
 
             // When fetching 2 user exercises
 
@@ -118,7 +118,7 @@ extension UserExerciseRepositoryTests {
         do {
             // Given that 3 user exercises have been added (from oldest to newest)
 
-            let (userExerciseRepository, _) = try addThreeUserExercises(context: viewContext)
+            let (userExerciseRepository, _) = try ExerciseSetup().addThreeUserExercises(context: viewContext)
 
             // When deleting first exercise in the list (i.e. the most recent)
 
@@ -128,8 +128,8 @@ extension UserExerciseRepositoryTests {
 
             let exercises = try userExerciseRepository.getUserExercise()
             XCTAssert(exercises.count == 2)
-            XCTAssert(exercises[0].startDate == dates[1])
-            XCTAssert(exercises[1].startDate == dates[2])
+            XCTAssert(exercises[0].startDate == XCTestCase.dates[1])
+            XCTAssert(exercises[1].startDate == XCTestCase.dates[2])
 
         } catch {
             XCTFail("error in Delete user exercise of UserExerciseRepositoryTests")
@@ -149,7 +149,7 @@ extension UserExerciseRepositoryTests {
         do {
             // Given that 3 exercises have been added (and 3 exercise types)
 
-            _ = try addThreeUserExercises(context: viewContext)
+            _ = try ExerciseSetup().addThreeUserExercises(context: viewContext)
 
             // When deleting user
 

@@ -42,7 +42,7 @@ struct UserDataView: View {
                         landscapeSummaries
                     }
                 } else {
-                    ErrorMessage(message: viewModel.fetchError)
+                    ErrorMessageView(message: viewModel.fetchError)
                 }
             }
         }
@@ -98,7 +98,7 @@ extension UserDataView {
 
     private var portraitSummaries: some View {
         VStack(spacing: chartSpacing) {
-            SummaryChart(
+            SummaryChartView(
                 title: "Votre sommeil",
                 image: "moon.fill",
                 data: viewModel.sleepSummary,
@@ -110,7 +110,7 @@ extension UserDataView {
             .padding(.horizontal)
             .padding(.bottom)
             HStack(spacing: chartSpacing) {
-                SummaryChart(
+                SummaryChartView(
                     title: "Vos exercices",
                     image: "flame.fill",
                     data: viewModel.exercisesSummary,
@@ -120,7 +120,7 @@ extension UserDataView {
                     error: viewModel.fetchExercisesError
                 )
                 .frame(height: 240)
-                SummaryChart(
+                SummaryChartView(
                     title: "Calories brûlées",
                     image: "flame.fill",
                     data: viewModel.caloriesPerDay,
@@ -137,7 +137,7 @@ extension UserDataView {
 
     private var landscapeSummaries: some View {
         HStack(spacing: chartSpacing) {
-            SummaryChart(
+            SummaryChartView(
                 title: "Votre sommeil",
                 image: "moon.fill",
                 data: viewModel.sleepSummary,
@@ -149,7 +149,7 @@ extension UserDataView {
             .padding(.bottom, 8)
             Divider()
             HStack(spacing: chartSpacing) {
-                SummaryChart(
+                SummaryChartView(
                     title: "Vos exercices",
                     image: "flame.fill",
                     data: viewModel.exercisesSummary,
@@ -159,7 +159,7 @@ extension UserDataView {
                     error: viewModel.fetchExercisesError
                 )
                 .frame(height: 240)
-                SummaryChart(
+                SummaryChartView(
                     title: "Calories brûlées",
                     image: "flame.fill",
                     data: viewModel.caloriesPerDay,

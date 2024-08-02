@@ -69,7 +69,7 @@ extension ExerciseListViewModelTests {
         do {
             // Given that 3 user exercises have been added (from oldest to newest)
 
-            _ = try addThreeUserExercises(context: viewContext)
+            _ = try ExerciseSetup().addThreeUserExercises(context: viewContext)
 
             // When fetching user exercises (in init of ExerciseListViewModel)
 
@@ -115,7 +115,7 @@ extension ExerciseListViewModelTests {
         do {
             // Given that 3 user exercises have been added
 
-            _ = try addThreeUserExercises(context: viewContext)
+            _ = try ExerciseSetup().addThreeUserExercises(context: viewContext)
 
             // When deleting user exercise
 

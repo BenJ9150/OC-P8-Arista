@@ -1,5 +1,5 @@
 //
-//  SummaryChart.swift
+//  SummaryChartView.swift
 //  Arista
 //
 //  Created by Benjamin LEFRANCOIS on 25/07/2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct SummaryChart<T>: View where T: Summary {
+struct SummaryChartView<T>: View where T: Summary {
 
     @Environment(\.colorScheme) private var colorScheme
 
@@ -47,7 +47,7 @@ struct SummaryChart<T>: View where T: Summary {
                     createChart(withData: data)
                 }
             } else {
-                ErrorMessage(message: error)
+                ErrorMessageView(message: error)
                     .padding(.top)
             }
         }
@@ -66,7 +66,7 @@ struct SummaryChart<T>: View where T: Summary {
 
 // MARK: Empty chart
 
-extension SummaryChart {
+extension SummaryChartView {
 
     private var empty: some View {
         VStack {
@@ -84,7 +84,7 @@ extension SummaryChart {
 
 // MARK: Create chart
 
-extension SummaryChart {
+extension SummaryChartView {
 
     private func createChart(withData data: [Date: [T]]) -> some View {
         Chart {
@@ -115,7 +115,7 @@ extension SummaryChart {
 
 // MARK: Axis
 
-extension SummaryChart {
+extension SummaryChartView {
 
     private func chartXAxis() -> some AxisContent {
         AxisMarks(preset: .aligned) { value in
@@ -149,7 +149,7 @@ extension SummaryChart {
 }
 
 #Preview {
-    SummaryChart(
+    SummaryChartView(
         title: "Mon graphique",
         image: "moon.fill",
         data: [Date: [UserExercise]](),

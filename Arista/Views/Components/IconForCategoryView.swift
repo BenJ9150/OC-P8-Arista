@@ -1,5 +1,5 @@
 //
-//  IconForCategory.swift
+//  IconForCategoryView.swift
 //  Arista
 //
 //  Created by Benjamin LEFRANCOIS on 27/06/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IconForCategory: View {
+struct IconForCategoryView: View {
 
     let exercise: String
 

@@ -54,7 +54,8 @@ extension UserRepositoryTests {
         do {
             // Given that user is created
 
-            _ = try createUser(context: viewContext)
+            let userSetup = UserSetup()
+            _ = try userSetup.createUser(context: viewContext)
 
             // When fetching user
 
@@ -64,8 +65,8 @@ extension UserRepositoryTests {
             // Then user is not nil
 
             XCTAssertNotNil(user)
-            XCTAssert(user?.firstName == userTestFirstName)
-            XCTAssert(user?.lastName == userTestLastName)
+            XCTAssert(user?.firstName == userSetup.firstName)
+            XCTAssert(user?.lastName == userSetup.lastName)
 
         } catch {
             XCTFail("error in Get user of UserRepositoryTests")

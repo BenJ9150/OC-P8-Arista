@@ -1,5 +1,5 @@
 //
-//  ErrorMessage.swift
+//  ErrorMessageView.swift
 //  Arista
 //
 //  Created by Benjamin LEFRANCOIS on 27/06/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ErrorMessage: View {
+struct ErrorMessageView: View {
 
     let message: String
     @State private var animation = false
@@ -34,5 +34,5 @@ struct ErrorMessage: View {
 }
 
 #Preview {
-    ErrorMessage(message: "Oups, une erreur s'est produite lors du preview de la struct.")
+    ErrorMessageView(message: "Oups, une erreur s'est produite lors du preview de la struct.")
 }

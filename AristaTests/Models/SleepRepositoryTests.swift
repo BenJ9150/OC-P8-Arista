@@ -43,7 +43,7 @@ extension SleepRepositoryTests {
         do {
             // Given that 3 sleep sessions have been added (from oldest to newest)
 
-            try addThreeSleepSessions(context: viewContext)
+            try SleepSetup().addThreeSleepSessions(context: viewContext)
 
             // When fetching sleep sessions
 
@@ -55,18 +55,18 @@ extension SleepRepositoryTests {
             XCTAssert(sleepSessions.count == 3)
             XCTAssert(sleepSessions[0].duration == 1000)
             XCTAssert(sleepSessions[0].quality == 6)
-            XCTAssert(sleepSessions[0].startDate == dates[0])
-            XCTAssert(sleepSessions[0].date == "\(dates[0].formatted())")
+            XCTAssert(sleepSessions[0].startDate == XCTestCase.dates[0])
+            XCTAssert(sleepSessions[0].date == "\(XCTestCase.dates[0].formatted())")
 
             XCTAssert(sleepSessions[1].duration == 1100)
             XCTAssert(sleepSessions[1].quality == 7)
-            XCTAssert(sleepSessions[1].startDate == dates[1])
-            XCTAssert(sleepSessions[1].date == "\(dates[1].formatted())")
+            XCTAssert(sleepSessions[1].startDate == XCTestCase.dates[1])
+            XCTAssert(sleepSessions[1].date == "\(XCTestCase.dates[1].formatted())")
 
             XCTAssert(sleepSessions[2].duration == 1200)
             XCTAssert(sleepSessions[2].quality == 8)
-            XCTAssert(sleepSessions[2].startDate == dates[2])
-            XCTAssert(sleepSessions[2].date == "\(dates[2].formatted())")
+            XCTAssert(sleepSessions[2].startDate == XCTestCase.dates[2])
+            XCTAssert(sleepSessions[2].date == "\(XCTestCase.dates[2].formatted())")
 
         } catch {
             XCTFail("error in Get sleep sessions of SleepRepositoryTests")
@@ -81,7 +81,7 @@ extension SleepRepositoryTests {
         do {
             // Given that 3 sleep sessions have been added (from oldest to newest)
 
-            try addThreeSleepSessions(context: viewContext)
+            try SleepSetup().addThreeSleepSessions(context: viewContext)
 
             // When fetching 2 sleep sessions
 
@@ -110,7 +110,7 @@ extension SleepRepositoryTests {
         do {
             // Given that 3 sleep sessions have been added
 
-            try addThreeSleepSessions(context: viewContext)
+            try SleepSetup().addThreeSleepSessions(context: viewContext)
 
             // When deleting user
 

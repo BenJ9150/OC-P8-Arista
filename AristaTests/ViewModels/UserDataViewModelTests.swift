@@ -73,7 +73,8 @@ extension UserDataViewModelTests {
         do {
             // Given that user is created
 
-            _ = try createUser(context: viewContext)
+            let userSetup = UserSetup()
+            _ = try userSetup.createUser(context: viewContext)
 
             // When fetching user data (in init of UserDataViewModel)
 
@@ -94,14 +95,14 @@ extension UserDataViewModelTests {
 
             viewModel.$firstName
                 .sink { firstName in
-                    XCTAssertEqual(firstName, userTestFirstName)
+                    XCTAssertEqual(firstName, userSetup.firstName)
                     firstNameExpectation.fulfill()
                 }
                 .store(in: &cancellables)
 
             viewModel.$lastName
                 .sink { lastName in
-                    XCTAssertEqual(lastName, userTestLastName)
+                    XCTAssertEqual(lastName, userSetup.lastName)
                     lastNameExpectation.fulfill()
                 }
                 .store(in: &cancellables)
@@ -127,7 +128,7 @@ extension UserDataViewModelTests {
         do {
             // Given that 3 sleep sessions have been added (from oldest to newest, with 2 last dates the same day)
 
-            try addThreeSleepSessions(context: viewContext)
+            try SleepSetup().addThreeSleepSessions(context: viewContext)
 
             // When fetching sleep summary (in init of UserDataViewModel)
 
@@ -148,8 +149,8 @@ extension UserDataViewModelTests {
             viewModel.$sleepSummary
                 .sink { sleepSummary in
                     XCTAssertEqual(sleepSummary.count, 2)
-                    XCTAssertEqual(sleepSummary[dates[0].withoutTime()]!.count, 1)
-                    XCTAssertEqual(sleepSummary[dates[2].withoutTime()]!.count, 2)
+                    XCTAssertEqual(sleepSummary[XCTestCase.dates[0].withoutTime()]!.count, 1)
+                    XCTAssertEqual(sleepSummary[XCTestCase.dates[2].withoutTime()]!.count, 2)
                     summaryExpectation.fulfill()
                 }
                 .store(in: &self.cancellables)
@@ -175,7 +176,7 @@ extension UserDataViewModelTests {
         do {
             // Given that 3 user exercises have been added (from oldest to newest, with 2 last dates the same day)
 
-            _ = try addThreeUserExercises(context: viewContext)
+            _ = try ExerciseSetup().addThreeUserExercises(context: viewContext)
 
             // When fetching exercise summary (in init of UserDataViewModel)
 

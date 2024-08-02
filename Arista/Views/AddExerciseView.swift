@@ -35,7 +35,7 @@ struct AddExerciseView: View {
                             exerciseFormInLandscape
                         }
                     } else {
-                        ErrorMessage(message: viewModel.fetchError)
+                        ErrorMessageView(message: viewModel.fetchError)
                     }
                 }
             }
@@ -121,7 +121,7 @@ extension AddExerciseView {
         Picker("Catégorie", selection: $viewModel.exercise) {
             ForEach(viewModel.exercises) { exercise in
                 HStack {
-                    IconForCategory(exercise: exercise.type ?? "")
+                    IconForCategoryView(exercise: exercise.type ?? "")
                     Text(exercise.type ?? "")
                 }
                 .tag(exercise as ExerciseType?)
@@ -141,7 +141,7 @@ extension AddExerciseView {
                 .font(.subheadline)
                 .bold()
                 .foregroundStyle(Color("GrayText"))
-            IntensityIndicator(intensity: Int16(viewModel.intensity))
+            IntensityIndicatorView(intensity: Int16(viewModel.intensity))
         }
     }
 
